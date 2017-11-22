@@ -1,0 +1,19 @@
+
+import { Container } from "inversify";
+import { IDeviceFactory, RuntimeDeviceFactory } from "../src/device/device_factory";
+import { IVoiceHandler, AlexaVoiceHandler } from "../src/voice_interface";
+import { IMessageHub } from "../src/message_hub";
+import { ConsoleLogger, ILogger } from "../src/logger";
+import { TYPES } from "../src/types";
+import { MockMessageHub } from "./mocks/mock_message_hub";
+import { IDeviceRepo, StaticDeviceRepo } from "../src/device/device_repo";
+
+const container = new Container();
+
+container.bind<IDeviceRepo>(TYPES.DeviceRepo).to(StaticDeviceRepo).inSingletonScope();
+container.bind<IDeviceFactory>(TYPES.DeviceFactory).to(RuntimeDeviceFactory);
+container.bind<IVoiceHandler>(TYPES.VoiceHandlerFactory).to(AlexaVoiceHandler);
+container.bind<IMessageHub>(TYPES.MessageHub).to(MockMessageHub);
+container.bind<ILogger>(TYPES.Logger).to(ConsoleLogger);
+
+export { container };
