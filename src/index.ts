@@ -1,7 +1,7 @@
 import { container } from './boot';
 import { App } from './App'
 import { IDeviceFactory } from './device/device_factory';
-import { IVoiceHandlerFactory } from './voice_interface';
+import { IVoiceHandlerFactory } from './voice_handler';
 import { ILogger } from './logger';
 import { IMessageHub } from './message_hub';
 import { TYPES } from './types';

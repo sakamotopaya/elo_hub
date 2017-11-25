@@ -1,7 +1,7 @@
 
 import { Container } from "inversify";
 import { IDeviceFactory, RuntimeDeviceFactory } from "./device/device_factory";
-import { IVoiceHandlerFactory, RuntimeVoiceHandlerFactory } from "./voice_interface";
+import { IVoiceHandlerFactory, RuntimeVoiceHandlerFactory } from "./voice_handler";
 import { IMessageHub, MqttMessageHub } from "./message_hub";
 import { ConsoleLogger, ILogger } from "./logger";
 import { TYPES } from "./types";
@@ -15,4 +15,5 @@ container.bind<IVoiceHandlerFactory>(TYPES.VoiceHandlerFactory).to(RuntimeVoiceH
 container.bind<IMessageHub>(TYPES.MessageHub).to(MqttMessageHub);
 container.bind<ILogger>(TYPES.Logger).to(ConsoleLogger);
 
+console.log('container setup');
 export { container };

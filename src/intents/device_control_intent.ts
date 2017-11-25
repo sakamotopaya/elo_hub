@@ -1,9 +1,9 @@
 import { ILogger } from "../logger";
 import { Utility } from "../utility/utility";
-import { IDeviceRepo} from "../device/device_repo";
+import { IDeviceRepo } from "../device/device_repo";
 
 export interface IVoiceIntentHandler {
-    handleIntent(request: IVoiceRequest, response: IVoiceResponse): void;
+    handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<void>;
 }
 
 export interface IVoiceRequest {
@@ -24,15 +24,12 @@ export class DeviceControlIntentHandler implements IVoiceIntentHandler {
         this.logger = logger;
     }
 
-    handleIntent(request: IVoiceRequest, response: IVoiceResponse): void {
+    async handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<void> {
         var unprocessedName = request.slot("device_name");
         var deviceState = request.slot("device_state");
 
         this.logger.log(unprocessedName);
 
-        var address = "";
-        var port = "";
-        var state = "on";
         var deviceName = Utility.unprocessedNameToDeviceName(unprocessedName);
         var device = this.deviceFactory.getDeviceByName(deviceName);
 
@@ -41,9 +38,13 @@ export class DeviceControlIntentHandler implements IVoiceIntentHandler {
             return;
         }
 
+        try {
         if (deviceState === "off")
-            state = "off";
-
-        device.setOn();
+            await device.setOff();
+        else if (deviceState === "on")
+            await device.setOn();
+        } catch (e){
+            console.error(e)            
+        }
     }
 }

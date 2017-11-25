@@ -16,10 +16,13 @@ export class MockDevice implements IDevice {
         throw new Error("Method not implemented.");
     }
 
-    public updateIndicator(indicatorId: number, state: number, level: number): void {
-        this.deviceState.index = indicatorId;
-        this.deviceState.state = state;
-        this.deviceState.level = level;
+    public updateIndicator(indicatorId: number, state: number, level: number): Promise<any> {
+        var self = this;
+        return new Promise<any>((resolve, reject) => {
+            this.deviceState.index = indicatorId;
+            this.deviceState.state = state;
+            this.deviceState.level = level;
+            });
     }
     
 }

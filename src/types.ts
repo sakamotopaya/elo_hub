@@ -10,7 +10,7 @@ const TYPES = {
 
 import { Container } from "inversify";
 import { IDeviceFactory, RuntimeDeviceFactory } from "./device/device_factory";
-import { IVoiceHandler, AlexaVoiceHandler } from "./voice_interface";
+import { IVoiceHandler, AlexaVoiceHandler } from "./voice_handler";
 import { IMessageHub, MqttMessageHub } from "./message_hub";
 import { ConsoleLogger, ILogger } from "./logger";
 

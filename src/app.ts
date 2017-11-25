@@ -3,27 +3,32 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser';
 import axios from 'axios';
 import { IDeviceFactory } from './device/device_factory';
-import { IVoiceHandler, AlexaVoiceHandler, IVoiceHandlerFactory } from './voice_interface';
+import { IVoiceHandler, AlexaVoiceHandler, IVoiceHandlerFactory } from './voice_handler';
 import { ILogger } from './logger';
 import { IMessageHub } from './message_hub';
 import { TYPES } from "./types";
 import { ISystemConfig, IExpressApp } from "./utility/utility";
 import { IDeviceRepo } from "./device/device_repo";
+import { IExpressRequest, IExpressResponse } from "./api_handlers/handler_api";
+import { IVoiceResponse } from "./intents/device_control_intent";
+import { HelloHandler } from "./api_handlers/hello_handler";
+import { NgrokConfigHandler } from "./api_handlers/ngrok_config_handler";
+import { ExpressDeviceRelayHandler } from "./api_handlers/relay_handler";
 
 export class App {
-  
+
   private logger: ILogger;
   private expressApp: any;
   private voiceHandler: IVoiceHandler;
   private deviceRepo: IDeviceRepo;
   private messageHub: IMessageHub;
 
-  constructor () {
+  constructor() {
 
-    this.deviceRepo = container.get<IDeviceRepo>(TYPES.DeviceRepo);  
+    this.deviceRepo = container.get<IDeviceRepo>(TYPES.DeviceRepo);
     this.logger = container.get<ILogger>(TYPES.Logger);
     this.messageHub = container.get<IMessageHub>(TYPES.MessageHub);
-    
+
     this.expressApp = express();
     this.expressApp.set("view engine", "ejs");
     this.expressApp.use(bodyParser.json());
@@ -36,55 +41,57 @@ export class App {
 
   }
 
-  public run(port: number) : void {
+  public run(port: number): void {
 
     let app = this.expressApp;
 
-    app.get('/api/hello', function (req, res) {
-      res.send('howdy sakamoto');
+    app.get('/api/hello', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new HelloHandler();
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
     });
-    
-    app.get('/api/config', function (req, res) {
-      axios.get('http://localhost:4040/api/tunnels')
-        .then(function (response) {
-          res.json(response.data);
-        })
-        .catch(function (error) {
-          res.send("Sum ting wong!");
-        });
+
+    app.get('/api/config', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new NgrokConfigHandler();
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
     });
-    
-    app.post('/api/relay', function (req, res) {
-    
-      console.log('relay: ' + JSON.stringify(req.body));
-    
-      let relayPayload = req.body;
-      let deviceAddress = decodeURIComponent(relayPayload.deviceAddress);
-      let devicePayload = relayPayload.payload;
-    
-      console.log('relay to : ' + deviceAddress);
-      axios.post(deviceAddress, relayPayload.payload)
-        .then(function (response) {
-          console.log('back from device', JSON.stringify(response.data));
-          res.json(response.data);
-        })
-        .catch(function (error) {
-          console.log('error calling device' + JSON.stringify(error));
-          res.json({ errorInfo: error });
-        });
+
+    app.post('/api/relay', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new ExpressDeviceRelayHandler();
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
     });
 
     app.listen(port, (err) => {
       if (err) {
         return console.log(err);
       }
-    
+
       return console.log(`server is listening on ${port}`);
     });
 
   }
 
-  private mountRoutes (): void {
+  private mountRoutes(): void {
     const router = express.Router()
     router.get('/', (req, res) => {
       res.json({

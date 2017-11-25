@@ -26,9 +26,9 @@ export class MqttMessageHub implements IMessageHub {
     private mqttClient: MqttClient;
     private deviceRepo: IDeviceRepo;
 
-    constructor(@inject(TYPES.Logger) logger: ILogger, 
-                @inject(TYPES.DeviceRepo) deviceRepo: IDeviceRepo, 
-                @inject(TYPES.Config) systemConfig: ISystemConfig) {
+    constructor( @inject(TYPES.Logger) logger: ILogger,
+        @inject(TYPES.DeviceRepo) deviceRepo: IDeviceRepo,
+        @inject(TYPES.Config) systemConfig: ISystemConfig) {
         this.logger = logger;
         this.config = <IMessageHubConfig>systemConfig.messaging;
         this.mqttClient = mqtt.connect('mqtt://192.168.1.168');
@@ -43,18 +43,22 @@ export class MqttMessageHub implements IMessageHub {
 
         client.on('connect', function () {
             client.subscribe('indicator_state');
-            //client.publish('presence', 'Hello mqtt')
         })
 
         client.on('message', function (topic, payload) {
 
             if (topic === "indicator_state") {
 
-                var indicatorStatus : IndicatorStatus = JSON.parse(payload.toString());
+                var indicatorStatus: IndicatorStatus = JSON.parse(payload.toString());
                 self.logger.log(indicatorStatus);
 
                 var device = self.deviceRepo.getDeviceByName(DeviceNames.whiteboard);
-                device.updateIndicator(indicatorStatus.indicatorId, indicatorStatus.status, indicatorStatus.level);
+                var result = device.updateIndicator(indicatorStatus.indicatorId, indicatorStatus.status, indicatorStatus.level);
+                result.then(() => {
+                    console.log("message sent");
+                }).catch((e) => {
+                    console.error(e);
+                });
             }
 
             self.logger.log(payload.toString())

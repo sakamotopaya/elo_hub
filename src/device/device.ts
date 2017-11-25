@@ -21,9 +21,9 @@ export class DeviceDescriptor {
 }
 
 export interface IDevice {
-    updateIndicator(indicatorId: number, status: number, level: number): void;
-    setOn(): Promise<any>;
-    setOff(): Promise<any>;
+    updateIndicator(indicatorId: number, status: number, level: number): Promise<void>;
+    setOn(): Promise<void>;
+    setOff(): Promise<void>;
 }
 
 export class AxiosDevice implements IDevice {
@@ -36,8 +36,8 @@ export class AxiosDevice implements IDevice {
         this.port = port;
     }
 
-    async updateIndicator(indicatorId: number, status: number, level: number): Promise<any> {
-        var url = this.url + ":" + this.port + '/api/dev_indicator';
+    async updateIndicator(indicatorId: number, status: number, level: number): Promise<void> {
+        var url = "http://" + this.url + ":" + this.port + '/api/dev_indicator';
 
         var indicatorRequest =
             {
@@ -50,8 +50,8 @@ export class AxiosDevice implements IDevice {
         await axios(indicatorRequest);
     }
 
-    async setOn(): Promise<any> {
-        var fullUrl = this.url + ':' + this.port + '/api/dev_on';
+    async setOn(): Promise<void> {
+        var fullUrl = "http://" + this.url + ':' + this.port + '/api/dev_on';
         await axios.post(fullUrl, { brightness: 100 });
 
         // .then(function (response) {
@@ -62,8 +62,8 @@ export class AxiosDevice implements IDevice {
         // });
     }
 
-    async setOff(): Promise<any> {
-        var fullUrl = this.url + ':' + this.port + '/api/dev_off';
+    async setOff(): Promise<void> {
+        var fullUrl = "http://" + this.url + ':' + this.port + '/api/dev_off';
         await axios.post(fullUrl, { brightness: 100 });
 
         // .then(function (response) {

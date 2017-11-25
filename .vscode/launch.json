@@ -33,16 +33,6 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program Old",
-            "program": "${file}",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": [
-                "${workspaceFolder}/dist/**/*.js"
-            ]
-        },
-        {
-            "type": "node",
-            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceRoot}/src/index.ts",
             "cwd": "${workspaceRoot}",

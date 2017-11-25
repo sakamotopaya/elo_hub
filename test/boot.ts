@@ -1,7 +1,7 @@
 
 import { Container } from "inversify";
 import { IDeviceFactory, RuntimeDeviceFactory } from "../src/device/device_factory";
-import { IVoiceHandler, AlexaVoiceHandler } from "../src/voice_interface";
+import { IVoiceHandler, AlexaVoiceHandler } from "../src/voice_handler";
 import { IMessageHub } from "../src/message_hub";
 import { ConsoleLogger, ILogger } from "../src/logger";
 import { TYPES } from "../src/types";
