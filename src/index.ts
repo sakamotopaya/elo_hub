@@ -1,5 +1,5 @@
 import { container } from './boot';
-import { App } from './App'
+import { App } from './app'
 import { IDeviceFactory } from './device/device_factory';
 import { IVoiceHandlerFactory } from './voice_handler';
 import { ILogger } from './logger';

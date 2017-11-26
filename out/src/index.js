@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const boot_1 = require("./boot");
-const App_1 = require("./App");
+const app_1 = require("./app");
 const types_1 = require("./types");
 const port = parseInt(process.env.PORT) || 3000;
 var config = {
@@ -14,6 +14,6 @@ boot_1.container.bind(types_1.TYPES.Config).toConstantValue(config);
 // const deviceFactory = container.get<IDeviceFactory>(TYPES.DeviceFactory);
 // const voiceHandlerFactory = container.get<IVoiceHandlerFactory>(TYPES.VoiceHandler);
 // const messageHub = container.get<IMessageHub>(TYPES.MessageHub);
-const app = new App_1.App();
+const app = new app_1.App();
 app.run(port);
 //# sourceMappingURL=index.js.map
