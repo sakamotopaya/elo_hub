@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const chai_1 = require("chai");
+const device_repo_1 = require("../../src/device/device_repo");
+const device_1 = require("../../src/device/device");
+describe("Device Repo Tests", function () {
+    describe("Static Device Repo Tests", function () {
+        describe("Can retrieve a device", function () {
+            it("retrieves the whiteboard device", function () {
+                var repo = new device_repo_1.StaticDeviceRepo();
+                var result = repo.getDeviceByName(device_1.DeviceNames.whiteboard);
+                chai_1.expect(result).to.not.be.null;
+            }),
+                it("bad device names return null", function () {
+                    var repo = new device_repo_1.StaticDeviceRepo();
+                    var result = repo.getDeviceByName('junk');
+                    chai_1.expect(result).to.be.null;
+                });
+        });
+    });
+});
+//# sourceMappingURL=device_repo.spec.js.map
