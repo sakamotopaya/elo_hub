@@ -4,7 +4,7 @@
     "lib": ["es6"],
     //"types": ["reflect-metadata", "node"],
     "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "out",
     "sourceMap": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,

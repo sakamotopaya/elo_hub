@@ -2,13 +2,16 @@
   "name": "elo_hub",
   "version": "1.0.0",
   "description": "Pi Node App for the home",
-  "main": "dist/src/index.js",
+  "main": "out/src/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch & nodemon dist/src",
-    "test": "tsc && find ./dist -name '*.spec.js' | xargs mocha -R spec",
+    "dev": "tsc --watch & nodemon out/src",
+    "test": "tsc && find ./out -name '*.spec.js' | xargs mocha -R spec",
     "lint": "eslint src --ext ts",
     "tsc": "tsc -w"
+  },
+  "pkg": {
+    "scripts": "build/**/*.js"
   },
   "repository": {
     "type": "git",

@@ -16,7 +16,7 @@
                 "999999",
                 "--colors",
                 "--debug",
-                "${workspaceFolder}/dist/**/*.spec.js"
+                "${workspaceFolder}/out/**/*.spec.js"
             ],
             "internalConsoleOptions": "openOnSessionStart"
         },
@@ -25,7 +25,7 @@
             "request": "launch",
             "name": "nodemon",
             "runtimeExecutable": "nodemon",
-            "program": "${workspaceFolder}/dist/src/index.js",
+            "program": "${workspaceFolder}/out/src/index.js",
             "restart": true,
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
@@ -38,7 +38,7 @@
             "cwd": "${workspaceRoot}",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
-                "${workspaceRoot}/dist/**/*.js"
+                "${workspaceRoot}/out/**/*.js"
             ],
             "sourceMaps": true
         }
