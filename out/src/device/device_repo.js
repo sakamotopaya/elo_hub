@@ -22,7 +22,7 @@ let StaticDeviceRepo = class StaticDeviceRepo {
     }
     initializeRepo(devices) {
         devices.add('kitchen', new device_1.DeviceDescriptor('192.168.1.114', 8088));
-        devices.add('whiteboard', new device_1.DeviceDescriptor('192.168.1.124', 8088));
+        devices.add('whiteboard', new device_1.DeviceDescriptor('192.168.1.136', 8088));
         devices.add('side table', new device_1.DeviceDescriptor('192.168.1.70', 88));
     }
     getDeviceByName(name) {

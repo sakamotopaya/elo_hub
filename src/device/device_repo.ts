@@ -25,7 +25,7 @@ export class StaticDeviceRepo implements IDeviceRepo {
 
     initializeRepo(devices: KeyedCollection<DeviceDescriptor>) {
         devices.add('kitchen', new DeviceDescriptor('192.168.1.114', 8088));
-        devices.add('whiteboard', new DeviceDescriptor('192.168.1.124', 8088));
+        devices.add('whiteboard', new DeviceDescriptor('192.168.1.136', 8088));
         devices.add('side table', new DeviceDescriptor('192.168.1.70', 88));
     }
 
