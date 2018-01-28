@@ -11,39 +11,71 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 require("reflect-metadata");
 const mqtt = require("mqtt");
 const types_1 = require("./types");
-const device_1 = require("./device/device");
 let MqttMessageHub = class MqttMessageHub {
-    constructor(logger, deviceRepo, systemConfig) {
+    constructor(logger, deviceRepo, systemConfig, topicHandlerFactory) {
         this.logger = logger;
         this.config = systemConfig.messaging;
-        this.mqttClient = mqtt.connect('mqtt://192.168.1.168');
+        this.mqttClient = mqtt.connect(this.config.hubUrl);
         this.deviceRepo = deviceRepo;
+        this.topicHandlerFactory = topicHandlerFactory;
         this.initialize(this.logger);
+    }
+    broadcastIndicatorStatus(device, status) {
+        this.sendMessage(device, 'update', JSON.stringify(status));
+    }
+    sendMessage(device, subject, message) {
+        let topic = 'elo/' + device + '/' + subject;
+        this.mqttClient.publish(topic, message);
     }
     initialize(logger) {
         let client = this.mqttClient;
         let self = this;
         client.on('connect', function () {
-            client.subscribe('indicator_state');
+            client.subscribe('elo/#');
         });
         client.on('message', function (topic, payload) {
-            if (topic === "indicator_state") {
-                var indicatorStatus = JSON.parse(payload.toString());
-                self.logger.log(indicatorStatus);
-                var device = self.deviceRepo.getDeviceByName(device_1.DeviceNames.whiteboard);
-                var result = device.updateIndicator(indicatorStatus.indicatorId, indicatorStatus.status, indicatorStatus.level);
-                result.then(() => {
-                    console.log("message sent");
-                }).catch((e) => {
-                    console.error(e);
-                });
-            }
-            self.logger.log(payload.toString());
+            return __awaiter(this, void 0, void 0, function* () {
+                let handler = self.topicHandlerFactory.getHandlerForTopic(topic);
+                handler.handleMessage(topic, payload);
+                /*if (topic.endsWith('weight')) {
+    
+                    let sensorValue: number = parseFloat(payload);
+                    self.logger.log(sensorValue);
+    
+                    let device = self.deviceRepo.getDeviceByName(DeviceNames.whiteboard);
+    
+                    let indicatorId = 0;
+                    let indicatorState = 1;
+                    let indicatorLevel = 2;
+    
+                    if (sensorValue < 5)
+                    {
+                        indicatorState = 2;
+                        indicatorLevel = 3;
+                    }
+    
+                    try {
+                        let result = await device.updateIndicator(indicatorId, indicatorState, indicatorLevel);
+                    } catch (err) {
+                        console.error(err);
+                    }
+    
+                    self.logger.log(payload.toString())
+                }*/
+            });
         });
     }
 };
@@ -52,9 +84,13 @@ MqttMessageHub = __decorate([
     __param(0, inversify_1.inject(types_1.TYPES.Logger)),
     __param(1, inversify_1.inject(types_1.TYPES.DeviceRepo)),
     __param(2, inversify_1.inject(types_1.TYPES.Config)),
-    __metadata("design:paramtypes", [Object, Object, Object])
+    __param(3, inversify_1.inject(types_1.TYPES.TopicHandlerFactory)),
+    __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], MqttMessageHub);
 exports.MqttMessageHub = MqttMessageHub;
-class IndicatorStatus {
-}
+/*class IndicatorStatus {
+    indicatorId: number;
+    status: number;
+    level: number;
+}*/ 
 //# sourceMappingURL=message_hub.js.map

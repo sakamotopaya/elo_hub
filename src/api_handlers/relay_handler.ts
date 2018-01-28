@@ -1,8 +1,9 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import {IExpressHandler, IExpressRequest, IExpressResponse } from './handler_api';
+import { IDeviceRepo } from '../device/device_repo';
 
 export class ExpressDeviceRelayHandler implements IExpressHandler {
-    public async handle(expressRequest: IExpressRequest, expressResponse: IExpressResponse) : Promise<any>{
+    public async handle(expressRequest: IExpressRequest, expressResponse: IExpressResponse) : Promise<any> {
 
         console.log('relay: ' + JSON.stringify(expressRequest.body));
         

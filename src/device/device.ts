@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export class DeviceNames {
     public static kitchen: string = 'kitchen';
-    public static whiteboard: string = 'whiteboard';
+    public static whiteboard: string = 'elo_wb';
     public static sideTable: string = 'sidetable';
 }
 
@@ -13,10 +13,17 @@ export class DeviceDescriptor {
 
     public url: string;
     public port: number;
-
-    constructor(url: string, port: number) {
+    public connectionType: string;
+    public type: string;
+    public description: string;
+    public name: string;
+    constructor(deviceName: string, description: string, url: string, port: number, connectionType: string, deviceType: string) {
         this.url = url;
         this.port = port;
+        this.connectionType = connectionType;
+        this.type = deviceType;
+        this.name = deviceName;
+        this.description = description;
     }
 }
 

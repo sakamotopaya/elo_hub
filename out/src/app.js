@@ -15,6 +15,7 @@ const types_1 = require("./types");
 const hello_handler_1 = require("./api_handlers/hello_handler");
 const ngrok_config_handler_1 = require("./api_handlers/ngrok_config_handler");
 const relay_handler_1 = require("./api_handlers/relay_handler");
+const device_list_handler_1 = require("./api_handlers/device_list_handler");
 class App {
     constructor() {
         this.deviceRepo = boot_1.container.get(types_1.TYPES.DeviceRepo);
@@ -30,6 +31,7 @@ class App {
     }
     run(port) {
         let app = this.expressApp;
+        let self = this;
         app.get('/api/hello', (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const handler = new hello_handler_1.HelloHandler();
@@ -42,6 +44,24 @@ class App {
         app.get('/api/config', (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const handler = new ngrok_config_handler_1.NgrokConfigHandler();
+                yield handler.handle(req, res);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }));
+        app.get('/api/devices', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const handler = new device_list_handler_1.DeviceListHandler(self.deviceRepo);
+                yield handler.handle(req, res);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }));
+        app.post('/api/device', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const handler = new device_list_handler_1.UpdateDeviceHandler(self.deviceRepo, self.messageHub);
                 yield handler.handle(req, res);
             }
             catch (error) {

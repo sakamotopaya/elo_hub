@@ -2,16 +2,19 @@ import { injectable, inject } from "inversify";
 import "reflect-metadata";
 
 import * as mqtt from 'mqtt';
-import { MqttClient } from 'mqtt';
+import { MqttClient, ISubscriptionGrant } from 'mqtt';
 import { ILogger } from './logger';
 import { IDeviceFactory } from './device/device_factory';
 import { TYPES } from "./types";
 import { ISystemConfig } from "./utility/utility";
 import { IDeviceRepo } from "./device/device_repo";
 import { DeviceNames } from "./device/device";
+import { ITopicHandlerFactory } from "./topics/topic_handler_factory";
+import { IndicatorStatus } from "./indicator/indicator_repo";
 
 export interface IMessageHub {
-
+    sendMessage(device: string, subject: string, message: string) ;
+    broadcastIndicatorStatus(device: string, status: IndicatorStatus) : void
 }
 
 export interface IMessageHubConfig {
@@ -25,16 +28,29 @@ export class MqttMessageHub implements IMessageHub {
     private config: IMessageHubConfig;
     private mqttClient: MqttClient;
     private deviceRepo: IDeviceRepo;
+    private topicHandlerFactory: ITopicHandlerFactory;
 
     constructor( @inject(TYPES.Logger) logger: ILogger,
         @inject(TYPES.DeviceRepo) deviceRepo: IDeviceRepo,
-        @inject(TYPES.Config) systemConfig: ISystemConfig) {
+        @inject(TYPES.Config) systemConfig: ISystemConfig,
+        @inject(TYPES.TopicHandlerFactory) topicHandlerFactory : ITopicHandlerFactory) {
+
         this.logger = logger;
         this.config = <IMessageHubConfig>systemConfig.messaging;
-        this.mqttClient = mqtt.connect('mqtt://192.168.1.168');
+        this.mqttClient = mqtt.connect(this.config.hubUrl);
         this.deviceRepo = deviceRepo;
+        this.topicHandlerFactory = topicHandlerFactory;
 
         this.initialize(this.logger);
+    }
+
+    public broadcastIndicatorStatus(device: string, status: IndicatorStatus) : void {
+        this.sendMessage(device, 'update', JSON.stringify(status));
+    }
+
+    public sendMessage(device: string, subject: string, message: string) {
+        let topic: string = 'elo/' + device + '/' + subject;
+        this.mqttClient.publish(topic, message);
     }
 
     private initialize(logger: ILogger): void {
@@ -42,32 +58,46 @@ export class MqttMessageHub implements IMessageHub {
         let self: MqttMessageHub = this;
 
         client.on('connect', function () {
-            client.subscribe('indicator_state');
+            client.subscribe('elo/#');
         })
 
-        client.on('message', function (topic, payload) {
+        client.on('message', async function (topic: string, payload: string) {
 
-            if (topic === "indicator_state") {
+            let handler = self.topicHandlerFactory.getHandlerForTopic(topic);
+            handler.handleMessage(topic, payload);
 
-                var indicatorStatus: IndicatorStatus = JSON.parse(payload.toString());
-                self.logger.log(indicatorStatus);
+            /*if (topic.endsWith('weight')) {
 
-                var device = self.deviceRepo.getDeviceByName(DeviceNames.whiteboard);
-                var result = device.updateIndicator(indicatorStatus.indicatorId, indicatorStatus.status, indicatorStatus.level);
-                result.then(() => {
-                    console.log("message sent");
-                }).catch((e) => {
-                    console.error(e);
-                });
-            }
+                let sensorValue: number = parseFloat(payload);
+                self.logger.log(sensorValue);
 
-            self.logger.log(payload.toString())
-        })
+                let device = self.deviceRepo.getDeviceByName(DeviceNames.whiteboard);
+
+                let indicatorId = 0;
+                let indicatorState = 1;
+                let indicatorLevel = 2;
+
+                if (sensorValue < 5)
+                {
+                    indicatorState = 2;
+                    indicatorLevel = 3;
+                }
+
+                try {
+                    let result = await device.updateIndicator(indicatorId, indicatorState, indicatorLevel);
+                } catch (err) {
+                    console.error(err);
+                }
+
+                self.logger.log(payload.toString())
+            }*/
+        });
+
     }
 }
 
-class IndicatorStatus {
+/*class IndicatorStatus {
     indicatorId: number;
     status: number;
     level: number;
-}
+}*/

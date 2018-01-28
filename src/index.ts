@@ -11,7 +11,8 @@ const port: number = parseInt(process.env.PORT) || 3000;
 
 var config: ISystemConfig = {
   messaging: {
-    hubUrl: 'mqtt://192.168.1.168'
+    //hubUrl: 'mqtt://localhost'
+    hubUrl: 'mqtt://pi3_hub'
   }
 };
 

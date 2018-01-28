@@ -1,0 +1,41 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+class DeviceListHandler {
+    constructor(deviceRepo) {
+        this.deviceRepo = deviceRepo;
+    }
+    handle(expressRequest, expressResponse) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log('devicelist: ' + JSON.stringify(expressRequest.query));
+            let devices = this.deviceRepo.getDeviceConfiguration();
+            expressResponse.json(devices);
+        });
+    }
+}
+exports.DeviceListHandler = DeviceListHandler;
+;
+class UpdateDeviceHandler {
+    constructor(deviceRepo, messageHub) {
+        this.deviceRepo = deviceRepo;
+        this.messageHub = messageHub;
+    }
+    handle(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let payload = request.body;
+            this.deviceRepo.updateDeviceConfiguration(payload.name, payload.config);
+            this.messageHub.sendMessage(payload.name, 'update', JSON.stringify(payload.config));
+            response.send('');
+        });
+    }
+}
+exports.UpdateDeviceHandler = UpdateDeviceHandler;
+;
+//# sourceMappingURL=device_list_handler.js.map

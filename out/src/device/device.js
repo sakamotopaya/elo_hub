@@ -13,13 +13,17 @@ const axios_1 = require("axios");
 class DeviceNames {
 }
 DeviceNames.kitchen = 'kitchen';
-DeviceNames.whiteboard = 'whiteboard';
+DeviceNames.whiteboard = 'elo_wb';
 DeviceNames.sideTable = 'sidetable';
 exports.DeviceNames = DeviceNames;
 class DeviceDescriptor {
-    constructor(url, port) {
+    constructor(deviceName, description, url, port, connectionType, deviceType) {
         this.url = url;
         this.port = port;
+        this.connectionType = connectionType;
+        this.type = deviceType;
+        this.name = deviceName;
+        this.description = description;
     }
 }
 exports.DeviceDescriptor = DeviceDescriptor;

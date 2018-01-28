@@ -6,7 +6,8 @@ const types_1 = require("./types");
 const port = parseInt(process.env.PORT) || 3000;
 var config = {
     messaging: {
-        hubUrl: 'mqtt://192.168.1.168'
+        //hubUrl: 'mqtt://localhost'
+        hubUrl: 'mqtt://pi3_hub'
     }
 };
 boot_1.container.bind(types_1.TYPES.Config).toConstantValue(config);

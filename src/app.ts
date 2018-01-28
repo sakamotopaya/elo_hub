@@ -14,6 +14,7 @@ import { IVoiceResponse } from "./intents/device_control_intent";
 import { HelloHandler } from "./api_handlers/hello_handler";
 import { NgrokConfigHandler } from "./api_handlers/ngrok_config_handler";
 import { ExpressDeviceRelayHandler } from "./api_handlers/relay_handler";
+import { UpdateDeviceHandler, DeviceListHandler } from "./api_handlers/device_list_handler";
 
 export class App {
 
@@ -44,6 +45,7 @@ export class App {
   public run(port: number): void {
 
     let app = this.expressApp;
+    let self = this;
 
     app.get('/api/hello', async (req: IExpressRequest, res: IExpressResponse) => {
 
@@ -69,6 +71,29 @@ export class App {
 
     });
 
+    app.get('/api/devices', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new DeviceListHandler(self.deviceRepo);
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    });
+
+    app.post('/api/device', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new UpdateDeviceHandler(self.deviceRepo, self.messageHub);
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    });
     app.post('/api/relay', async (req: IExpressRequest, res: IExpressResponse) => {
 
       try {

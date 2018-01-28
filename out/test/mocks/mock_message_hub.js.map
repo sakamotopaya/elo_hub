@@ -1,1 +1,1 @@
-{"version":3,"file":"mock_message_hub.js","sourceRoot":"","sources":["../../../test/mocks/mock_message_hub.ts"],"names":[],"mappings":";;AAGA;CAEC;AAFD,wCAEC"}
+{"version":3,"file":"mock_message_hub.js","sourceRoot":"","sources":["../../../test/mocks/mock_message_hub.ts"],"names":[],"mappings":";;AAIA;IACI,wBAAwB,CAAC,MAAc,EAAE,MAAuB;QAC5D,MAAM,IAAI,KAAK,CAAC,yBAAyB,CAAC,CAAC;IAC/C,CAAC;IACD,WAAW,CAAC,MAAc,EAAE,OAAe,EAAE,OAAe;IAE5D,CAAC;CACJ;AAPD,wCAOC"}

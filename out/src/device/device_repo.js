@@ -15,24 +15,67 @@ require("reflect-metadata");
 const device_1 = require("./device");
 const dictionary_1 = require("../utility/dictionary");
 const types_1 = require("../types");
+;
+class DeviceContext {
+}
+;
+class DevicePayload {
+}
+exports.DevicePayload = DevicePayload;
+;
 let StaticDeviceRepo = class StaticDeviceRepo {
     constructor() {
         this.devices = new dictionary_1.KeyedCollection();
         this.initializeRepo(this.devices);
     }
     initializeRepo(devices) {
-        devices.add('kitchen', new device_1.DeviceDescriptor('192.168.1.114', 8088));
-        devices.add('whiteboard', new device_1.DeviceDescriptor('192.168.1.136', 8088));
-        devices.add('side table', new device_1.DeviceDescriptor('192.168.1.70', 88));
+        devices.add('kitchen', { descriptor: new device_1.DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led') });
+        devices.add('elo_wb', { descriptor: new device_1.DeviceDescriptor('whiteboard', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led') });
+        devices.add('side table', { descriptor: new device_1.DeviceDescriptor('side table', 'living room side table', '192.168.1.70', 88, 'rest', 'led') });
+        devices.add('elo_test', { descriptor: new device_1.DeviceDescriptor('elo_test', 'test_device', '192.168.1.136', 8088, 'mqtt', 'led') });
+        devices.add('elo_dfmon', { descriptor: new device_1.DeviceDescriptor('dfmon', 'dog food scale', '192.168.1.136', 8088, 'mqtt', 'led') });
     }
     getDeviceByName(name) {
         if (this.devices.containsKey(name)) {
-            var descriptor = this.devices.item(name);
+            var context = this.devices.item(name);
             var deviceFactory = boot_1.container.get(types_1.TYPES.DeviceFactory);
-            var device = deviceFactory.getDevice(descriptor);
+            var device = deviceFactory.getDevice(context.descriptor);
             return device;
         }
         return null;
+    }
+    updateDeviceConfiguration(name, config) {
+        let context = this.getDeviceContext(name);
+        context.config = config;
+    }
+    getDeviceState(name) {
+        let context = this.getDeviceContext(name);
+        return context.state;
+    }
+    updateDeviceState(name, state) {
+        let context = this.getDeviceContext(name);
+        context.state = state;
+    }
+    getDeviceContext(name) {
+        if (this.devices.containsKey(name)) {
+            return this.devices.item(name);
+        }
+        else {
+            var context = new DeviceContext();
+            this.devices.add(name, context);
+            return context;
+        }
+    }
+    getDeviceConfiguration() {
+        let deviceList = [];
+        for (let key of this.devices.keys()) {
+            var context = this.devices.item(key);
+            let deviceResponse = {
+                name: key, config: context.config, state: context.state, device: context.descriptor
+            };
+            deviceList.push(deviceResponse);
+        }
+        return deviceList;
     }
 };
 StaticDeviceRepo = __decorate([
@@ -40,4 +83,5 @@ StaticDeviceRepo = __decorate([
     __metadata("design:paramtypes", [])
 ], StaticDeviceRepo);
 exports.StaticDeviceRepo = StaticDeviceRepo;
+;
 //# sourceMappingURL=device_repo.js.map

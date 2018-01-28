@@ -1,6 +1,7 @@
 
 export interface IExpressRequest {
     body: any;
+    query : any;
 }
 
 export interface IExpressResponse {
