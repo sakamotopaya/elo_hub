@@ -192,7 +192,7 @@ export class IndicatorRulesEngine implements IIndicatorRulesEngine {
             let triggerState = self.getDeviceState(rule.triggerName, deviceState);
             let triggerVal: number = <number>triggerState[rule.triggerVar];
 
-            if (triggerVal) {
+            if (triggerVal !== undefined) {
                 if (rule.ruleType === IndicatorRuleType.equal) {
                     if (triggerVal === rule.minVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));

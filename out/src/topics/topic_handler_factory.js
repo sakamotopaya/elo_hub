@@ -41,6 +41,7 @@ class DeviceStateHandler {
         });
     }
 }
+exports.DeviceStateHandler = DeviceStateHandler;
 class NullTopicHandler {
     handleMessage(name, message) {
         console.log('null topic handler selected for topic ' + name + '. this message was missed:');

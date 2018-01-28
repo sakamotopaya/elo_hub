@@ -37,6 +37,7 @@ export class Messages {
 
 export interface ISystemConfig {
     messaging: any;
+    build: any;
 }
 
 export interface IExpressApp {

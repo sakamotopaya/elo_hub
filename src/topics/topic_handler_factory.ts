@@ -28,7 +28,7 @@ class DeviceConfigHandler implements ITopicHandler {
 
 }
 
-class DeviceStateHandler implements ITopicHandler {
+export class DeviceStateHandler implements ITopicHandler {
     rulesEngine: IIndicatorRulesEngine;
 
     deviceRepo: IDeviceRepo;

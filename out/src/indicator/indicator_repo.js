@@ -140,7 +140,7 @@ let IndicatorRulesEngine = class IndicatorRulesEngine {
         indicator.rules.forEach(rule => {
             let triggerState = self.getDeviceState(rule.triggerName, deviceState);
             let triggerVal = triggerState[rule.triggerVar];
-            if (triggerVal) {
+            if (triggerVal !== undefined) {
                 if (rule.ruleType === IndicatorRuleType.equal) {
                     if (triggerVal === rule.minVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
