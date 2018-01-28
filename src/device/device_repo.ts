@@ -45,10 +45,10 @@ export class StaticDeviceRepo implements IDeviceRepo {
     initializeRepo(devices: KeyedCollection<DeviceContext>) {
 
         devices.add('kitchen', <DeviceContext> { descriptor : new DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led') });
-        devices.add('elo_wb', <DeviceContext> { descriptor : new DeviceDescriptor('whiteboard','office whiteboard','192.168.1.136', 8088, 'mqtt', 'led') });
+        devices.add('elo_wb', <DeviceContext> { descriptor : new DeviceDescriptor('elo_wb','office whiteboard','192.168.1.136', 8088, 'mqtt', 'led') });
         devices.add('side table', <DeviceContext> { descriptor : new DeviceDescriptor('side table','living room side table','192.168.1.70', 88, 'rest', 'led') });
         devices.add('elo_test', <DeviceContext> { descriptor : new DeviceDescriptor('elo_test','test_device','192.168.1.136', 8088, 'mqtt', 'led') });
-        devices.add('elo_dfmon', <DeviceContext> { descriptor : new DeviceDescriptor('dfmon','dog food scale','192.168.1.136', 8088, 'mqtt', 'led') });
+        devices.add('elo_dfmon', <DeviceContext> { descriptor : new DeviceDescriptor('elo_dfmon','dog food scale','192.168.1.136', 8088, 'mqtt', 'led') });
     }
 
     public getDeviceByName(name: string): IDevice {

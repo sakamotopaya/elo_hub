@@ -11,17 +11,17 @@ export class DeviceNames {
 
 export class DeviceDescriptor {
 
-    public url: string;
+    public address: string;
     public port: number;
     public connectionType: string;
-    public type: string;
+    public deviceClass: string;
     public description: string;
     public name: string;
-    constructor(deviceName: string, description: string, url: string, port: number, connectionType: string, deviceType: string) {
-        this.url = url;
+    constructor(deviceName: string, description: string, address: string, port: number, connectionType: string, deviceClass: string) {
+        this.address = address;
         this.port = port;
         this.connectionType = connectionType;
-        this.type = deviceType;
+        this.deviceClass = deviceClass;
         this.name = deviceName;
         this.description = description;
     }

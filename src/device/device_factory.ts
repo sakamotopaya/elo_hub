@@ -9,6 +9,6 @@ export interface IDeviceFactory {
 @injectable()
 export class RuntimeDeviceFactory implements IDeviceFactory {
     getDevice(deviceDescriptor: DeviceDescriptor): IDevice {
-        return new AxiosDevice(deviceDescriptor.url, deviceDescriptor.port);
+        return new AxiosDevice(deviceDescriptor.address, deviceDescriptor.port);
     };
 }

@@ -30,10 +30,10 @@ let StaticDeviceRepo = class StaticDeviceRepo {
     }
     initializeRepo(devices) {
         devices.add('kitchen', { descriptor: new device_1.DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led') });
-        devices.add('elo_wb', { descriptor: new device_1.DeviceDescriptor('whiteboard', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led') });
+        devices.add('elo_wb', { descriptor: new device_1.DeviceDescriptor('elo_wb', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led') });
         devices.add('side table', { descriptor: new device_1.DeviceDescriptor('side table', 'living room side table', '192.168.1.70', 88, 'rest', 'led') });
         devices.add('elo_test', { descriptor: new device_1.DeviceDescriptor('elo_test', 'test_device', '192.168.1.136', 8088, 'mqtt', 'led') });
-        devices.add('elo_dfmon', { descriptor: new device_1.DeviceDescriptor('dfmon', 'dog food scale', '192.168.1.136', 8088, 'mqtt', 'led') });
+        devices.add('elo_dfmon', { descriptor: new device_1.DeviceDescriptor('elo_dfmon', 'dog food scale', '192.168.1.136', 8088, 'mqtt', 'led') });
     }
     getDeviceByName(name) {
         if (this.devices.containsKey(name)) {

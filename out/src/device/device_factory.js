@@ -11,7 +11,7 @@ require("reflect-metadata");
 const device_1 = require("./device");
 let RuntimeDeviceFactory = class RuntimeDeviceFactory {
     getDevice(deviceDescriptor) {
-        return new device_1.AxiosDevice(deviceDescriptor.url, deviceDescriptor.port);
+        return new device_1.AxiosDevice(deviceDescriptor.address, deviceDescriptor.port);
     }
     ;
 };
