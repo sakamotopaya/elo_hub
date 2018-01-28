@@ -11,17 +11,13 @@ const port: number = parseInt(process.env.PORT) || 3000;
 
 var config: ISystemConfig = {
   messaging: {
-    //hubUrl: 'mqtt://localhost'
-    hubUrl: 'mqtt://pi3_hub'
+    hubUrl: 'mqtt://pi3_hub',
+    listenerDisabled: true,
+    listenerPattern: 'elo/#'
   }
 };
 
 container.bind<ISystemConfig>(TYPES.Config).toConstantValue(config);
-
-// const logger = container.get<ILogger>(TYPES.Logger);
-// const deviceFactory = container.get<IDeviceFactory>(TYPES.DeviceFactory);
-// const voiceHandlerFactory = container.get<IVoiceHandlerFactory>(TYPES.VoiceHandler);
-// const messageHub = container.get<IMessageHub>(TYPES.MessageHub);
 
 const app = new App();
 app.run(port);

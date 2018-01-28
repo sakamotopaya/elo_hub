@@ -44,37 +44,13 @@ let MqttMessageHub = class MqttMessageHub {
         let client = this.mqttClient;
         let self = this;
         client.on('connect', function () {
-            client.subscribe('elo/#');
+            if (!self.config.listenerDisabled)
+                client.subscribe(self.config.listenerPattern);
         });
         client.on('message', function (topic, payload) {
             return __awaiter(this, void 0, void 0, function* () {
                 let handler = self.topicHandlerFactory.getHandlerForTopic(topic);
                 handler.handleMessage(topic, payload);
-                /*if (topic.endsWith('weight')) {
-    
-                    let sensorValue: number = parseFloat(payload);
-                    self.logger.log(sensorValue);
-    
-                    let device = self.deviceRepo.getDeviceByName(DeviceNames.whiteboard);
-    
-                    let indicatorId = 0;
-                    let indicatorState = 1;
-                    let indicatorLevel = 2;
-    
-                    if (sensorValue < 5)
-                    {
-                        indicatorState = 2;
-                        indicatorLevel = 3;
-                    }
-    
-                    try {
-                        let result = await device.updateIndicator(indicatorId, indicatorState, indicatorLevel);
-                    } catch (err) {
-                        console.error(err);
-                    }
-    
-                    self.logger.log(payload.toString())
-                }*/
             });
         });
     }
@@ -88,9 +64,4 @@ MqttMessageHub = __decorate([
     __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], MqttMessageHub);
 exports.MqttMessageHub = MqttMessageHub;
-/*class IndicatorStatus {
-    indicatorId: number;
-    status: number;
-    level: number;
-}*/ 
 //# sourceMappingURL=message_hub.js.map

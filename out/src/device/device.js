@@ -48,24 +48,12 @@ class AxiosDevice {
         return __awaiter(this, void 0, void 0, function* () {
             var fullUrl = "http://" + this.url + ':' + this.port + '/api/dev_on';
             yield axios_1.default.post(fullUrl, { brightness: 100 });
-            // .then(function (response) {
-            //   response.say("Done!");
-            // })
-            // .catch(function (error) {
-            //   response.say(Messages.StockErrorMessage);
-            // });
         });
     }
     setOff() {
         return __awaiter(this, void 0, void 0, function* () {
             var fullUrl = "http://" + this.url + ':' + this.port + '/api/dev_off';
             yield axios_1.default.post(fullUrl, { brightness: 100 });
-            // .then(function (response) {
-            //   response.say("Done!");
-            // })
-            // .catch(function (error) {
-            //   response.say(Messages.StockErrorMessage);
-            // });
         });
     }
 }

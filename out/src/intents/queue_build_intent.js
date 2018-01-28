@@ -17,7 +17,7 @@ class QueueBuildIntentHandler {
     handleIntent(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('queuing a build...');
-            child_process_1.exec('/home/openhabian/code/elo_alexa/queue_build.sh', (error, stdout, stderr) => {
+            child_process_1.exec('/home/pi/code/elo_alexa/queue_build.sh', (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
                 console.log(JSON.stringify(error));

@@ -60,25 +60,11 @@ export class AxiosDevice implements IDevice {
     async setOn(): Promise<void> {
         var fullUrl = "http://" + this.url + ':' + this.port + '/api/dev_on';
         await axios.post(fullUrl, { brightness: 100 });
-
-        // .then(function (response) {
-        //   response.say("Done!");
-        // })
-        // .catch(function (error) {
-        //   response.say(Messages.StockErrorMessage);
-        // });
     }
 
     async setOff(): Promise<void> {
         var fullUrl = "http://" + this.url + ':' + this.port + '/api/dev_off';
         await axios.post(fullUrl, { brightness: 100 });
-
-        // .then(function (response) {
-        //   response.say("Done!");
-        // })
-        // .catch(function (error) {
-        //   response.say(Messages.StockErrorMessage);
-        // });
     }
 }
 

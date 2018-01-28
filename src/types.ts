@@ -11,20 +11,4 @@ const TYPES = {
     IndicatorRulesEngine : Symbol("IIndicatorRulesEngine")
 };
 
-/*
-import { Container } from "inversify";
-import { IDeviceFactory, RuntimeDeviceFactory } from "./device/device_factory";
-import { IVoiceHandler, AlexaVoiceHandler } from "./voice_handler";
-import { IMessageHub, MqttMessageHub } from "./message_hub";
-import { ConsoleLogger, ILogger } from "./logger";
-*/
-
-/*const myContainer = new Container();
-myContainer.bind<IDeviceFactory>(TYPES.DeviceFactory).to(RuntimeDeviceFactory);
-myContainer.bind<IVoiceHandler>(TYPES.VoiceHandlerFactory).to(AlexaVoiceHandler);
-myContainer.bind<IMessageHub>(TYPES.MessageHub).to(MqttMessageHub);
-myContainer.bind<ILogger>(TYPES.Logger).to(ConsoleLogger);
-myContainer.bind<ITopicHandlerFactory>(TYPES.TopicHandlerFactory).to(TopicHandlerFactory);
-*/
-//export { myContainer, TYPES };
 export { TYPES };

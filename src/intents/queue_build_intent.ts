@@ -15,7 +15,7 @@ export class QueueBuildIntentHandler implements IVoiceIntentHandler {
     
         async handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<void> {
             console.log('queuing a build...');
-            exec('/home/openhabian/code/elo_alexa/queue_build.sh',
+            exec('/home/pi/code/elo_alexa/queue_build.sh',
               (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
