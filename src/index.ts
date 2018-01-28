@@ -47,7 +47,7 @@ setInterval(() => {
         } 
         let deviceRepo : IDeviceRepo = container.get<IDeviceRepo>(TYPES.DeviceRepo);
         let rulesEngine : IIndicatorRulesEngine = container.get<IIndicatorRulesEngine>(TYPES.IndicatorRulesEngine);
-        let stateHandler = new DeviceStateHandler('elo_bld', deviceRepo, this.rulesEngine);
+        let stateHandler = new DeviceStateHandler('elo_bld', deviceRepo, rulesEngine);
         stateHandler.handleMessage("elo/elo_bld/state", JSON.stringify({v1: state}));
       }
     });
