@@ -42,12 +42,15 @@ setInterval(() => {
         var buildStatus = JSON.parse(fs.readFileSync(config.build.scriptPath + '/build_status.json', 'utf8'))[0];
         var state = 0;
 
-        if (buildStatus.result === "succeeded") {
+        if (buildStatus.status === "inProgress")
+          state = 2;
+        else if (buildStatus.status === "completed" && buildStatus.result === "succeeded")
           state = 1;
-        } 
+        
         let deviceRepo : IDeviceRepo = container.get<IDeviceRepo>(TYPES.DeviceRepo);
         let rulesEngine : IIndicatorRulesEngine = container.get<IIndicatorRulesEngine>(TYPES.IndicatorRulesEngine);
         let stateHandler = new DeviceStateHandler('elo_bld', deviceRepo, rulesEngine);
+        
         stateHandler.handleMessage("elo/elo_bld/state", JSON.stringify({v1: state}));
       }
     });

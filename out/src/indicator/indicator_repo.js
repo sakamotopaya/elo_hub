@@ -56,6 +56,7 @@ let IndicatorRepo = class IndicatorRepo {
     addBuildIndicatorRules(indicator) {
         indicator.rules.push(this.createRule(IndicatorRuleType.equal, 'elo_bld', 'v1', 'elo_wb', 0, 2, 2, 0, undefined));
         indicator.rules.push(this.createRule(IndicatorRuleType.equal, 'elo_bld', 'v1', 'elo_wb', 0, 2, 1, 1, undefined));
+        indicator.rules.push(this.createRule(IndicatorRuleType.equal, 'elo_bld', 'v1', 'elo_wb', 0, 2, 3, 2, undefined));
     }
     createRule(ruleType, triggerName, triggerVar, deviceName, deviceIndicator, indicatorState, indicatorLevel, minVal, maxVal) {
         let rule = new IndicatorRule();
