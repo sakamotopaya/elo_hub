@@ -33,7 +33,7 @@ setInterval(() => {
             }
             let deviceRepo = boot_1.container.get(types_1.TYPES.DeviceRepo);
             let rulesEngine = boot_1.container.get(types_1.TYPES.IndicatorRulesEngine);
-            let stateHandler = new topic_handler_factory_1.DeviceStateHandler('elo_bld', deviceRepo, this.rulesEngine);
+            let stateHandler = new topic_handler_factory_1.DeviceStateHandler('elo_bld', deviceRepo, rulesEngine);
             stateHandler.handleMessage("elo/elo_bld/state", JSON.stringify({ v1: state }));
         }
     });
