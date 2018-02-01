@@ -14,7 +14,9 @@ import { IVoiceResponse } from "./intents/device_control_intent";
 import { HelloHandler } from "./api_handlers/hello_handler";
 import { NgrokConfigHandler } from "./api_handlers/ngrok_config_handler";
 import { ExpressDeviceRelayHandler } from "./api_handlers/relay_handler";
-import { UpdateDeviceHandler, DeviceListHandler } from "./api_handlers/device_list_handler";
+import { DeviceListHandler } from "./api_handlers/device_list_handler";
+import { UpdateDeviceHandler } from "./api_handlers/update_device_handler";
+import { DeviceProfileListHandler } from "./api_handlers/device_profile_list_handler";
 
 export class App {
 
@@ -83,10 +85,10 @@ export class App {
 
     });
 
-    app.post('/api/device', async (req: IExpressRequest, res: IExpressResponse) => {
+    app.get('/api/device_profiles', async (req: IExpressRequest, res: IExpressResponse) => {
 
       try {
-        const handler = new UpdateDeviceHandler(self.deviceRepo, self.messageHub);
+        const handler = new DeviceProfileListHandler(self.deviceRepo);
         await handler.handle(req, res);
 
       } catch (error) {
@@ -94,6 +96,29 @@ export class App {
       }
 
     });
+
+    app.post('/api/device', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+
+        if (req.body.name === "sidetable") {
+          let deviceAddress = encodeURIComponent("192.168.1.70:88");
+          let devicePayload = req.body.payload;
+          let newPayload = { deviceAddress: deviceAddress, payload : devicePayload };
+
+          const handler = new ExpressDeviceRelayHandler();
+          await handler.handle(req, res);  
+        } else {       
+          const handler = new UpdateDeviceHandler(self.deviceRepo, self.messageHub);
+          await handler.handle(req, res);
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    });
+
     app.post('/api/relay', async (req: IExpressRequest, res: IExpressResponse) => {
 
       try {

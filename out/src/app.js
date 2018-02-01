@@ -16,6 +16,8 @@ const hello_handler_1 = require("./api_handlers/hello_handler");
 const ngrok_config_handler_1 = require("./api_handlers/ngrok_config_handler");
 const relay_handler_1 = require("./api_handlers/relay_handler");
 const device_list_handler_1 = require("./api_handlers/device_list_handler");
+const update_device_handler_1 = require("./api_handlers/update_device_handler");
+const device_profile_list_handler_1 = require("./api_handlers/device_profile_list_handler");
 class App {
     constructor() {
         this.deviceRepo = boot_1.container.get(types_1.TYPES.DeviceRepo);
@@ -59,10 +61,28 @@ class App {
                 console.log(error);
             }
         }));
+        app.get('/api/device_profiles', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const handler = new device_profile_list_handler_1.DeviceProfileListHandler(self.deviceRepo);
+                yield handler.handle(req, res);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }));
         app.post('/api/device', (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const handler = new device_list_handler_1.UpdateDeviceHandler(self.deviceRepo, self.messageHub);
-                yield handler.handle(req, res);
+                if (req.body.name === "sidetable") {
+                    let deviceAddress = encodeURIComponent("192.168.1.70:88");
+                    let devicePayload = req.body.payload;
+                    let newPayload = { deviceAddress: deviceAddress, payload: devicePayload };
+                    const handler = new relay_handler_1.ExpressDeviceRelayHandler();
+                    yield handler.handle(req, res);
+                }
+                else {
+                    const handler = new update_device_handler_1.UpdateDeviceHandler(self.deviceRepo, self.messageHub);
+                    yield handler.handle(req, res);
+                }
             }
             catch (error) {
                 console.log(error);
