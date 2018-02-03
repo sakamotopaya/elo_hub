@@ -13,6 +13,8 @@ pids
 
 dist
 #out
+elo_hub
+elo_hub_v1
 
 .DS_Store
 
