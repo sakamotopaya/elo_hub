@@ -29,9 +29,48 @@ let StaticDeviceRepo = class StaticDeviceRepo {
         this.initializeRepo(this.devices);
     }
     initializeRepo(devices) {
-        devices.add('kitchen', { descriptor: new device_1.DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led') });
-        devices.add('elo_wb', { descriptor: new device_1.DeviceDescriptor('elo_wb', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led') });
-        devices.add('side table', { descriptor: new device_1.DeviceDescriptor('side table', 'living room side table', '192.168.1.70', 88, 'rest', 'led') });
+        devices.add('kitchen', {
+            descriptor: new device_1.DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led'),
+            profile: {
+                applianceId: 'kitchen',
+                manufacturerName: 'ELO Home',
+                modelName: 'Kitchen',
+                version: '1.0',
+                friendlyName: 'Kitchen',
+                friendlyDescription: "Kitchen mood lighting",
+                isReachable: true,
+                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+                additionalApplianceDetails: {}
+            }
+        });
+        devices.add('elo_wb', {
+            descriptor: new device_1.DeviceDescriptor('elo_wb', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led'),
+            profile: {
+                applianceId: 'whiteboard',
+                manufacturerName: 'ELO Home',
+                modelName: 'Whiteboard',
+                version: '1.0',
+                friendlyName: 'Whiteboard',
+                friendlyDescription: "sakamoto's whiteboard",
+                isReachable: true,
+                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+                additionalApplianceDetails: {}
+            }
+        });
+        devices.add('side table', {
+            descriptor: new device_1.DeviceDescriptor('side table', 'living room side table', '192.168.1.70', 88, 'rest', 'led'),
+            profile: {
+                applianceId: 'sidetable',
+                manufacturerName: 'ELO Home',
+                modelName: 'SideTable',
+                version: '1.0',
+                friendlyName: 'Side Table',
+                friendlyDescription: "Side table",
+                isReachable: true,
+                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+                additionalApplianceDetails: {}
+            }
+        });
         devices.add('elo_test', { descriptor: new device_1.DeviceDescriptor('elo_test', 'test_device', '192.168.1.136', 8088, 'mqtt', 'led') });
         devices.add('elo_dfmon', { descriptor: new device_1.DeviceDescriptor('elo_dfmon', 'dog food scale', '192.168.1.136', 8088, 'mqtt', 'led') });
     }
@@ -74,6 +113,14 @@ let StaticDeviceRepo = class StaticDeviceRepo {
                 name: key, config: context.config, state: context.state, device: context.descriptor
             };
             deviceList.push(deviceResponse);
+        }
+        return deviceList;
+    }
+    getDeviceProfiles() {
+        let deviceList = [];
+        for (let key of this.devices.keys()) {
+            var context = this.devices.item(key);
+            deviceList.push(context.profile);
         }
         return deviceList;
     }

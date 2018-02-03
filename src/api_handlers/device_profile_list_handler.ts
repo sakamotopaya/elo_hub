@@ -2,8 +2,7 @@ import { IExpressHandler, IExpressRequest, IExpressResponse } from "./handler_ap
 import { IDeviceRepo, DevicePayload } from "../device/device_repo";
 import { IMessageHub } from "../message_hub";
 
-
-export class DeviceListHandler implements IExpressHandler {
+export class DeviceProfileListHandler implements IExpressHandler {
 
     deviceRepo: IDeviceRepo;
 
@@ -13,8 +12,8 @@ export class DeviceListHandler implements IExpressHandler {
 
     public async handle(expressRequest: IExpressRequest, expressResponse: IExpressResponse): Promise<any> {
 
-        console.log('devicelist: ' + JSON.stringify(expressRequest.query));
-        let devices = this.deviceRepo.getDeviceConfiguration();
+        console.log('deviceprofilelist: ' + JSON.stringify(expressRequest.query));
+        let devices = this.deviceRepo.getDeviceProfiles();
         expressResponse.json(devices);
     }
 

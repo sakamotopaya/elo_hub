@@ -16,12 +16,26 @@ export interface IDeviceRepo {
     getDeviceState(name: string) : DeviceState;
     updateDeviceState(name: string, state: DeviceState);
     getDeviceConfiguration() : DevicePayload[];
+    getDeviceProfiles() : DeviceProfile[];
 };
+
+export interface DeviceProfile {
+    applianceId: string,
+    manufacturerName: string,
+    modelName: string,
+    version: '1.0',
+    friendlyName: string,
+    friendlyDescription: string,
+    isReachable: true,
+    actions: string[],
+    additionalApplianceDetails: any
+;}
 
 class DeviceContext {
     descriptor: DeviceDescriptor;
     config: DeviceConfig;
     state: DeviceState;
+    profile: DeviceProfile;
 };
 
 export class DevicePayload {
@@ -44,13 +58,62 @@ export class StaticDeviceRepo implements IDeviceRepo {
 
     initializeRepo(devices: KeyedCollection<DeviceContext>) {
 
-        devices.add('kitchen', <DeviceContext> { descriptor : new DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led') });
-        devices.add('elo_wb', <DeviceContext> { descriptor : new DeviceDescriptor('elo_wb','office whiteboard','192.168.1.136', 8088, 'mqtt', 'led') });
-        devices.add('side table', <DeviceContext> { descriptor : new DeviceDescriptor('side table','living room side table','192.168.1.70', 88, 'rest', 'led') });
+        devices.add('kitchen', <DeviceContext> 
+        { 
+            descriptor : new DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led'),
+            profile: <DeviceProfile> {
+                applianceId: 'kitchen',
+                manufacturerName: 'ELO Home',
+                modelName: 'Kitchen',
+                version: '1.0',
+                friendlyName: 'Kitchen',
+                friendlyDescription: "Kitchen mood lighting",
+                isReachable: true,
+                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+                
+                additionalApplianceDetails: {
+                }
+            }
+        });
+
+        devices.add('elo_wb', <DeviceContext> 
+        { 
+            descriptor : new DeviceDescriptor('elo_wb','office whiteboard','192.168.1.136', 8088, 'mqtt', 'led'),
+            profile: <DeviceProfile> {
+                applianceId: 'whiteboard',
+                manufacturerName: 'ELO Home',
+                modelName: 'Whiteboard',
+                version: '1.0',
+                friendlyName: 'Whiteboard',
+                friendlyDescription: "sakamoto's whiteboard",
+                isReachable: true,
+                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+                
+                additionalApplianceDetails: {}
+            }
+        });
+        devices.add('side table', <DeviceContext> 
+        { 
+            descriptor : new DeviceDescriptor('side table','living room side table','192.168.1.70', 88, 'rest', 'led'),
+            profile: <DeviceProfile> {
+                applianceId: 'sidetable',
+                manufacturerName: 'ELO Home',
+                modelName: 'SideTable',
+                version: '1.0',
+                friendlyName: 'Side Table',
+                friendlyDescription: "Side table",
+                isReachable: true,
+                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+                
+                additionalApplianceDetails: {
+                }
+            }
+        });
         devices.add('elo_test', <DeviceContext> { descriptor : new DeviceDescriptor('elo_test','test_device','192.168.1.136', 8088, 'mqtt', 'led') });
         devices.add('elo_dfmon', <DeviceContext> { descriptor : new DeviceDescriptor('elo_dfmon','dog food scale','192.168.1.136', 8088, 'mqtt', 'led') });
     }
 
+    
     public getDeviceByName(name: string): IDevice {
         if (this.devices.containsKey(name)) {
             var context : DeviceContext = this.devices.item(name);
@@ -103,4 +166,14 @@ export class StaticDeviceRepo implements IDeviceRepo {
         return deviceList;
     }
 
+    public getDeviceProfiles() : DeviceProfile[] {
+        let deviceList : DeviceProfile[] = [];
+
+        for (let key of this.devices.keys()) {
+            var context = this.devices.item(key);
+            deviceList.push(context.profile);
+        }
+        
+        return deviceList;
+    }
 };

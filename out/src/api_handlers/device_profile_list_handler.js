@@ -8,18 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-class DeviceListHandler {
+class DeviceProfileListHandler {
     constructor(deviceRepo) {
         this.deviceRepo = deviceRepo;
     }
     handle(expressRequest, expressResponse) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('devicelist: ' + JSON.stringify(expressRequest.query));
-            let devices = this.deviceRepo.getDeviceConfiguration();
+            console.log('deviceprofilelist: ' + JSON.stringify(expressRequest.query));
+            let devices = this.deviceRepo.getDeviceProfiles();
             expressResponse.json(devices);
         });
     }
 }
-exports.DeviceListHandler = DeviceListHandler;
+exports.DeviceProfileListHandler = DeviceProfileListHandler;
 ;
-//# sourceMappingURL=device_list_handler.js.map
+//# sourceMappingURL=device_profile_list_handler.js.map
