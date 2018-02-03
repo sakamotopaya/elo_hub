@@ -5,9 +5,12 @@ const app_1 = require("./app");
 const types_1 = require("./types");
 const child_process_1 = require("child_process");
 const fs = require("fs");
+const path = require("path");
+const process = require("process");
 const topic_handler_factory_1 = require("./topics/topic_handler_factory");
 const port = parseInt(process.env.PORT) || 3000;
-var config = JSON.parse(fs.readFileSync('elo_hub_cfg.json').toString());
+let configPath = process.cwd();
+const config = JSON.parse(fs.readFileSync(path.join(configPath, 'elo_hub_cfg.json')).toString());
 boot_1.container.bind(types_1.TYPES.Config).toConstantValue(config);
 setInterval(() => {
     console.log('checking build status...');

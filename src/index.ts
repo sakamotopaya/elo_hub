@@ -8,13 +8,16 @@ import { TYPES } from './types';
 import { ISystemConfig } from './utility/utility';
 import { exec } from 'child_process';
 import * as fs from 'fs';
+import * as path from 'path';
+import * as process from 'process';
 import { IDeviceRepo } from './device/device_repo';
 import { IIndicatorRulesEngine } from './indicator/indicator_repo';
 import { DeviceStateHandler } from './topics/topic_handler_factory';
 
 const port: number = parseInt(process.env.PORT) || 3000;
 
-var config: ISystemConfig = JSON.parse(fs.readFileSync('elo_hub_cfg.json').toString());
+let configPath: string = process.cwd();
+const config: ISystemConfig = JSON.parse(fs.readFileSync(path.join(configPath,'elo_hub_cfg.json')).toString());
 
 container.bind<ISystemConfig>(TYPES.Config).toConstantValue(config);
 
