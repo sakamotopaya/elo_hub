@@ -14,22 +14,7 @@ import { DeviceStateHandler } from './topics/topic_handler_factory';
 
 const port: number = parseInt(process.env.PORT) || 3000;
 
-var config: ISystemConfig = {
-  messaging: {
-    hubUrl: 'mqtt://pi3_hub',
-    listenerDisabled: false,
-    listenerPattern: 'elo/#'
-  },
-  build: {
-    scriptPath: '/home/pi/.elo_hub'
-  },
-  deviceRepo: {
-    repoPath: 'sample_files',
-  },
-  indicatorRepo: {
-    repoPath: 'sample_files'
-  }
-};
+var config: ISystemConfig = JSON.parse(fs.readFileSync('elo_hub_cfg.json').toString());
 
 container.bind<ISystemConfig>(TYPES.Config).toConstantValue(config);
 

@@ -7,22 +7,7 @@ const child_process_1 = require("child_process");
 const fs = require("fs");
 const topic_handler_factory_1 = require("./topics/topic_handler_factory");
 const port = parseInt(process.env.PORT) || 3000;
-var config = {
-    messaging: {
-        hubUrl: 'mqtt://pi3_hub',
-        listenerDisabled: false,
-        listenerPattern: 'elo/#'
-    },
-    build: {
-        scriptPath: '/home/pi/.elo_hub'
-    },
-    deviceRepo: {
-        repoPath: 'sample_files',
-    },
-    indicatorRepo: {
-        repoPath: 'sample_files'
-    }
-};
+var config = JSON.parse(fs.readFileSync('elo_hub_cfg.json').toString());
 boot_1.container.bind(types_1.TYPES.Config).toConstantValue(config);
 setInterval(() => {
     console.log('checking build status...');

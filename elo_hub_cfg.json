@@ -1,0 +1,16 @@
+{
+    "messaging": {
+        "hubUrl": "mqtt://pi3_hub",
+        "listenerDisabled": false,
+        "listenerPattern": "elo/#"
+    },
+    "build": {
+        "scriptPath": "/home/pi/.elo_hub"
+    },
+    "deviceRepo": {
+        "repoPath": "sample_files"
+    },
+    "indicatorRepo": {
+        "repoPath": "sample_files"
+    }
+}
