@@ -98,7 +98,7 @@
                 "connectionType": "mqtt",
                 "deviceClass": "led",
                 "name": "elo_test",
-                "description": "test_device"
+                "description": "simple test device"
             }
         }
     },

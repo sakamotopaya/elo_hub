@@ -13,6 +13,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
+const filewatcher = require("filewatcher");
+const path = require("path");
 const boot_1 = require("../boot");
 const dictionary_1 = require("../utility/dictionary");
 const inversify_1 = require("inversify");
@@ -42,12 +44,23 @@ class IndicatorRule {
 let IndicatorRepo = class IndicatorRepo {
     constructor(logger, systemConfig) {
         this.repoConfig = systemConfig.indicatorRepo;
-        this.initializeRepo(this.indicators);
+        this.initializeRepo();
+        this.watchRepo();
     }
-    initializeRepo(indicators) {
+    watchRepo() {
+        let that = this;
+        let repoPath = path.join(this.repoConfig.repoPath, 'ind_repo.json');
+        let watcher = filewatcher();
+        watcher.add(repoPath);
+        watcher.on('change', function (file, stat) {
+            console.log('Indicator repo changed, reloading...');
+            that.initializeRepo();
+        });
+    }
+    initializeRepo() {
         let self = this;
         this.indicators = new dictionary_1.KeyedCollection();
-        let repoPath = this.repoConfig.repoPath + '/ind_repo.json';
+        let repoPath = path.join(this.repoConfig.repoPath, '/ind_repo.json');
         let indicatorStore = JSON.parse(fs.readFileSync(repoPath).toString());
         indicatorStore.forEach(indicator => {
             this.indicators.add(indicator.name, { indicator: indicator });

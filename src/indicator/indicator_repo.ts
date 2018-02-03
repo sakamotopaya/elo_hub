@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import * as filewatcher from 'filewatcher';
+import * as path from 'path';
 import { container } from "../boot";
 import { KeyedCollection } from "../utility/dictionary";
 import { IDeviceRepo } from "../device/device_repo";
@@ -61,14 +63,28 @@ export class IndicatorRepo implements IIndicatorRepo {
                     
         this.repoConfig = systemConfig.indicatorRepo;
 
-        this.initializeRepo(this.indicators);
+        this.initializeRepo();
+        this.watchRepo();
     }
 
-    initializeRepo(indicators: KeyedCollection<IndicatorContext>) {
+    private watchRepo() {
+        let that = this;
+        let repoPath = path.join(this.repoConfig.repoPath ,'ind_repo.json');
+        let watcher = filewatcher();
+ 
+        watcher.add(repoPath);
+         
+        watcher.on('change', function(file, stat) {
+          console.log('Indicator repo changed, reloading...');
+          that.initializeRepo();
+        });
+    }
+
+    initializeRepo() {
         let self = this;
         this.indicators = new KeyedCollection<IndicatorContext>();
 
-        let repoPath = this.repoConfig.repoPath + '/ind_repo.json';
+        let repoPath = path.join( this.repoConfig.repoPath,  '/ind_repo.json');
         let indicatorStore = <Indicator[]> JSON.parse( fs.readFileSync(repoPath).toString());
 
         indicatorStore.forEach(indicator => {

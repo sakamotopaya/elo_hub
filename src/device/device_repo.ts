@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import * as filewatcher from 'filewatcher';
+import * as path from 'path';
 import { container } from "../boot";
 import { injectable, inject } from "inversify";
 import "reflect-metadata";
@@ -69,75 +71,36 @@ export class StaticDeviceRepo implements IDeviceRepo {
 
         this.config = systemConfig.deviceRepo;
 
-        this.initializeRepo(this.devices);
+        this.initializeRepo();
+
+        this.watchRepo();
     }
 
-    initializeRepo(devices: KeyedCollection<DeviceContext>) {
+    private watchRepo() {
+        let that = this;
+        let repoPath = path.join(this.config.repoPath ,'device_repo.json');
+        let watcher = filewatcher();
+ 
+        watcher.add(repoPath);
+         
+        watcher.on('change', function(file, stat) {
+          console.log('Device repo changed, reloading...');
+          that.initializeRepo();
+        });
+    }
+
+    initializeRepo() {
         let self = this;
         this.devices = new KeyedCollection<DeviceContext>();
 
-        let repoPath = this.config.repoPath + '/device_repo.json';
-        let deviceStore = <Device[]> JSON.parse( fs.readFileSync(repoPath).toString());
+        let repoPath = path.join(this.config.repoPath ,'device_repo.json');
+        let deviceStore = <Device[]> JSON.parse(fs.readFileSync(repoPath).toString());
 
         deviceStore.forEach(device => {
             this.devices.add(device.name, device.context );
         });
 
-        /*devices.add('kitchen', <DeviceContext>
-            {
-                descriptor: new DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led'),
-                profile: <DeviceProfile>{
-                    applianceId: 'kitchen',
-                    manufacturerName: 'ELO Home',
-                    modelName: 'Kitchen',
-                    version: '1.0',
-                    friendlyName: 'Kitchen',
-                    friendlyDescription: "Kitchen mood lighting",
-                    isReachable: true,
-                    actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
-
-                    additionalApplianceDetails: {
-                    }
-                }
-            });
-
-        devices.add('elo_wb', <DeviceContext>
-            {
-                descriptor: new DeviceDescriptor('elo_wb', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led'),
-                profile: <DeviceProfile>{
-                    applianceId: 'whiteboard',
-                    manufacturerName: 'ELO Home',
-                    modelName: 'Whiteboard',
-                    version: '1.0',
-                    friendlyName: 'Whiteboard',
-                    friendlyDescription: "sakamoto's whiteboard",
-                    isReachable: true,
-                    actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
-
-                    additionalApplianceDetails: {}
-                }
-            });
-        devices.add('side table', <DeviceContext>
-            {
-                descriptor: new DeviceDescriptor('side table', 'living room side table', '192.168.1.70', 88, 'rest', 'led'),
-                profile: <DeviceProfile>{
-                    applianceId: 'sidetable',
-                    manufacturerName: 'ELO Home',
-                    modelName: 'SideTable',
-                    version: '1.0',
-                    friendlyName: 'Side Table',
-                    friendlyDescription: "Side table",
-                    isReachable: true,
-                    actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
-
-                    additionalApplianceDetails: {
-                    }
-                }
-            });
-        devices.add('elo_test', <DeviceContext>{ descriptor: new DeviceDescriptor('elo_test', 'test_device', '192.168.1.136', 8088, 'mqtt', 'led') });
-        devices.add('elo_dfmon', <DeviceContext>{ descriptor: new DeviceDescriptor('elo_dfmon', 'dog food scale', '192.168.1.136', 8088, 'mqtt', 'led') });
-
-        this.dumpRepo();*/
+        // this.dumpRepo();
     }
 
     private dumpRepo() {
