@@ -22,6 +22,12 @@ var config: ISystemConfig = {
   },
   build: {
     scriptPath: '/home/pi/.elo_hub'
+  },
+  deviceRepo: {
+    repoPath: 'sample_files',
+  },
+  indicatorRepo: {
+    repoPath: 'sample_files'
   }
 };
 

@@ -1,0 +1,78 @@
+[
+    {
+        "name": "elo_ind_df",
+        "rules": [
+            {
+                "ruleType": 2,
+                "triggerName": "elo_dfmon",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 1,
+                "indicatorState": 2,
+                "indicatorLevel": 2,
+                "minVal": null,
+                "maxVal": 624
+            },
+            {
+                "ruleType": 2,
+                "triggerName": "elo_dfmon",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 1,
+                "indicatorState": 4,
+                "indicatorLevel": 1,
+                "minVal": 625,
+                "maxVal": 899
+            },
+            {
+                "ruleType": 2,
+                "triggerName": "elo_dfmon",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 1,
+                "indicatorState": 1,
+                "indicatorLevel": 0,
+                "minVal": 900,
+                "maxVal": null
+            }
+        ]
+    },
+    {
+        "name": "elo_ind_bld",
+        "rules": [
+            {
+                "ruleType": 1,
+                "triggerName": "elo_bld",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 0,
+                "indicatorState": 2,
+                "indicatorLevel": 3,
+                "minVal": 0,
+                "maxVal": null
+            },
+            {
+                "ruleType": 1,
+                "triggerName": "elo_bld",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 0,
+                "indicatorState": 1,
+                "indicatorLevel": 1,
+                "minVal": 1,
+                "maxVal": null
+            },
+            {
+                "ruleType": 1,
+                "triggerName": "elo_bld",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 0,
+                "indicatorState": 3,
+                "indicatorLevel": 1,
+                "minVal": 2,
+                "maxVal": null
+            }
+        ]
+    }
+]

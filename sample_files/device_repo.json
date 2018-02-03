@@ -1,0 +1,118 @@
+[
+    {
+        "name": "kitchen",
+        "context": {
+            "descriptor": {
+                "address": "192.168.1.114",
+                "port": 8088,
+                "connectionType": "rest",
+                "deviceClass": "led",
+                "name": "kitchen",
+                "description": "leds above the cabinet"
+            },
+            "profile": {
+                "applianceId": "kitchen",
+                "manufacturerName": "ELO Home",
+                "modelName": "Kitchen",
+                "version": "1.0",
+                "friendlyName": "Kitchen",
+                "friendlyDescription": "Kitchen mood lighting",
+                "isReachable": true,
+                "actions": [
+                    "turnOn",
+                    "turnOff",
+                    "setPercentage",
+                    "incrementPercentage",
+                    "decrementPercentage"
+                ],
+                "additionalApplianceDetails": {}
+            }
+        }
+    },
+    {
+        "name": "elo_wb",
+        "context": {
+            "descriptor": {
+                "address": "192.168.1.136",
+                "port": 8088,
+                "connectionType": "mqtt",
+                "deviceClass": "led",
+                "name": "elo_wb",
+                "description": "office whiteboard"
+            },
+            "profile": {
+                "applianceId": "whiteboard",
+                "manufacturerName": "ELO Home",
+                "modelName": "Whiteboard",
+                "version": "1.0",
+                "friendlyName": "Whiteboard",
+                "friendlyDescription": "sakamoto's whiteboard",
+                "isReachable": true,
+                "actions": [
+                    "turnOn",
+                    "turnOff",
+                    "setPercentage",
+                    "incrementPercentage",
+                    "decrementPercentage"
+                ],
+                "additionalApplianceDetails": {}
+            }
+        }
+    },
+    {
+        "name": "side table",
+        "context": {
+            "descriptor": {
+                "address": "192.168.1.70",
+                "port": 88,
+                "connectionType": "rest",
+                "deviceClass": "led",
+                "name": "side table",
+                "description": "living room side table"
+            },
+            "profile": {
+                "applianceId": "sidetable",
+                "manufacturerName": "ELO Home",
+                "modelName": "SideTable",
+                "version": "1.0",
+                "friendlyName": "Side Table",
+                "friendlyDescription": "Side table",
+                "isReachable": true,
+                "actions": [
+                    "turnOn",
+                    "turnOff",
+                    "setPercentage",
+                    "incrementPercentage",
+                    "decrementPercentage"
+                ],
+                "additionalApplianceDetails": {}
+            }
+        }
+    },
+    {
+        "name": "elo_test",
+        "context": {
+            "descriptor": {
+                "address": "192.168.1.136",
+                "port": 8088,
+                "connectionType": "mqtt",
+                "deviceClass": "led",
+                "name": "elo_test",
+                "description": "test_device"
+            }
+        }
+    },
+    {
+        "name": "elo_dfmon",
+        "context": {
+            "descriptor": {
+                "address": "192.168.1.136",
+                "port": 8088,
+                "connectionType": "mqtt",
+                "deviceClass": "led",
+                "name": "elo_dfmon",
+                "description": "dog food scale"
+            }
+        }
+    }
+]

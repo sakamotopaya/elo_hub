@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs");
 const boot_1 = require("../boot");
 const dictionary_1 = require("../utility/dictionary");
 const inversify_1 = require("inversify");
@@ -21,6 +22,9 @@ class IndicatorRuleType {
 IndicatorRuleType.equal = 1;
 IndicatorRuleType.range = 2;
 exports.IndicatorRuleType = IndicatorRuleType;
+class IndicatorRepoConfig {
+}
+exports.IndicatorRepoConfig = IndicatorRepoConfig;
 class Indicator {
     constructor() {
         this.rules = [];
@@ -37,16 +41,25 @@ class IndicatorRule {
 ;
 let IndicatorRepo = class IndicatorRepo {
     constructor(logger, systemConfig) {
-        this.indicators = new dictionary_1.KeyedCollection();
+        this.repoConfig = systemConfig.indicatorRepo;
         this.initializeRepo(this.indicators);
     }
     initializeRepo(indicators) {
-        let context = { indicator: { name: 'elo_ind_df', rules: [] } };
+        let self = this;
+        this.indicators = new dictionary_1.KeyedCollection();
+        let repoPath = this.repoConfig.repoPath + '/ind_repo.json';
+        let indicatorStore = JSON.parse(fs.readFileSync(repoPath).toString());
+        indicatorStore.forEach(indicator => {
+            this.indicators.add(indicator.name, { indicator: indicator });
+        });
+        /*let context: IndicatorContext = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_df', rules: [] } };
         this.addDogFoodIndicatorRules(context.indicator);
         indicators.add('elo_ind_df', context);
-        context = { indicator: { name: 'elo_ind_bld', rules: [] } };
+
+        context = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_bld', rules: [] } };
         this.addBuildIndicatorRules(context.indicator);
         indicators.add('elo_ind_bld', context);
+*/
     }
     addDogFoodIndicatorRules(indicator) {
         indicator.rules.push(this.createRule(IndicatorRuleType.range, 'elo_dfmon', 'v1', 'elo_wb', 1, 2, 2, undefined, 624));
@@ -147,11 +160,12 @@ let IndicatorRulesEngine = class IndicatorRulesEngine {
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
                 }
                 else if (rule.ruleType === IndicatorRuleType.range) {
-                    if (rule.minVal === undefined && triggerVal <= rule.maxVal)
+                    if ((rule.minVal === undefined || rule.minVal === null) && triggerVal <= rule.maxVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
-                    else if (rule.minVal !== undefined && triggerVal >= rule.minVal && rule.maxVal !== undefined && triggerVal <= rule.maxVal)
+                    else if ((rule.minVal !== undefined && rule.minVal !== null) && triggerVal >= rule.minVal &&
+                        (rule.maxVal !== undefined && rule.maxVal !== null) && triggerVal <= rule.maxVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
-                    else if (rule.maxVal === undefined && triggerVal >= rule.minVal)
+                    else if ((rule.maxVal === undefined || rule.maxVal === null) && triggerVal >= rule.minVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
                 }
             }

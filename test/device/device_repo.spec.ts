@@ -2,23 +2,41 @@ import * as mocha from 'mocha';
 import { expect } from 'chai';
 import { container } from "../boot";
 
-import { Utility } from "../../src/utility/utility";
+import { Utility, ISystemConfig } from "../../src/utility/utility";
 import { StaticDeviceRepo } from '../../src/device/device_repo';
 import { DeviceNames } from '../../src/device/device';
+import { ConsoleLogger } from '../../src/logger';
 
+var config: ISystemConfig = {
+    messaging: {
+      hubUrl: 'mqtt://pi3_hub',
+      listenerDisabled: false,
+      listenerPattern: 'elo/#'
+    },
+    build: {
+      scriptPath: '/home/pi/.elo_hub'
+    },
+    deviceRepo: {
+      repoPath: '/home/pi/.elo_hub'
+    },
+    indicatorRepo: {
+      repoPath: '/home/pi/.elo_hub'
+    }
+  };
+  
 describe("Device Repo Tests", function () {
     describe("Static Device Repo Tests", function () {
         describe("Can retrieve a device", function () {
             it("retrieves the whiteboard device", function () {
 
-                var repo = new StaticDeviceRepo();
+                var repo = new StaticDeviceRepo(new ConsoleLogger(), config);
                 var result = repo.getDeviceByName(DeviceNames.whiteboard);
 
                 expect(result).to.not.be.null;
             }), 
             it("bad device names return null", function () {
 
-                var repo = new StaticDeviceRepo();
+                var repo = new StaticDeviceRepo(new ConsoleLogger(), config);
                 var result = repo.getDeviceByName('junk');
 
                 expect(result).to.be.null;

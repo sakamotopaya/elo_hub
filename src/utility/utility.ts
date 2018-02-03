@@ -38,6 +38,8 @@ export class Messages {
 export interface ISystemConfig {
     messaging: any;
     build: any;
+    deviceRepo: any;
+    indicatorRepo: any;
 }
 
 export interface IExpressApp {

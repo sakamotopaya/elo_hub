@@ -3,16 +3,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chai_1 = require("chai");
 const device_repo_1 = require("../../src/device/device_repo");
 const device_1 = require("../../src/device/device");
+const logger_1 = require("../../src/logger");
+var config = {
+    messaging: {
+        hubUrl: 'mqtt://pi3_hub',
+        listenerDisabled: false,
+        listenerPattern: 'elo/#'
+    },
+    build: {
+        scriptPath: '/home/pi/.elo_hub'
+    },
+    deviceRepo: {
+        repoPath: '/home/pi/.elo_hub'
+    },
+    indicatorRepo: {
+        repoPath: '/home/pi/.elo_hub'
+    }
+};
 describe("Device Repo Tests", function () {
     describe("Static Device Repo Tests", function () {
         describe("Can retrieve a device", function () {
             it("retrieves the whiteboard device", function () {
-                var repo = new device_repo_1.StaticDeviceRepo();
+                var repo = new device_repo_1.StaticDeviceRepo(new logger_1.ConsoleLogger(), config);
                 var result = repo.getDeviceByName(device_1.DeviceNames.whiteboard);
                 chai_1.expect(result).to.not.be.null;
             }),
                 it("bad device names return null", function () {
-                    var repo = new device_repo_1.StaticDeviceRepo();
+                    var repo = new device_repo_1.StaticDeviceRepo(new logger_1.ConsoleLogger(), config);
                     var result = repo.getDeviceByName('junk');
                     chai_1.expect(result).to.be.null;
                 });

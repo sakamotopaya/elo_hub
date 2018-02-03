@@ -8,11 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs");
 const boot_1 = require("../boot");
 const inversify_1 = require("inversify");
 require("reflect-metadata");
-const device_1 = require("./device");
 const dictionary_1 = require("../utility/dictionary");
 const types_1 = require("../types");
 ;
@@ -23,56 +26,85 @@ class DevicePayload {
 }
 exports.DevicePayload = DevicePayload;
 ;
+class Device {
+}
 let StaticDeviceRepo = class StaticDeviceRepo {
-    constructor() {
-        this.devices = new dictionary_1.KeyedCollection();
+    constructor(logger, systemConfig) {
+        this.config = systemConfig.deviceRepo;
         this.initializeRepo(this.devices);
     }
     initializeRepo(devices) {
-        devices.add('kitchen', {
-            descriptor: new device_1.DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led'),
-            profile: {
-                applianceId: 'kitchen',
-                manufacturerName: 'ELO Home',
-                modelName: 'Kitchen',
-                version: '1.0',
-                friendlyName: 'Kitchen',
-                friendlyDescription: "Kitchen mood lighting",
-                isReachable: true,
-                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
-                additionalApplianceDetails: {}
-            }
+        let self = this;
+        this.devices = new dictionary_1.KeyedCollection();
+        let repoPath = this.config.repoPath + '/device_repo.json';
+        let deviceStore = JSON.parse(fs.readFileSync(repoPath).toString());
+        deviceStore.forEach(device => {
+            this.devices.add(device.name, device.context);
         });
-        devices.add('elo_wb', {
-            descriptor: new device_1.DeviceDescriptor('elo_wb', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led'),
-            profile: {
-                applianceId: 'whiteboard',
-                manufacturerName: 'ELO Home',
-                modelName: 'Whiteboard',
-                version: '1.0',
-                friendlyName: 'Whiteboard',
-                friendlyDescription: "sakamoto's whiteboard",
-                isReachable: true,
-                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
-                additionalApplianceDetails: {}
-            }
-        });
-        devices.add('side table', {
-            descriptor: new device_1.DeviceDescriptor('side table', 'living room side table', '192.168.1.70', 88, 'rest', 'led'),
-            profile: {
-                applianceId: 'sidetable',
-                manufacturerName: 'ELO Home',
-                modelName: 'SideTable',
-                version: '1.0',
-                friendlyName: 'Side Table',
-                friendlyDescription: "Side table",
-                isReachable: true,
-                actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
-                additionalApplianceDetails: {}
-            }
-        });
-        devices.add('elo_test', { descriptor: new device_1.DeviceDescriptor('elo_test', 'test_device', '192.168.1.136', 8088, 'mqtt', 'led') });
-        devices.add('elo_dfmon', { descriptor: new device_1.DeviceDescriptor('elo_dfmon', 'dog food scale', '192.168.1.136', 8088, 'mqtt', 'led') });
+        /*devices.add('kitchen', <DeviceContext>
+            {
+                descriptor: new DeviceDescriptor('kitchen', 'leds above the cabinet', '192.168.1.114', 8088, 'rest', 'led'),
+                profile: <DeviceProfile>{
+                    applianceId: 'kitchen',
+                    manufacturerName: 'ELO Home',
+                    modelName: 'Kitchen',
+                    version: '1.0',
+                    friendlyName: 'Kitchen',
+                    friendlyDescription: "Kitchen mood lighting",
+                    isReachable: true,
+                    actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+
+                    additionalApplianceDetails: {
+                    }
+                }
+            });
+
+        devices.add('elo_wb', <DeviceContext>
+            {
+                descriptor: new DeviceDescriptor('elo_wb', 'office whiteboard', '192.168.1.136', 8088, 'mqtt', 'led'),
+                profile: <DeviceProfile>{
+                    applianceId: 'whiteboard',
+                    manufacturerName: 'ELO Home',
+                    modelName: 'Whiteboard',
+                    version: '1.0',
+                    friendlyName: 'Whiteboard',
+                    friendlyDescription: "sakamoto's whiteboard",
+                    isReachable: true,
+                    actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+
+                    additionalApplianceDetails: {}
+                }
+            });
+        devices.add('side table', <DeviceContext>
+            {
+                descriptor: new DeviceDescriptor('side table', 'living room side table', '192.168.1.70', 88, 'rest', 'led'),
+                profile: <DeviceProfile>{
+                    applianceId: 'sidetable',
+                    manufacturerName: 'ELO Home',
+                    modelName: 'SideTable',
+                    version: '1.0',
+                    friendlyName: 'Side Table',
+                    friendlyDescription: "Side table",
+                    isReachable: true,
+                    actions: ['turnOn', 'turnOff', 'setPercentage', 'incrementPercentage', 'decrementPercentage'],
+
+                    additionalApplianceDetails: {
+                    }
+                }
+            });
+        devices.add('elo_test', <DeviceContext>{ descriptor: new DeviceDescriptor('elo_test', 'test_device', '192.168.1.136', 8088, 'mqtt', 'led') });
+        devices.add('elo_dfmon', <DeviceContext>{ descriptor: new DeviceDescriptor('elo_dfmon', 'dog food scale', '192.168.1.136', 8088, 'mqtt', 'led') });
+
+        this.dumpRepo();*/
+    }
+    dumpRepo() {
+        let dump = [];
+        for (let key of this.devices.keys()) {
+            let outModel = { name: key, context: this.devices.item(key) };
+            dump.push(outModel);
+        }
+        let repoBuf = JSON.stringify(dump);
+        fs.writeFileSync('sample_files/repo.json', repoBuf);
     }
     getDeviceByName(name) {
         if (this.devices.containsKey(name)) {
@@ -120,14 +152,17 @@ let StaticDeviceRepo = class StaticDeviceRepo {
         let deviceList = [];
         for (let key of this.devices.keys()) {
             var context = this.devices.item(key);
-            deviceList.push(context.profile);
+            if (context.profile !== undefined)
+                deviceList.push(context.profile);
         }
         return deviceList;
     }
 };
 StaticDeviceRepo = __decorate([
     inversify_1.injectable(),
-    __metadata("design:paramtypes", [])
+    __param(0, inversify_1.inject(types_1.TYPES.Logger)),
+    __param(1, inversify_1.inject(types_1.TYPES.Config)),
+    __metadata("design:paramtypes", [Object, Object])
 ], StaticDeviceRepo);
 exports.StaticDeviceRepo = StaticDeviceRepo;
 ;

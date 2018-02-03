@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { container } from "../boot";
 import { KeyedCollection } from "../utility/dictionary";
 import { IDeviceRepo } from "../device/device_repo";
@@ -12,6 +13,10 @@ import { ILogger } from "../logger";
 export class IndicatorRuleType {
     public static equal: number = 1;
     public static range: number = 2;
+}
+
+export class IndicatorRepoConfig {
+    repoPath: string;
 }
 
 export class Indicator {
@@ -49,23 +54,35 @@ export interface IIndicatorRepo {
 export class IndicatorRepo implements IIndicatorRepo {
 
     private indicators: KeyedCollection<IndicatorContext>;
+    private repoConfig: IndicatorRepoConfig;
 
     constructor(@inject(TYPES.Logger) logger: ILogger,
-                @inject(TYPES.Config) systemConfig: ISystemConfig,) {
+                @inject(TYPES.Config) systemConfig: ISystemConfig) {
                     
-        this.indicators = new KeyedCollection<IndicatorContext>();
+        this.repoConfig = systemConfig.indicatorRepo;
+
         this.initializeRepo(this.indicators);
     }
 
     initializeRepo(indicators: KeyedCollection<IndicatorContext>) {
+        let self = this;
+        this.indicators = new KeyedCollection<IndicatorContext>();
 
-        let context: IndicatorContext = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_df', rules: [] } };
+        let repoPath = this.repoConfig.repoPath + '/ind_repo.json';
+        let indicatorStore = <Indicator[]> JSON.parse( fs.readFileSync(repoPath).toString());
+
+        indicatorStore.forEach(indicator => {
+            this.indicators.add(indicator.name, <IndicatorContext> { indicator: indicator } );
+        });
+
+        /*let context: IndicatorContext = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_df', rules: [] } };
         this.addDogFoodIndicatorRules(context.indicator);
         indicators.add('elo_ind_df', context);
 
         context = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_bld', rules: [] } };
         this.addBuildIndicatorRules(context.indicator);
         indicators.add('elo_ind_bld', context);
+*/
 
     }
 
@@ -199,11 +216,12 @@ export class IndicatorRulesEngine implements IIndicatorRulesEngine {
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
                 }
                 else if (rule.ruleType === IndicatorRuleType.range) {
-                    if (rule.minVal === undefined && triggerVal <= rule.maxVal)
+                    if ((rule.minVal === undefined || rule.minVal === null) && triggerVal <= rule.maxVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
-                    else if (rule.minVal !== undefined && triggerVal >= rule.minVal && rule.maxVal !== undefined && triggerVal <= rule.maxVal)
+                    else if ((rule.minVal !== undefined && rule.minVal !== null) && triggerVal >= rule.minVal && 
+                             (rule.maxVal !== undefined && rule.maxVal !== null) && triggerVal <= rule.maxVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
-                    else if (rule.maxVal === undefined && triggerVal >= rule.minVal)
+                    else if ((rule.maxVal === undefined || rule.maxVal === null) && triggerVal >= rule.minVal)
                         indicatorActions.push(self.createIndicatorAction(rule.deviceName, rule.deviceIndicator, rule.indicatorState, rule.indicatorLevel));
                 }
             }
