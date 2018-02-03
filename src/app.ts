@@ -102,13 +102,66 @@ export class App {
       try {
 
         if (req.body.name === "sidetable") {
-          let deviceAddress = encodeURIComponent("192.168.1.70:88");
-          let devicePayload = req.body.payload;
-          let newPayload = { deviceAddress: deviceAddress, payload : devicePayload };
+          let deviceAddress = "http://192.168.1.70:88/api/";
+          let v2Config = req.body.config;
+          let v1Config: any = {};
+          let newPayload: any = {};
+
+          if (v2Config.s !== undefined) {
+
+            v1Config.state = v2Config.s;
+
+            if (v2Config.s === 1) {
+              deviceAddress = deviceAddress + "dev_on";
+            } else {
+              deviceAddress = deviceAddress + "dev_off";
+            }
+
+          } else if (v2Config.l !== undefined) {
+            deviceAddress = deviceAddress + "dev_level";
+            v1Config.brightness = v2Config.l;
+          } else if (v2Config.a !== undefined) {
+            deviceAddress = deviceAddress + "dev_anim";
+            v1Config.anim = v2Config.a;
+
+            if (v2Config.p1 !== undefined) {
+              v1Config.p1 = v2Config.p1;
+            }
+  
+            if (v2Config.p2 !== undefined) {
+              v1Config.p2 = v2Config.p2;
+            }
+  
+            if (v2Config.p3 !== undefined) {
+              v1Config.p3 = v2Config.p3;
+            }
+  
+            if (v2Config.p4 !== undefined) {
+              v1Config.p4 = v2Config.p4;
+            }
+  
+            if (v2Config.p5 !== undefined) {
+              v1Config.p5 = v2Config.p5;
+            }
+  
+          } else if (v2Config.c !== undefined) {
+            deviceAddress = deviceAddress + "dev_color";
+            v1Config.red = v2Config.r;
+            v1Config.green = v2Config.g;
+            v1Config.blue = v2Config.b;
+          }
+
+          // state change can also send brightness
+          if (v2Config.l !== undefined)
+            v1Config.brightness = v2Config.l;
+
+          newPayload.deviceAddress = encodeURIComponent(deviceAddress);
+          newPayload.payload = v1Config;
+          req.body = newPayload;
 
           const handler = new ExpressDeviceRelayHandler();
-          await handler.handle(req, res);  
-        } else {       
+          await handler.handle(req, res);
+        } else {
           const handler = new UpdateDeviceHandler(self.deviceRepo, self.messageHub);
           await handler.handle(req, res);
         }
