@@ -78,14 +78,14 @@ export class StaticDeviceRepo implements IDeviceRepo {
 
     private watchRepo() {
         let that = this;
-        let repoPath = path.join(this.config.repoPath ,'device_repo.json');
+        let repoPath = path.join(this.config.repoPath, 'device_repo.json');
         let watcher = filewatcher();
- 
+
         watcher.add(repoPath);
-         
-        watcher.on('change', function(file, stat) {
-          console.log('Device repo changed, reloading...');
-          that.initializeRepo();
+
+        watcher.on('change', function (file, stat) {
+            console.log('Device repo changed, reloading...');
+            that.initializeRepo();
         });
     }
 
@@ -93,11 +93,11 @@ export class StaticDeviceRepo implements IDeviceRepo {
         let self = this;
         this.devices = new KeyedCollection<DeviceContext>();
 
-        let repoPath = path.join(this.config.repoPath ,'device_repo.json');
-        let deviceStore = <Device[]> JSON.parse(fs.readFileSync(repoPath).toString());
+        let repoPath = path.join(this.config.repoPath, 'device_repo.json');
+        let deviceStore = <Device[]>JSON.parse(fs.readFileSync(repoPath).toString());
 
         deviceStore.forEach(device => {
-            this.devices.add(device.name, device.context );
+            this.devices.add(device.name, device.context);
         });
 
         // this.dumpRepo();
@@ -156,11 +156,13 @@ export class StaticDeviceRepo implements IDeviceRepo {
 
         for (let key of this.devices.keys()) {
             var context = this.devices.item(key);
-            let deviceResponse: DevicePayload = <DevicePayload>
-                {
-                    name: key, config: context.config, state: context.state, device: context.descriptor
-                };
-            deviceList.push(deviceResponse);
+            if (context.descriptor) {
+                let deviceResponse: DevicePayload = <DevicePayload>
+                    {
+                        name: key, config: context.config, state: context.state, device: context.descriptor
+                    };
+                deviceList.push(deviceResponse);
+            }
         }
 
         return deviceList;

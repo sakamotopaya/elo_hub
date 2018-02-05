@@ -98,7 +98,7 @@
                 "connectionType": "mqtt",
                 "deviceClass": "led",
                 "name": "elo_test",
-                "description": "simple test device"
+                "description": "hello lisa"
             }
         }
     },
@@ -114,5 +114,48 @@
                 "description": "dog food scale"
             }
         }
-    }
+    },
+    {
+        "name": "elo_trek",
+        "context": {
+            "descriptor": {
+                "address": "0.0.0.0",
+                "port": 0,
+                "connectionType": "mqtt",
+                "deviceClass": "led",
+                "name": "elo_trek",
+                "description": "trek light"
+            },
+            "profile": {
+                "applianceId": "elo_trek",
+                "manufacturerName": "ELO Home",
+                "modelName": "Trek Light",
+                "version": "1.0",
+                "friendlyName": "StarTrek Light",
+                "friendlyDescription": "Star Trek Light",
+                "isReachable": true,
+                "actions": [
+                    "turnOn",
+                    "turnOff",
+                    "setPercentage",
+                    "incrementPercentage",
+                    "decrementPercentage"
+                ],
+                "additionalApplianceDetails": {}
+            }
+        }
+    },
+    {
+        "name": "elo_disp1",
+        "context": {
+            "descriptor": {
+                "address": "0.0.0.0",
+                "port": 0,
+                "connectionType": "mqtt",
+                "deviceClass": "led",
+                "name": "elo_disp1",
+                "description": "trek light"
+            }
+	}
+     }
 ]

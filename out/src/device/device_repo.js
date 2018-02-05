@@ -100,10 +100,12 @@ let StaticDeviceRepo = class StaticDeviceRepo {
         let deviceList = [];
         for (let key of this.devices.keys()) {
             var context = this.devices.item(key);
-            let deviceResponse = {
-                name: key, config: context.config, state: context.state, device: context.descriptor
-            };
-            deviceList.push(deviceResponse);
+            if (context.descriptor) {
+                let deviceResponse = {
+                    name: key, config: context.config, state: context.state, device: context.descriptor
+                };
+                deviceList.push(deviceResponse);
+            }
         }
         return deviceList;
     }

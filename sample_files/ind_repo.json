@@ -30,7 +30,7 @@
                 "triggerVar": "v1",
                 "deviceName": "elo_wb",
                 "deviceIndicator": 1,
-                "indicatorState": 1,
+                "indicatorState": 0,
                 "indicatorLevel": 0,
                 "minVal": 900,
                 "maxVal": null
@@ -57,8 +57,8 @@
                 "triggerVar": "v1",
                 "deviceName": "elo_wb",
                 "deviceIndicator": 0,
-                "indicatorState": 1,
-                "indicatorLevel": 1,
+                "indicatorState": 0,
+                "indicatorLevel": 0,
                 "minVal": 1,
                 "maxVal": null
             },
@@ -74,5 +74,54 @@
                 "maxVal": null
             }
         ]
+    },
+    {
+        "name": "elo_ind_pir1",
+        "rules": [
+            {
+                "ruleType": 1,
+                "triggerName": "elo_pir1",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 2,
+                "indicatorState": 1,
+                "indicatorLevel": 0,
+                "minVal": 0,
+                "maxVal": null
+            },
+	        {
+                "ruleType": 1,
+                "triggerName": "elo_pir1",
+                "triggerVar": "v1",
+                "deviceName": "elo_wb",
+                "deviceIndicator": 2,
+                "indicatorState": 2,
+                "indicatorLevel": 2,
+                "minVal": 1,
+                "maxVal": null
+            },
+            {
+                "ruleType": 1,
+                "triggerName": "elo_pir1",
+                "triggerVar": "v1",
+                "deviceName": "elo_trek",
+                "deviceIndicator": 0,
+                "indicatorState": 2,
+                "indicatorLevel": 2,
+                "minVal": 1,
+                "maxVal": null
+            },
+            {
+                "ruleType": 1,
+                "triggerName": "elo_pir1",
+                "triggerVar": "v1",
+                "deviceName": "elo_trek",
+                "deviceIndicator": 0,
+                "indicatorState": 0,
+                "indicatorLevel": 0,
+                "minVal": 0,
+                "maxVal": null
+            }
+       ]
     }
 ]
