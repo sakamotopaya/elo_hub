@@ -99,27 +99,32 @@
                 "indicatorLevel": 2,
                 "minVal": 1,
                 "maxVal": null
-            },
+            }
+       ]
+    },
+    {
+        "name": "elo_ind_higrow1",
+        "rules": [
             {
-                "ruleType": 1,
-                "triggerName": "elo_pir1",
-                "triggerVar": "v1",
-                "deviceName": "elo_trek",
-                "deviceIndicator": 0,
-                "indicatorState": 2,
-                "indicatorLevel": 2,
-                "minVal": 1,
-                "maxVal": null
-            },
-            {
-                "ruleType": 1,
-                "triggerName": "elo_pir1",
-                "triggerVar": "v1",
+                "ruleType": 2,
+                "triggerName": "elo_higrow1",
+                "triggerVar": "v4",
                 "deviceName": "elo_trek",
                 "deviceIndicator": 0,
                 "indicatorState": 0,
                 "indicatorLevel": 0,
                 "minVal": 0,
+                "maxVal": 550
+            },
+	        {
+                "ruleType": 2,
+                "triggerName": "elo_higrow1",
+                "triggerVar": "v4",
+                "deviceName": "elo_trek",
+                "deviceIndicator": 0,
+                "indicatorState": 5,
+                "indicatorLevel": 2,
+                "minVal": 551,
                 "maxVal": null
             }
        ]
