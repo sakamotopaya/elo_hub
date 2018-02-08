@@ -11,7 +11,7 @@
                 "indicatorState": 2,
                 "indicatorLevel": 2,
                 "minVal": null,
-                "maxVal": 624
+                "maxVal": 700
             },
             {
                 "ruleType": 2,
@@ -21,8 +21,8 @@
                 "deviceIndicator": 1,
                 "indicatorState": 4,
                 "indicatorLevel": 1,
-                "minVal": 625,
-                "maxVal": 899
+                "minVal": 701,
+                "maxVal": 950
             },
             {
                 "ruleType": 2,
@@ -32,7 +32,7 @@
                 "deviceIndicator": 1,
                 "indicatorState": 0,
                 "indicatorLevel": 0,
-                "minVal": 900,
+                "minVal": 951,
                 "maxVal": null
             }
         ]

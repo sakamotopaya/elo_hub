@@ -8,7 +8,8 @@ const TYPES = {
     DeviceRepo: Symbol("IDeviceRepo"),
     TopicHandlerFactory : Symbol("ITopicHandlerFactory"),
     IndicatorRepo : Symbol("IIndicatorRepo"),
-    IndicatorRulesEngine : Symbol("IIndicatorRulesEngine")
+    IndicatorRulesEngine : Symbol("IIndicatorRulesEngine"),
+    AnimationRepo : Symbol("IAnimationRepo"),
 };
 
 export { TYPES };

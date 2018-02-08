@@ -12,5 +12,8 @@
     },
     "indicatorRepo": {
         "repoPath": "sample_files"
+    },
+    "animationRepo": {
+        "repoPath": "sample_files"
     }
 }

@@ -29,18 +29,23 @@ export class Utility {
         return null;
     }
 
-}
+};
+
+export interface IRepoConfig {
+    repoPath: string;
+};
 
 export class Messages {
     public static StockErrorMessage: string = 'Sum ting wong!';
-}
+};
 
 export interface ISystemConfig {
     messaging: any;
     build: any;
-    deviceRepo: any;
-    indicatorRepo: any;
-}
+    deviceRepo: IRepoConfig;
+    indicatorRepo: IRepoConfig;
+    animationRepo: IRepoConfig;
+};
 
 export interface IExpressApp {
 

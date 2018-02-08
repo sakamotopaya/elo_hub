@@ -26,8 +26,12 @@ class Utility {
     }
 }
 exports.Utility = Utility;
+;
+;
 class Messages {
 }
 Messages.StockErrorMessage = 'Sum ting wong!';
 exports.Messages = Messages;
+;
+;
 //# sourceMappingURL=utility.js.map

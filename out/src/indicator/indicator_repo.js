@@ -65,14 +65,6 @@ let IndicatorRepo = class IndicatorRepo {
         indicatorStore.forEach(indicator => {
             this.indicators.add(indicator.name, { indicator: indicator });
         });
-        /*let context: IndicatorContext = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_df', rules: [] } };
-        this.addDogFoodIndicatorRules(context.indicator);
-        indicators.add('elo_ind_df', context);
-
-        context = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_bld', rules: [] } };
-        this.addBuildIndicatorRules(context.indicator);
-        indicators.add('elo_ind_bld', context);
-*/
     }
     addDogFoodIndicatorRules(indicator) {
         indicator.rules.push(this.createRule(IndicatorRuleType.range, 'elo_dfmon', 'v1', 'elo_wb', 1, 2, 2, undefined, 624));

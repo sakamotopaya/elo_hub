@@ -9,6 +9,7 @@ const types_1 = require("./types");
 const device_repo_1 = require("./device/device_repo");
 const topic_handler_factory_1 = require("./topics/topic_handler_factory");
 const indicator_repo_1 = require("./indicator/indicator_repo");
+const animation_repo_1 = require("./animations/animation_repo");
 const container = new inversify_1.Container();
 exports.container = container;
 container.bind(types_1.TYPES.DeviceRepo).to(device_repo_1.StaticDeviceRepo).inSingletonScope();
@@ -17,6 +18,7 @@ container.bind(types_1.TYPES.VoiceHandlerFactory).to(voice_handler_1.RuntimeVoic
 container.bind(types_1.TYPES.MessageHub).to(message_hub_1.MqttMessageHub).inSingletonScope();
 container.bind(types_1.TYPES.Logger).to(logger_1.ConsoleLogger).inSingletonScope();
 container.bind(types_1.TYPES.IndicatorRepo).to(indicator_repo_1.IndicatorRepo).inSingletonScope();
+container.bind(types_1.TYPES.AnimationRepo).to(animation_repo_1.AnimationRepo).inSingletonScope();
 container.bind(types_1.TYPES.IndicatorRulesEngine).to(indicator_repo_1.IndicatorRulesEngine).inSingletonScope();
 container.bind(types_1.TYPES.TopicHandlerFactory).to(topic_handler_factory_1.TopicHandlerFactory).inSingletonScope();
 console.log('container setup');

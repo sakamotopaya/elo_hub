@@ -90,16 +90,6 @@ export class IndicatorRepo implements IIndicatorRepo {
         indicatorStore.forEach(indicator => {
             this.indicators.add(indicator.name, <IndicatorContext> { indicator: indicator } );
         });
-
-        /*let context: IndicatorContext = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_df', rules: [] } };
-        this.addDogFoodIndicatorRules(context.indicator);
-        indicators.add('elo_ind_df', context);
-
-        context = <IndicatorContext>{ indicator: <Indicator>{ name: 'elo_ind_bld', rules: [] } };
-        this.addBuildIndicatorRules(context.indicator);
-        indicators.add('elo_ind_bld', context);
-*/
-
     }
 
     private addDogFoodIndicatorRules(indicator: Indicator): void {

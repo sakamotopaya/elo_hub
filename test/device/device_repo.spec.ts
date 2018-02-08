@@ -17,10 +17,13 @@ var config: ISystemConfig = {
       scriptPath: '/home/pi/.elo_hub'
     },
     deviceRepo: {
-      repoPath: '/home/pi/.elo_hub'
+      repoPath: 'sample_files'
     },
     indicatorRepo: {
-      repoPath: '/home/pi/.elo_hub'
+      repoPath: 'sample_files'
+    },
+    animationRepo : {
+        repoPath: 'sample_files'
     }
   };
   

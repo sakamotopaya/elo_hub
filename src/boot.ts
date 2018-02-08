@@ -8,6 +8,7 @@ import { TYPES } from "./types";
 import { IDeviceRepo, StaticDeviceRepo } from "./device/device_repo";
 import { ITopicHandlerFactory, TopicHandlerFactory } from "./topics/topic_handler_factory";
 import { IndicatorRepo, IIndicatorRepo, IndicatorRulesEngine, IIndicatorRulesEngine } from "./indicator/indicator_repo";
+import { AnimationRepo, IAnimationRepo } from "./animations/animation_repo";
 
 const container = new Container();
 
@@ -17,6 +18,7 @@ container.bind<IVoiceHandlerFactory>(TYPES.VoiceHandlerFactory).to(RuntimeVoiceH
 container.bind<IMessageHub>(TYPES.MessageHub).to(MqttMessageHub).inSingletonScope();
 container.bind<ILogger>(TYPES.Logger).to(ConsoleLogger).inSingletonScope();
 container.bind<IIndicatorRepo>(TYPES.IndicatorRepo).to(IndicatorRepo).inSingletonScope();
+container.bind<IAnimationRepo>(TYPES.AnimationRepo).to(AnimationRepo).inSingletonScope();
 container.bind<IIndicatorRulesEngine>(TYPES.IndicatorRulesEngine).to(IndicatorRulesEngine).inSingletonScope();
 container.bind<ITopicHandlerFactory>(TYPES.TopicHandlerFactory).to(TopicHandlerFactory).inSingletonScope();
 
