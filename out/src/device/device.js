@@ -17,14 +17,6 @@ DeviceNames.whiteboard = 'elo_wb';
 DeviceNames.sideTable = 'sidetable';
 exports.DeviceNames = DeviceNames;
 class DeviceDescriptor {
-    constructor(deviceName, description, address, port, connectionType, deviceClass) {
-        this.address = address;
-        this.port = port;
-        this.connectionType = connectionType;
-        this.deviceClass = deviceClass;
-        this.name = deviceName;
-        this.description = description;
-    }
 }
 exports.DeviceDescriptor = DeviceDescriptor;
 class AxiosDevice {

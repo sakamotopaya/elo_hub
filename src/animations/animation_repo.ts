@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as filewatcher from 'filewatcher';
 import * as path from 'path';
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { ILogger } from "../logger";
 import { KeyedCollection } from '../utility/dictionary';
 import { ISystemConfig, IRepoConfig } from '../utility/utility';
@@ -38,22 +38,21 @@ export interface IAnimationRepo extends IRepoBase<AnimationPack> {
 
 };
 
+@injectable()
 export class RepoBase<T> implements IRepoBase<T> {
 
     private repoConfig: IRepoConfig;
     private items: KeyedCollection<T>;
-    private repoFileName: string;
 
-    constructor(logger: ILogger, repoConfig: IRepoConfig, repoFileName: string) {
+    constructor(logger: ILogger, repoConfig: IRepoConfig) {
 
         this.repoConfig = repoConfig;
-        this.repoFileName = repoFileName;
         this.initializeRepo();
         this.watchRepo();
     }
 
     private getFullRepoPath(): string {
-        return path.join(this.repoConfig.repoPath, this.repoFileName);
+        return path.join(this.repoConfig.repoPath, this.getRepoFilename());
     }
 
     private watchRepo() {
@@ -80,6 +79,10 @@ export class RepoBase<T> implements IRepoBase<T> {
         return undefined;
     }
 
+    getRepoFilename(): string {
+        return undefined;
+    }
+
     readItems(buf: Buffer): T[] {
         return <T[]>JSON.parse(buf.toString());
     }
@@ -99,13 +102,18 @@ export class RepoBase<T> implements IRepoBase<T> {
     }
 };
 
+@injectable()
 export class AnimationRepo extends RepoBase<AnimationPack> implements IAnimationRepo {
 
     constructor( @inject(TYPES.Logger) logger: ILogger,
         @inject(TYPES.Config) systemConfig: ISystemConfig) {
 
-        super(logger, systemConfig.animationRepo, "animations.json");
+        super(logger, systemConfig.animationRepo);
 
+    }
+
+    getRepoFilename(): string {
+        return "animations.json";
     }
 
     getKey(item: AnimationPack): string {

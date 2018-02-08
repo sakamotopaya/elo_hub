@@ -17,6 +17,8 @@ import { ExpressDeviceRelayHandler } from "./api_handlers/relay_handler";
 import { DeviceListHandler } from "./api_handlers/device_list_handler";
 import { UpdateDeviceHandler } from "./api_handlers/update_device_handler";
 import { DeviceProfileListHandler } from "./api_handlers/device_profile_list_handler";
+import { AnimationPackListHandler } from "./api_handlers/animation_pack_list_handler";
+import { IAnimationRepo } from "./animations/animation_repo";
 
 export class App {
 
@@ -24,6 +26,7 @@ export class App {
   private expressApp: any;
   private voiceHandler: IVoiceHandler;
   private deviceRepo: IDeviceRepo;
+  private animationRepo: IAnimationRepo;
   private messageHub: IMessageHub;
 
   constructor() {
@@ -31,6 +34,7 @@ export class App {
     this.deviceRepo = container.get<IDeviceRepo>(TYPES.DeviceRepo);
     this.logger = container.get<ILogger>(TYPES.Logger);
     this.messageHub = container.get<IMessageHub>(TYPES.MessageHub);
+    this.animationRepo = container.get<IAnimationRepo>(TYPES.AnimationRepo);
 
     this.expressApp = express();
     this.expressApp.set("view engine", "ejs");
@@ -77,6 +81,18 @@ export class App {
 
       try {
         const handler = new DeviceListHandler(self.deviceRepo);
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    });
+
+    app.get('/api/animationpacks', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new AnimationPackListHandler(self.animationRepo);
         await handler.handle(req, res);
 
       } catch (error) {

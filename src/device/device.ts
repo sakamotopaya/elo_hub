@@ -17,14 +17,17 @@ export class DeviceDescriptor {
     public deviceClass: string;
     public description: string;
     public name: string;
-    constructor(deviceName: string, description: string, address: string, port: number, connectionType: string, deviceClass: string) {
-        this.address = address;
-        this.port = port;
-        this.connectionType = connectionType;
-        this.deviceClass = deviceClass;
-        this.name = deviceName;
-        this.description = description;
-    }
+    public animationPack: string;
+
+    // constructor(deviceName: string, description: string, address: string, 
+    //             port: number, connectionType: string, deviceClass: string) {
+    //     this.address = address;
+    //     this.port = port;
+    //     this.connectionType = connectionType;
+    //     this.deviceClass = deviceClass;
+    //     this.name = deviceName;
+    //     this.description = description;
+    // }
 }
 
 export interface IDevice {

@@ -27,15 +27,14 @@ exports.Animation = Animation;
 ;
 ;
 ;
-class RepoBase {
-    constructor(logger, repoConfig, repoFileName) {
+let RepoBase = class RepoBase {
+    constructor(logger, repoConfig) {
         this.repoConfig = repoConfig;
-        this.repoFileName = repoFileName;
         this.initializeRepo();
         this.watchRepo();
     }
     getFullRepoPath() {
-        return path.join(this.repoConfig.repoPath, this.repoFileName);
+        return path.join(this.repoConfig.repoPath, this.getRepoFilename());
     }
     watchRepo() {
         let that = this;
@@ -55,6 +54,9 @@ class RepoBase {
     getKey(item) {
         return undefined;
     }
+    getRepoFilename() {
+        return undefined;
+    }
     readItems(buf) {
         return JSON.parse(buf.toString());
     }
@@ -68,18 +70,26 @@ class RepoBase {
             this.items.add(key, item);
         });
     }
-}
+};
+RepoBase = __decorate([
+    inversify_1.injectable(),
+    __metadata("design:paramtypes", [Object, Object])
+], RepoBase);
 exports.RepoBase = RepoBase;
 ;
 let AnimationRepo = class AnimationRepo extends RepoBase {
     constructor(logger, systemConfig) {
-        super(logger, systemConfig.animationRepo, "animations.json");
+        super(logger, systemConfig.animationRepo);
+    }
+    getRepoFilename() {
+        return "animations.json";
     }
     getKey(item) {
         return item.name;
     }
 };
 AnimationRepo = __decorate([
+    inversify_1.injectable(),
     __param(0, inversify_1.inject(types_1.TYPES.Logger)),
     __param(1, inversify_1.inject(types_1.TYPES.Config)),
     __metadata("design:paramtypes", [Object, Object])

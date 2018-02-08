@@ -8,7 +8,8 @@
                 "connectionType": "rest",
                 "deviceClass": "led",
                 "name": "kitchen",
-                "description": "leds above the cabinet"
+                "description": "leds above the cabinet",
+                "animationPack": "std"
             },
             "profile": {
                 "applianceId": "kitchen",
@@ -38,7 +39,8 @@
                 "connectionType": "mqtt",
                 "deviceClass": "led",
                 "name": "elo_wb",
-                "description": "office whiteboard"
+                "description": "office whiteboard",
+                "animationPack": "std"
             },
             "profile": {
                 "applianceId": "whiteboard",
@@ -68,7 +70,8 @@
                 "connectionType": "rest",
                 "deviceClass": "led",
                 "name": "side table",
-                "description": "living room side table"
+                "description": "living room side table",
+                "animationPack": "multi"
             },
             "profile": {
                 "applianceId": "sidetable",
@@ -98,7 +101,8 @@
                 "connectionType": "mqtt",
                 "deviceClass": "led",
                 "name": "elo_test",
-                "description": "hello lisa"
+                "description": "hello lisa",
+                "animationPack": "std"
             }
         }
     },
@@ -124,7 +128,8 @@
                 "connectionType": "mqtt",
                 "deviceClass": "led",
                 "name": "elo_trek",
-                "description": "trek light"
+                "description": "trek light",
+                "animationPack": "std"
             },
             "profile": {
                 "applianceId": "elo_trek",
@@ -154,7 +159,8 @@
                 "connectionType": "mqtt",
                 "deviceClass": "led",
                 "name": "elo_disp1",
-                "description": "trek light"
+                "description": "trek light",
+                "animationPack": "std"
             }
 	}
      }
