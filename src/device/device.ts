@@ -9,6 +9,13 @@ export class DeviceNames {
     public static sideTable: string = 'sidetable';
 }
 
+export class DeviceIndicator {
+    i : number;
+    li : number;
+    ls: number;
+    lc: number;
+};
+
 export class DeviceDescriptor {
 
     public address: string;
@@ -18,7 +25,8 @@ export class DeviceDescriptor {
     public description: string;
     public name: string;
     public animationPack: string;
-
+    public indicators: DeviceIndicator[];
+    
     // constructor(deviceName: string, description: string, address: string, 
     //             port: number, connectionType: string, deviceClass: string) {
     //     this.address = address;

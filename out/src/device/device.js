@@ -16,6 +16,10 @@ DeviceNames.kitchen = 'kitchen';
 DeviceNames.whiteboard = 'elo_wb';
 DeviceNames.sideTable = 'sidetable';
 exports.DeviceNames = DeviceNames;
+class DeviceIndicator {
+}
+exports.DeviceIndicator = DeviceIndicator;
+;
 class DeviceDescriptor {
 }
 exports.DeviceDescriptor = DeviceDescriptor;

@@ -9,7 +9,8 @@
                 "deviceClass": "led",
                 "name": "kitchen",
                 "description": "leds above the cabinet",
-                "animationPack": "std"
+                "animationPack": "std",
+                "indicators" : []
             },
             "profile": {
                 "applianceId": "kitchen",
@@ -40,7 +41,11 @@
                 "deviceClass": "led",
                 "name": "elo_wb",
                 "description": "office whiteboard",
-                "animationPack": "std"
+                "animationPack": "std",
+                "indicators" : [
+                    { "i" : 0, "li" : 0, "ls" : 135, "lc" : 14 },
+                    { "i" : 1, "li" : 0, "ls" : 70, "lc" : 14 }
+                ]
             },
             "profile": {
                 "applianceId": "whiteboard",
@@ -71,7 +76,8 @@
                 "deviceClass": "led",
                 "name": "side table",
                 "description": "living room side table",
-                "animationPack": "multi"
+                "animationPack": "multi",
+                "indicators" : []
             },
             "profile": {
                 "applianceId": "sidetable",
@@ -102,7 +108,8 @@
                 "deviceClass": "led",
                 "name": "elo_test",
                 "description": "hello lisa",
-                "animationPack": "std"
+                "animationPack": "std",
+                "indicators" : []
             }
         }
     },
@@ -129,7 +136,11 @@
                 "deviceClass": "led",
                 "name": "elo_trek",
                 "description": "trek light",
-                "animationPack": "std"
+                "animationPack": "std",
+                "indicators" : [
+                    { "i" : 0, "li" : 0, "ls" : 0, "lc" : 4 }
+                ]
+                
             },
             "profile": {
                 "applianceId": "elo_trek",
@@ -160,7 +171,9 @@
                 "deviceClass": "led",
                 "name": "elo_disp1",
                 "description": "trek light",
-                "animationPack": "std"
+                "animationPack": "std",
+                "indicators" : [
+                ]
             }
 	}
      }
