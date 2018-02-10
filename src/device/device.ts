@@ -2,6 +2,7 @@
 import { injectable, inject } from "inversify";
 import "reflect-metadata";
 import axios from 'axios';
+import { InputRegisterMap, OutputRegisterMap, ConfigRegisterMap } from "../registers/register_map_models";
 
 export class DeviceNames {
     public static kitchen: string = 'kitchen';
@@ -17,7 +18,6 @@ export class DeviceIndicator {
 };
 
 export class DeviceDescriptor {
-
     public address: string;
     public port: number;
     public connectionType: string;
@@ -26,16 +26,9 @@ export class DeviceDescriptor {
     public name: string;
     public animationPack: string;
     public indicators: DeviceIndicator[];
-    
-    // constructor(deviceName: string, description: string, address: string, 
-    //             port: number, connectionType: string, deviceClass: string) {
-    //     this.address = address;
-    //     this.port = port;
-    //     this.connectionType = connectionType;
-    //     this.deviceClass = deviceClass;
-    //     this.name = deviceName;
-    //     this.description = description;
-    // }
+    public inputRegisterMap: InputRegisterMap;
+    public outputRegisterMap: OutputRegisterMap;
+    public configRegisterMap: ConfigRegisterMap;
 }
 
 export interface IDevice {

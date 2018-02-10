@@ -10,6 +10,7 @@ const TYPES = {
     IndicatorRepo : Symbol("IIndicatorRepo"),
     IndicatorRulesEngine : Symbol("IIndicatorRulesEngine"),
     AnimationRepo : Symbol("IAnimationRepo"),
+    RegisterMapRepo : Symbol("IRegisterMapRepo")
 };
 
 export { TYPES };

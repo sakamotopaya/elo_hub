@@ -45,6 +45,8 @@ export interface ISystemConfig {
     deviceRepo: IRepoConfig;
     indicatorRepo: IRepoConfig;
     animationRepo: IRepoConfig;
+    registerMapRepo: IRepoConfig;
+    broadcastInterval: number;
 };
 
 export interface IExpressApp {

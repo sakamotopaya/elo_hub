@@ -15,5 +15,8 @@
     },
     "animationRepo": {
         "repoPath": "sample_files"
+    },
+    "registerMapRepo": {
+        "repoPath": "sample_files"
     }
 }

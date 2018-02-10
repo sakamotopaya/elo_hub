@@ -19,23 +19,23 @@ const inversify_1 = require("inversify");
 const types_1 = require("../types");
 const repo_base_1 = require("../core/repo_base");
 ;
-let AnimationRepo = class AnimationRepo extends repo_base_1.RepoBase {
+let RegisterMapRepo = class RegisterMapRepo extends repo_base_1.RepoBase {
     constructor(logger, systemConfig) {
-        super(logger, systemConfig.animationRepo);
+        super(logger, systemConfig.registerMapRepo);
     }
     getRepoFilename() {
-        return "animations.json";
+        return "register_maps.json";
     }
     getKey(item) {
         return item.name;
     }
 };
-AnimationRepo = __decorate([
+RegisterMapRepo = __decorate([
     inversify_1.injectable(),
     __param(0, inversify_1.inject(types_1.TYPES.Logger)),
     __param(1, inversify_1.inject(types_1.TYPES.Config)),
     __metadata("design:paramtypes", [Object, Object])
-], AnimationRepo);
-exports.AnimationRepo = AnimationRepo;
+], RegisterMapRepo);
+exports.RegisterMapRepo = RegisterMapRepo;
 ;
-//# sourceMappingURL=animation_repo.js.map
+//# sourceMappingURL=register_map_repo.js.map

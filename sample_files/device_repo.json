@@ -10,7 +10,28 @@
                 "name": "kitchen",
                 "description": "leds above the cabinet",
                 "animationPack": "std",
-                "indicators" : []
+                "indicators": [],
+                "inputRegisterMap": {
+                    "p1": "anim_speed",
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": null,
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
             },
             "profile": {
                 "applianceId": "kitchen",
@@ -42,10 +63,41 @@
                 "name": "elo_wb",
                 "description": "office whiteboard",
                 "animationPack": "std",
-                "indicators" : [
-                    { "i" : 0, "li" : 0, "ls" : 135, "lc" : 14 },
-                    { "i" : 1, "li" : 0, "ls" : 70, "lc" : 14 }
-                ]
+                "indicators": [
+                    {
+                        "i": 0,
+                        "li": 0,
+                        "ls": 135,
+                        "lc": 14
+                    },
+                    {
+                        "i": 1,
+                        "li": 0,
+                        "ls": 70,
+                        "lc": 14
+                    }
+                ],
+                "inputRegisterMap": {
+                    "p1": "anim_speed",
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": null,
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
             },
             "profile": {
                 "applianceId": "whiteboard",
@@ -77,7 +129,28 @@
                 "name": "side table",
                 "description": "living room side table",
                 "animationPack": "multi",
-                "indicators" : []
+                "indicators": [],
+                "inputRegisterMap": {
+                    "p1": "anim_speed",
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": null,
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
             },
             "profile": {
                 "applianceId": "sidetable",
@@ -109,7 +182,28 @@
                 "name": "elo_test",
                 "description": "hello lisa",
                 "animationPack": "std",
-                "indicators" : []
+                "indicators": [],
+                "inputRegisterMap": {
+                    "p1": "anim_speed",
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": null,
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
             }
         }
     },
@@ -122,7 +216,28 @@
                 "connectionType": "mqtt",
                 "deviceClass": "led",
                 "name": "elo_dfmon",
-                "description": "dog food scale"
+                "description": "dog food scale",
+                "inputRegisterMap": {
+                    "p1": null,
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": "dfmon_load",
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
             }
         }
     },
@@ -137,10 +252,35 @@
                 "name": "elo_trek",
                 "description": "trek light",
                 "animationPack": "std",
-                "indicators" : [
-                    { "i" : 0, "li" : 0, "ls" : 0, "lc" : 4 }
-                ]
-                
+                "indicators": [
+                    {
+                        "i": 0,
+                        "li": 0,
+                        "ls": 0,
+                        "lc": 4
+                    }
+                ],
+                "inputRegisterMap": {
+                    "p1": "anim_speed",
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": null,
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
             },
             "profile": {
                 "applianceId": "elo_trek",
@@ -172,9 +312,29 @@
                 "name": "elo_disp1",
                 "description": "trek light",
                 "animationPack": "std",
-                "indicators" : [
-                ]
+                "indicators": [],
+                "inputRegisterMap": {
+                    "p1": null,
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": null,
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
             }
-	}
-     }
+        }
+    }
 ]

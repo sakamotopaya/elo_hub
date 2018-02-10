@@ -17,6 +17,7 @@ const ngrok_config_handler_1 = require("./api_handlers/ngrok_config_handler");
 const relay_handler_1 = require("./api_handlers/relay_handler");
 const device_list_handler_1 = require("./api_handlers/device_list_handler");
 const update_device_handler_1 = require("./api_handlers/update_device_handler");
+const generic_list_handler_1 = require("./api_handlers/generic_list_handler");
 const device_profile_list_handler_1 = require("./api_handlers/device_profile_list_handler");
 const animation_pack_list_handler_1 = require("./api_handlers/animation_pack_list_handler");
 class App {
@@ -25,6 +26,7 @@ class App {
         this.logger = boot_1.container.get(types_1.TYPES.Logger);
         this.messageHub = boot_1.container.get(types_1.TYPES.MessageHub);
         this.animationRepo = boot_1.container.get(types_1.TYPES.AnimationRepo);
+        this.registerMapRepo = boot_1.container.get(types_1.TYPES.RegisterMapRepo);
         this.expressApp = express();
         this.expressApp.set("view engine", "ejs");
         this.expressApp.use(bodyParser.json());
@@ -57,6 +59,15 @@ class App {
         app.get('/api/devices', (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const handler = new device_list_handler_1.DeviceListHandler(self.deviceRepo);
+                yield handler.handle(req, res);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }));
+        app.get('/api/registermaps', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const handler = new generic_list_handler_1.GenericListHandler('registermaps', self.registerMapRepo);
                 yield handler.handle(req, res);
             }
             catch (error) {

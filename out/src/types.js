@@ -12,6 +12,7 @@ const TYPES = {
     IndicatorRepo: Symbol("IIndicatorRepo"),
     IndicatorRulesEngine: Symbol("IIndicatorRulesEngine"),
     AnimationRepo: Symbol("IAnimationRepo"),
+    RegisterMapRepo: Symbol("IRegisterMapRepo")
 };
 exports.TYPES = TYPES;
 //# sourceMappingURL=types.js.map

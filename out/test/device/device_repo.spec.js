@@ -21,7 +21,11 @@ var config = {
     },
     animationRepo: {
         repoPath: 'sample_files'
-    }
+    },
+    registerMapRepo: {
+        repoPath: 'sample_files'
+    },
+    broadcastInterval: 5000
 };
 describe("Device Repo Tests", function () {
     describe("Static Device Repo Tests", function () {

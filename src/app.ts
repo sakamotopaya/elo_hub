@@ -16,9 +16,12 @@ import { NgrokConfigHandler } from "./api_handlers/ngrok_config_handler";
 import { ExpressDeviceRelayHandler } from "./api_handlers/relay_handler";
 import { DeviceListHandler } from "./api_handlers/device_list_handler";
 import { UpdateDeviceHandler } from "./api_handlers/update_device_handler";
+import { GenericListHandler } from "./api_handlers/generic_list_handler";
 import { DeviceProfileListHandler } from "./api_handlers/device_profile_list_handler";
 import { AnimationPackListHandler } from "./api_handlers/animation_pack_list_handler";
 import { IAnimationRepo } from "./animations/animation_repo";
+import { IRegisterMapRepo } from "./registers/register_map_repo";
+import { RegisterMap } from "./registers/register_map_models";
 
 export class App {
 
@@ -27,6 +30,7 @@ export class App {
   private voiceHandler: IVoiceHandler;
   private deviceRepo: IDeviceRepo;
   private animationRepo: IAnimationRepo;
+  private registerMapRepo: IRegisterMapRepo;
   private messageHub: IMessageHub;
 
   constructor() {
@@ -35,6 +39,7 @@ export class App {
     this.logger = container.get<ILogger>(TYPES.Logger);
     this.messageHub = container.get<IMessageHub>(TYPES.MessageHub);
     this.animationRepo = container.get<IAnimationRepo>(TYPES.AnimationRepo);
+    this.registerMapRepo = container.get<IRegisterMapRepo>(TYPES.RegisterMapRepo);
 
     this.expressApp = express();
     this.expressApp.set("view engine", "ejs");
@@ -81,6 +86,18 @@ export class App {
 
       try {
         const handler = new DeviceListHandler(self.deviceRepo);
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    });
+
+    app.get('/api/registermaps', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new GenericListHandler<RegisterMap>('registermaps', self.registerMapRepo);
         await handler.handle(req, res);
 
       } catch (error) {
