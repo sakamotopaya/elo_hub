@@ -12,7 +12,6 @@ pids
 *.pid.lock
 
 dist
-#out
 elo_hub
 elo_hub_v1
 elo_hub_cfg.json
