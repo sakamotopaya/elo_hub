@@ -15,6 +15,7 @@ dist
 #out
 elo_hub
 elo_hub_v1
+elo_hub_cfg.json
 scripts/dev
 
 .DS_Store

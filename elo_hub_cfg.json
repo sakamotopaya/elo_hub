@@ -1,26 +1,26 @@
 {
     "messaging": {
-        "hubUrl": "mqtt://yourmqttserver",
-        "listenerDisabled": false, 
+        "hubUrl": "mqtt://pi3_hub",
+        "listenerDisabled": false,
         "listenerPattern": "elo/#"
     },
     "deviceRepo": {
-        "repoPath": ""
+        "repoPath": "sample_files"
     },
     "indicatorRepo": {
-        "repoPath": ""
+        "repoPath": "sample_files"
     },
     "animationRepo": {
-        "repoPath": ""
+        "repoPath": "sample_files"
     },
     "registerMapRepo": {
-        "repoPath": ""
+        "repoPath": "sample_files"
     },
     "vsts" : {
-        "scriptPath" : "where your elo/vsts scripts are located",
-        "dataPath" : "where you want hub to write results",
-        "token" : "your key from vsts security",
-        "vstsPath" : "path to vsts cli",
-        "activeTasksQueryId" : "guid of the query that represents active tasks"
+        "scriptPath" : "./scripts/dev",
+        "dataPath" : "/Users/sakamoto/.elo",
+        "token" : "5y7xcn43ipkbpfiyygn4j4uzfqougdya76cjrov7hdc7zkkfyqua",
+        "vstsPath" : "/Users/sakamoto/bin",
+        "activeTasksQueryId" : "db79da21-fec5-447a-99b9-03a1ea2db6c4"
     }
 }
