@@ -7,34 +7,36 @@ These are the things I think you need to do:
 - typescript
 - elo_hub_cfg.json - sample in the repo. mostly mqtt config and paths
 - vsts cli installed for the vsts integration stuff
-- there are scripts that run. I am keeping mine in ~/.elo  samples are in the script directory
+- there are scripts that run. I am keeping mine in ~/.elo  (samples are in the script directory)
 
 
 
+### Sample Hub Config
+This file is not under 
 ```json
 {
     "messaging": {
-        "hubUrl": "mqtt://pi3_hub",
-        "listenerDisabled": false,
+        "hubUrl": "mqtt://yourmqttserver",
+        "listenerDisabled": false, 
         "listenerPattern": "elo/#"
     },
     "deviceRepo": {
-        "repoPath": "sample_files"
+        "repoPath": ""
     },
     "indicatorRepo": {
-        "repoPath": "sample_files"
+        "repoPath": ""
     },
     "animationRepo": {
-        "repoPath": "sample_files"
+        "repoPath": ""
     },
     "registerMapRepo": {
-        "repoPath": "sample_files"
+        "repoPath": ""
     },
     "vsts" : {
-        "scriptPath" : "./scripts/dev",
-        "dataPath" : "/Users/sakamoto/.elo",
+        "scriptPath" : "where your elo/vsts scripts are located",
+        "dataPath" : "where you want hub to write results",
         "token" : "your key from vsts security",
-        "vstsPath" : "/Users/sakamoto/bin",
+        "vstsPath" : "path to vsts cli",
         "activeTasksQueryId" : "guid of the query that represents active tasks"
     }
 }
