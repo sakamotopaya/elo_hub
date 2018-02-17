@@ -11,6 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 require("reflect-metadata");
@@ -20,11 +28,13 @@ const types_1 = require("./types");
 const alexa_launch_handler_1 = require("./intents/alexa_launch_handler");
 const build_intent_1 = require("./intents/build_intent");
 const queue_build_intent_1 = require("./intents/queue_build_intent");
+const active_tasks_intent_1 = require("./intents/active_tasks_intent");
 let AlexaVoiceHandler = class AlexaVoiceHandler {
-    constructor(logger, deviceRepo, expressApp) {
+    constructor(logger, deviceRepo, expressApp, config) {
         this.alexaApp = new alexa_app_1.app("alexa");
         this.logger = logger;
         this.deviceRepo = deviceRepo;
+        this.config = config;
         this.alexaApp.express({
             expressApp: expressApp,
             checkCert: false,
@@ -38,7 +48,7 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
         this.alexaApp.launch((request, response) => {
             try {
                 var intent = new alexa_launch_handler_1.AlexaLaunchHandler(this.logger, this.deviceRepo);
-                intent.handleIntent(request, response);
+                return intent.handleIntent(request, response);
             }
             catch (e) {
                 logger.error(e);
@@ -52,7 +62,7 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
         }, (request, response) => {
             try {
                 var intent = new device_control_intent_1.DeviceControlIntentHandler(this.logger, this.deviceRepo);
-                intent.handleIntent(request, response);
+                return intent.handleIntent(request, response);
             }
             catch (e) {
                 logger.error(e);
@@ -67,11 +77,12 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
             ]
         }, (request, response) => {
             try {
-                var intent = new build_intent_1.BuildIntentHandler(this.logger, this.deviceRepo);
-                intent.handleIntent(request, response);
+                var intent = new build_intent_1.BuildIntentHandler(this.logger, this.deviceRepo, this.config);
+                return intent.handleIntent(request, response);
             }
             catch (e) {
                 logger.error(e);
+                response.say(e);
             }
         });
         this.alexaApp.intent("QueueBuildIntent", {
@@ -83,8 +94,8 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
             ]
         }, (request, response) => {
             try {
-                var intent = new queue_build_intent_1.QueueBuildIntentHandler(this.logger, this.deviceRepo);
-                intent.handleIntent(request, response);
+                var intent = new queue_build_intent_1.QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
+                return intent.handleIntent(request, response);
             }
             catch (e) {
                 logger.error(e);
@@ -97,25 +108,40 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
             ]
         }, (request, response) => {
             try {
-                var intent = new queue_build_intent_1.QueueBuildIntentHandler(this.logger, this.deviceRepo);
-                intent.handleIntent(request, response);
+                var intent = new queue_build_intent_1.QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
+                return intent.handleIntent(request, response);
             }
             catch (e) {
                 logger.error(e);
             }
         });
+        this.alexaApp.intent("ActiveTasksIntent", {
+            "slots": {},
+            "utterances": [
+                "to list my active tasks"
+            ]
+        }, (request, response) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                var intent = new active_tasks_intent_1.ActiveTasksIntentHandler(this.logger, this.deviceRepo, self.config);
+                return intent.handleIntent(request, response);
+            }
+            catch (e) {
+                logger.error(e);
+            }
+        }));
     }
 };
 AlexaVoiceHandler = __decorate([
     __param(0, inversify_1.inject(types_1.TYPES.Logger)),
     __param(1, inversify_1.inject(types_1.TYPES.DeviceRepo)),
     __param(2, inversify_1.inject(types_1.TYPES.ExpressApp)),
-    __metadata("design:paramtypes", [Object, Object, Object])
+    __param(3, inversify_1.inject(types_1.TYPES.Config)),
+    __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], AlexaVoiceHandler);
 exports.AlexaVoiceHandler = AlexaVoiceHandler;
 let RuntimeVoiceHandlerFactory = class RuntimeVoiceHandlerFactory {
-    getVoiceHandler(logger, deviceRepo, app) {
-        return new AlexaVoiceHandler(logger, deviceRepo, app);
+    getVoiceHandler(logger, deviceRepo, app, config) {
+        return new AlexaVoiceHandler(logger, deviceRepo, app, config);
     }
 };
 RuntimeVoiceHandlerFactory = __decorate([

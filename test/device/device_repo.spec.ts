@@ -9,28 +9,26 @@ import { ConsoleLogger } from '../../src/logger';
 
 var config: ISystemConfig = {
     messaging: {
-      hubUrl: 'mqtt://pi3_hub',
-      listenerDisabled: false,
-      listenerPattern: 'elo/#'
-    },
-    build: {
-      scriptPath: '/home/pi/.elo_hub'
+        hubUrl: 'mqtt://pi3_hub',
+        listenerDisabled: false,
+        listenerPattern: 'elo/#'
     },
     deviceRepo: {
-      repoPath: 'sample_files'
+        repoPath: 'sample_files'
     },
     indicatorRepo: {
-      repoPath: 'sample_files'
-    },
-    animationRepo : {
         repoPath: 'sample_files'
     },
-    registerMapRepo : {
+    animationRepo: {
         repoPath: 'sample_files'
     },
-    broadcastInterval : 5000
-  };
-  
+    registerMapRepo: {
+        repoPath: 'sample_files'
+    },
+    broadcastInterval: 5000,
+    vsts: { scriptPath: "", dataPath: "", token: "", vstsPath: "",activeTasksQueryId: "" }
+};
+
 describe("Device Repo Tests", function () {
     describe("Static Device Repo Tests", function () {
         describe("Can retrieve a device", function () {
@@ -40,14 +38,14 @@ describe("Device Repo Tests", function () {
                 var result = repo.getDeviceByName(DeviceNames.whiteboard);
 
                 expect(result).to.not.be.null;
-            }), 
-            it("bad device names return null", function () {
+            }),
+                it("bad device names return null", function () {
 
-                var repo = new StaticDeviceRepo(new ConsoleLogger(), config);
-                var result = repo.getDeviceByName('junk');
+                    var repo = new StaticDeviceRepo(new ConsoleLogger(), config);
+                    var result = repo.getDeviceByName('junk');
 
-                expect(result).to.be.null;
-            });
+                    expect(result).to.be.null;
+                });
         });
     });
 });

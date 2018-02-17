@@ -14,13 +14,15 @@ const config = JSON.parse(fs.readFileSync(path.join(configPath, 'elo_hub_cfg.jso
 boot_1.container.bind(types_1.TYPES.Config).toConstantValue(config);
 setInterval(() => {
     console.log('checking build status...');
-    child_process_1.exec(config.build.scriptPath + '/check_build_status.sh', (error, stdout, stderr) => {
+    let scriptToRun = path.join(config.vsts.scriptPath, types_1.VstsFileNames.CheckBuildStatus);
+    let fullCommandLine = scriptToRun + ' ' + config.vsts.vstsPath + ' ' + config.vsts.dataPath + ' ' + config.vsts.token;
+    child_process_1.exec(fullCommandLine, (error, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         console.log(JSON.stringify(error));
         if (!error || error === null) {
             console.log('reading build status');
-            var buildStatus = JSON.parse(fs.readFileSync(config.build.scriptPath + '/build_status.json', 'utf8'))[0];
+            var buildStatus = JSON.parse(fs.readFileSync(path.join(config.vsts.dataPath, types_1.VstsFileNames.BuildResults), 'utf8'))[0];
             var state = 0;
             if (buildStatus.status === "inProgress")
                 state = 2;

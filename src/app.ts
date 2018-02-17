@@ -31,6 +31,7 @@ export class App {
   private deviceRepo: IDeviceRepo;
   private animationRepo: IAnimationRepo;
   private registerMapRepo: IRegisterMapRepo;
+  private config: ISystemConfig;
   private messageHub: IMessageHub;
 
   constructor() {
@@ -40,6 +41,7 @@ export class App {
     this.messageHub = container.get<IMessageHub>(TYPES.MessageHub);
     this.animationRepo = container.get<IAnimationRepo>(TYPES.AnimationRepo);
     this.registerMapRepo = container.get<IRegisterMapRepo>(TYPES.RegisterMapRepo);
+    this.config = container.get<ISystemConfig>(TYPES.Config);
 
     this.expressApp = express();
     this.expressApp.set("view engine", "ejs");
@@ -47,7 +49,7 @@ export class App {
     container.bind<IExpressApp>(TYPES.Config).toConstantValue(this.expressApp);
 
     let voiceHandlerFactory = container.get<IVoiceHandlerFactory>(TYPES.VoiceHandlerFactory);
-    this.voiceHandler = voiceHandlerFactory.getVoiceHandler(this.logger, this.deviceRepo, this.expressApp);
+    this.voiceHandler = voiceHandlerFactory.getVoiceHandler(this.logger, this.deviceRepo, this.expressApp, this.config);
 
     this.mountRoutes();
 

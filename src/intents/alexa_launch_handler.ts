@@ -13,7 +13,10 @@ export class AlexaLaunchHandler implements IVoiceIntentHandler {
             this.logger = logger;
         }
     
-        async handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<void> {
-            response.say("howdy");
+        handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<IVoiceResponse> {
+            return new Promise<IVoiceResponse>((resolve, reject) => {
+                response.say("howdy");
+                resolve(response);
+            });
         }
     }

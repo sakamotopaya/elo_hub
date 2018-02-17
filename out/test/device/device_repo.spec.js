@@ -10,9 +10,6 @@ var config = {
         listenerDisabled: false,
         listenerPattern: 'elo/#'
     },
-    build: {
-        scriptPath: '/home/pi/.elo_hub'
-    },
     deviceRepo: {
         repoPath: 'sample_files'
     },
@@ -25,7 +22,8 @@ var config = {
     registerMapRepo: {
         repoPath: 'sample_files'
     },
-    broadcastInterval: 5000
+    broadcastInterval: 5000,
+    vsts: { scriptPath: "", dataPath: "", token: "", vstsPath: "", activeTasksQueryId: "" }
 };
 describe("Device Repo Tests", function () {
     describe("Static Device Repo Tests", function () {

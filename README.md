@@ -11,3 +11,31 @@ These are the things I think you need to do:
 
 
 
+```json
+{
+    "messaging": {
+        "hubUrl": "mqtt://pi3_hub",
+        "listenerDisabled": false,
+        "listenerPattern": "elo/#"
+    },
+    "deviceRepo": {
+        "repoPath": "sample_files"
+    },
+    "indicatorRepo": {
+        "repoPath": "sample_files"
+    },
+    "animationRepo": {
+        "repoPath": "sample_files"
+    },
+    "registerMapRepo": {
+        "repoPath": "sample_files"
+    },
+    "vsts" : {
+        "scriptPath" : "./scripts/dev",
+        "dataPath" : "/Users/sakamoto/.elo",
+        "token" : "your key from vsts security",
+        "vstsPath" : "/Users/sakamoto/bin",
+        "activeTasksQueryId" : "guid of the query that represents active tasks"
+    }
+}
+```

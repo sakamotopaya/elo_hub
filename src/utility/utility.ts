@@ -35,18 +35,26 @@ export interface IRepoConfig {
     repoPath: string;
 };
 
+export interface IVstsConfig {
+    scriptPath: string;
+    dataPath: string;
+    token: string;
+    vstsPath: string;
+    activeTasksQueryId: string;
+}
+
 export class Messages {
     public static StockErrorMessage: string = 'Sum ting wong!';
 };
 
 export interface ISystemConfig {
     messaging: any;
-    build: any;
     deviceRepo: IRepoConfig;
     indicatorRepo: IRepoConfig;
     animationRepo: IRepoConfig;
     registerMapRepo: IRepoConfig;
     broadcastInterval: number;
+    vsts: IVstsConfig;
 };
 
 export interface IExpressApp {

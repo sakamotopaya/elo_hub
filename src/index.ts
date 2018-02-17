@@ -4,7 +4,7 @@ import { IDeviceFactory } from './device/device_factory';
 import { IVoiceHandlerFactory } from './voice_handler';
 import { ILogger } from './logger';
 import { IMessageHub } from './message_hub';
-import { TYPES } from './types';
+import { TYPES, VstsFileNames } from './types';
 import { ISystemConfig } from './utility/utility';
 import { exec } from 'child_process';
 import * as fs from 'fs';
@@ -24,8 +24,9 @@ container.bind<ISystemConfig>(TYPES.Config).toConstantValue(config);
 setInterval(() => {
 
   console.log('checking build status...');
-  exec(config.build.scriptPath + '/check_build_status.sh',
-    (error, stdout, stderr) => {
+  let scriptToRun = path.join(config.vsts.scriptPath, VstsFileNames.CheckBuildStatus);
+  let fullCommandLine = scriptToRun + ' ' + config.vsts.vstsPath + ' ' + config.vsts.dataPath +  ' ' + config.vsts.token;
+  exec(fullCommandLine, (error, stdout, stderr) => {
       console.log(stdout);
       console.log(stderr);
       console.log(JSON.stringify(error));
@@ -33,7 +34,7 @@ setInterval(() => {
       if (!error || error === null) {
         console.log('reading build status');
 
-        var buildStatus = JSON.parse(fs.readFileSync(config.build.scriptPath + '/build_status.json', 'utf8'))[0];
+        var buildStatus = JSON.parse(fs.readFileSync(path.join(config.vsts.dataPath, VstsFileNames.BuildResults), 'utf8'))[0];
         var state = 0;
 
         if (buildStatus.status === "inProgress")

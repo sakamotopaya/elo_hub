@@ -15,4 +15,17 @@ const TYPES = {
     RegisterMapRepo: Symbol("IRegisterMapRepo")
 };
 exports.TYPES = TYPES;
+const VstsFileNames = {
+    BuildResults: "build_status.json",
+    CheckBuildStatus: "check_build_status.sh",
+    QueueBuild: "queue_build.sh",
+    ListActiveTasks: "list_active_tasks.sh",
+    ActiveTaskResults: "active_tasks.json"
+};
+exports.VstsFileNames = VstsFileNames;
+const StandardVoiceResponses = {
+    MissingScript: "I seem to have lost the script. You can probably get sakamoto to fix it.",
+    MissingBuildResults: "The file containing the last build result is not where it should be."
+};
+exports.StandardVoiceResponses = StandardVoiceResponses;
 //# sourceMappingURL=types.js.map

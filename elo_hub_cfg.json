@@ -4,9 +4,6 @@
         "listenerDisabled": false,
         "listenerPattern": "elo/#"
     },
-    "build": {
-        "scriptPath": "/home/pi/.elo_hub"
-    },
     "deviceRepo": {
         "repoPath": "sample_files"
     },
@@ -18,5 +15,12 @@
     },
     "registerMapRepo": {
         "repoPath": "sample_files"
+    },
+    "vsts" : {
+        "scriptPath" : "./scripts/dev",
+        "dataPath" : "/Users/sakamoto/.elo",
+        "token" : "5y7xcn43ipkbpfiyygn4j4uzfqougdya76cjrov7hdc7zkkfyqua",
+        "vstsPath" : "/Users/sakamoto/bin",
+        "activeTasksQueryId" : "db79da21-fec5-447a-99b9-03a1ea2db6c4"
     }
 }

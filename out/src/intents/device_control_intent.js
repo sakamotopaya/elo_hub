@@ -16,24 +16,30 @@ class DeviceControlIntentHandler {
     }
     handleIntent(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            var unprocessedName = request.slot("device_name");
-            var deviceState = request.slot("device_state");
-            this.logger.log(unprocessedName);
-            var deviceName = utility_1.Utility.unprocessedNameToDeviceName(unprocessedName);
-            var device = this.deviceFactory.getDeviceByName(deviceName);
-            if (device === null) {
-                response.say("I don't recognize " + unprocessedName + " as a valid device.");
-                return;
-            }
-            try {
-                if (deviceState === "off")
-                    yield device.setOff();
-                else if (deviceState === "on")
-                    yield device.setOn();
-            }
-            catch (e) {
-                console.error(e);
-            }
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                var unprocessedName = request.slot("device_name");
+                var deviceState = request.slot("device_state");
+                this.logger.log(unprocessedName);
+                var deviceName = utility_1.Utility.unprocessedNameToDeviceName(unprocessedName);
+                var device = this.deviceFactory.getDeviceByName(deviceName);
+                if (device === null) {
+                    response.say("I don't recognize " + unprocessedName + " as a valid device.");
+                    resolve(response);
+                    return;
+                }
+                try {
+                    if (deviceState === "off")
+                        yield device.setOff();
+                    else if (deviceState === "on")
+                        yield device.setOn();
+                    response.say("done!");
+                    resolve(response);
+                }
+                catch (e) {
+                    console.error(e);
+                    reject(response);
+                }
+            }));
         });
     }
 }
