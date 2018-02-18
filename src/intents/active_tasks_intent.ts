@@ -1,4 +1,4 @@
-import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "./device_control_intent";
+import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice_handler";
 import { ILogger } from "../logger";
 import { IDeviceRepo } from "../device/device_repo";
 import * as fs from 'fs';
@@ -7,37 +7,20 @@ import { ISystemConfig } from "../utility/utility";
 import { exec } from "child_process";
 import { container } from '../boot';
 import { VstsFileNames, StandardVoiceResponses } from "../types";
-import { VstsWorkitem, VstsUtilities } from "../utility/vsts";
+import { VstsWorkitem, VstsUtilities } from "../vsts/vsts";
 import * as Speech from 'ssml-builder';
-
-export interface AlexaSpeech {
-    say(msg: string): AlexaSpeech;
-    pause(time: string): AlexaSpeech;
-    sayAs(options: any): AlexaSpeech;
-    ssml(something: true): string;
-};
-
-var speech = new Speech();
-speech.say('Hello')
-    .pause('1s')
-    .say('fellow Alexa developers')
-    .pause('500ms')
-    .say('Testing phone numbers')
-    .sayAs({
-        word: "+1-377-777-1888",
-        interpret: "telephone"
-    });
-var speechOutput = speech.ssml(true);
+import { AlexaSpeech } from "../voice_handler";
+import { IVstsRepo } from "../vsts/vsts_repo";
 
 export class ActiveTasksIntentHandler implements IVoiceIntentHandler {
 
     logger: ILogger;
-    deviceFactory: IDeviceRepo;
+    vstsRepo: IVstsRepo;
     config: ISystemConfig;
 
-    constructor(logger: ILogger, deviceFactory: IDeviceRepo, config: ISystemConfig) {
+    constructor(logger: ILogger, vstsRepo: IVstsRepo, config: ISystemConfig) {
         this.config = config;
-        this.deviceFactory = deviceFactory;
+        this.vstsRepo = vstsRepo;
         this.logger = logger;
     }
 
@@ -45,55 +28,44 @@ export class ActiveTasksIntentHandler implements IVoiceIntentHandler {
         let self = this;
 
         return new Promise<IVoiceResponse>((resolve, reject) => {
-            let scriptToRun = path.join(this.config.vsts.scriptPath, VstsFileNames.ListActiveTasks);
 
-            if (!fs.existsSync(scriptToRun)) {
-                response.say(StandardVoiceResponses.MissingScript);
-                return;
+            let activeTasks = self.vstsRepo.getActiveTasks();
+
+            let complexSpeech = <AlexaSpeech>new Speech();
+
+            if (activeTasks.length > 0) {
+
+                let msg = "You have " + activeTasks.length + " task" + (activeTasks.length == 1 ? "" : "s") + ".";
+                let index = 0;
+                complexSpeech.say(msg);
+                complexSpeech.pause('300ms');
+
+                activeTasks.forEach((task) => {
+                    index += 1;
+                    complexSpeech.say("" + index)
+                        .pause('300ms')
+                        .sayAs({
+                            word: "" + task.id,
+                            interpret: "digits"
+                        })
+                        .pause('500ms')
+                        .say(", " + task.title + '. ')
+                        .pause('300ms')
+                        .say("Total complete work is " + task.completedWork + " hours with ")
+                        .say("" + task.remainingWork + " hours remaining. ")
+                        .pause('500ms');
+
+                });
+            } else {
+                complexSpeech.say("You have no active tasks as this time.").pause('300ms');
             }
 
-            let fullCommandLine = scriptToRun + ' ' + this.config.vsts.vstsPath + ' ' + this.config.vsts.dataPath + ' ' + this.config.vsts.token + ' ' + this.config.vsts.activeTasksQueryId;
+            request.getSession().set("taskContext", "active");
 
-            exec(fullCommandLine, (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-                console.log(JSON.stringify(error));
-
-                if (!error || error === null) {
-                    console.log('reading active tasks');
-
-                    var activeTasks = <VstsWorkitem[]>JSON.parse(fs.readFileSync(path.join(self.config.vsts.dataPath, VstsFileNames.ActiveTaskResults), 'utf8'));
-                    let complexSpeech = <AlexaSpeech>new Speech();
-
-                    if (activeTasks.length > 0) {
-
-                        let msg = "You have " + activeTasks.length + " task" + (activeTasks.length == 1 ? "" : "s") + ".";
-                        complexSpeech.say(msg);
-
-                        activeTasks.forEach((task) => {
-                            complexSpeech.say("Task ")
-                            .sayAs({
-                                word: "" + task.id,
-                                interpret: "digits"
-                            })
-                            .say(", " + VstsUtilities.getTitle(task) + '. ')
-                            .say("Total complete work is " + VstsUtilities.getCompletedWork(task) + " hours with ")
-                            .say("" + VstsUtilities.getRemainingWork(task) + " hours remaining. ");
-
-                            //let tempBuf = "Task " + task.id + ", " + VstsUtilities.getTitle(task) + '. ';// + '<break time="1s"/>';
-                            //tempBuf = tempBuf + "Total complete work is " + VstsUtilities.getCompletedWork(task) + " hours with ";
-                            //tempBuf = tempBuf + VstsUtilities.getRemainingWork(task) + " hours remaining. ";
-
-                            //msg += tempBuf;
-                        });
-                    } else {
-                        complexSpeech.say("You have no active tasks as this time.");
-                    }
-
-                    response.say(complexSpeech.ssml(true));
-                    resolve(response);
-                }
-            });
+            complexSpeech.say("What else do you need me for?");
+            //response.shouldEndSession(false);
+            response.say(complexSpeech.ssml(true));
+            resolve(response);
         });
     }
 }

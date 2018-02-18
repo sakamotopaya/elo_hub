@@ -11,6 +11,7 @@ const topic_handler_factory_1 = require("./topics/topic_handler_factory");
 const indicator_repo_1 = require("./indicator/indicator_repo");
 const animation_repo_1 = require("./animations/animation_repo");
 const register_map_repo_1 = require("./registers/register_map_repo");
+const vsts_repo_1 = require("./vsts/vsts_repo");
 const container = new inversify_1.Container();
 exports.container = container;
 container.bind(types_1.TYPES.DeviceRepo).to(device_repo_1.StaticDeviceRepo).inSingletonScope();
@@ -23,5 +24,6 @@ container.bind(types_1.TYPES.AnimationRepo).to(animation_repo_1.AnimationRepo).i
 container.bind(types_1.TYPES.RegisterMapRepo).to(register_map_repo_1.RegisterMapRepo).inSingletonScope();
 container.bind(types_1.TYPES.IndicatorRulesEngine).to(indicator_repo_1.IndicatorRulesEngine).inSingletonScope();
 container.bind(types_1.TYPES.TopicHandlerFactory).to(topic_handler_factory_1.TopicHandlerFactory).inSingletonScope();
+container.bind(types_1.TYPES.VstsRepo).to(vsts_repo_1.VstsRepo).inSingletonScope();
 console.log('container setup');
 //# sourceMappingURL=boot.js.map

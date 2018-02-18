@@ -17,6 +17,7 @@ const dictionary_1 = require("../utility/dictionary");
 ;
 let RepoBase = class RepoBase {
     constructor(logger, repoConfig) {
+        this.writing = 0;
         this.repoConfig = repoConfig;
         this.initializeRepo();
         this.watchRepo();
@@ -30,8 +31,26 @@ let RepoBase = class RepoBase {
         let watcher = filewatcher();
         watcher.add(repoPath);
         watcher.on('change', function (file, stat) {
-            console.log(this.repoFileName + ' repo has changed, reloading...');
-            that.initializeRepo();
+            if (that.writing > 0)
+                that.writing = 0;
+            else {
+                console.log(this.repoFileName + ' repo has changed, reloading...');
+                that.initializeRepo();
+            }
+        });
+    }
+    save() {
+        let self = this;
+        self.writing += 1;
+        return new Promise((resolve, reject) => {
+            let repoPath = self.getFullRepoPath();
+            let buf = JSON.stringify(self.items.values(), null, 2);
+            fs.writeFile(repoPath, buf, (err) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve();
+            });
         });
     }
     getItem(key) {

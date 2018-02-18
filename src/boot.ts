@@ -10,6 +10,7 @@ import { ITopicHandlerFactory, TopicHandlerFactory } from "./topics/topic_handle
 import { IndicatorRepo, IIndicatorRepo, IndicatorRulesEngine, IIndicatorRulesEngine } from "./indicator/indicator_repo";
 import { AnimationRepo, IAnimationRepo } from "./animations/animation_repo";
 import { RegisterMapRepo, IRegisterMapRepo } from "./registers/register_map_repo";
+import { VstsRepo, IVstsRepo } from "./vsts/vsts_repo";
 
 const container = new Container();
 
@@ -23,6 +24,7 @@ container.bind<IAnimationRepo>(TYPES.AnimationRepo).to(AnimationRepo).inSingleto
 container.bind<IRegisterMapRepo>(TYPES.RegisterMapRepo).to(RegisterMapRepo).inSingletonScope();
 container.bind<IIndicatorRulesEngine>(TYPES.IndicatorRulesEngine).to(IndicatorRulesEngine).inSingletonScope();
 container.bind<ITopicHandlerFactory>(TYPES.TopicHandlerFactory).to(TopicHandlerFactory).inSingletonScope();
+container.bind<IVstsRepo>(TYPES.VstsRepo).to(VstsRepo).inSingletonScope();
 
 console.log('container setup');
 

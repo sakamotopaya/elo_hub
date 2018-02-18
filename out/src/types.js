@@ -12,7 +12,8 @@ const TYPES = {
     IndicatorRepo: Symbol("IIndicatorRepo"),
     IndicatorRulesEngine: Symbol("IIndicatorRulesEngine"),
     AnimationRepo: Symbol("IAnimationRepo"),
-    RegisterMapRepo: Symbol("IRegisterMapRepo")
+    RegisterMapRepo: Symbol("IRegisterMapRepo"),
+    VstsRepo: Symbol("IVstsRepo")
 };
 exports.TYPES = TYPES;
 const VstsFileNames = {

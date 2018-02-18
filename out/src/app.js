@@ -27,13 +27,14 @@ class App {
         this.messageHub = boot_1.container.get(types_1.TYPES.MessageHub);
         this.animationRepo = boot_1.container.get(types_1.TYPES.AnimationRepo);
         this.registerMapRepo = boot_1.container.get(types_1.TYPES.RegisterMapRepo);
+        this.vstsRepo = boot_1.container.get(types_1.TYPES.VstsRepo);
         this.config = boot_1.container.get(types_1.TYPES.Config);
         this.expressApp = express();
         this.expressApp.set("view engine", "ejs");
         this.expressApp.use(bodyParser.json());
         boot_1.container.bind(types_1.TYPES.Config).toConstantValue(this.expressApp);
         let voiceHandlerFactory = boot_1.container.get(types_1.TYPES.VoiceHandlerFactory);
-        this.voiceHandler = voiceHandlerFactory.getVoiceHandler(this.logger, this.deviceRepo, this.expressApp, this.config);
+        this.voiceHandler = voiceHandlerFactory.getVoiceHandler(this.logger, this.deviceRepo, this.vstsRepo, this.expressApp, this.config);
         this.mountRoutes();
     }
     run(port) {

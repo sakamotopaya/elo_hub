@@ -10,7 +10,7 @@ import { TYPES } from "./types";
 import { ISystemConfig, IExpressApp } from "./utility/utility";
 import { IDeviceRepo } from "./device/device_repo";
 import { IExpressRequest, IExpressResponse } from "./api_handlers/handler_api";
-import { IVoiceResponse } from "./intents/device_control_intent";
+import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "./voice_handler";
 import { HelloHandler } from "./api_handlers/hello_handler";
 import { NgrokConfigHandler } from "./api_handlers/ngrok_config_handler";
 import { ExpressDeviceRelayHandler } from "./api_handlers/relay_handler";
@@ -22,6 +22,7 @@ import { AnimationPackListHandler } from "./api_handlers/animation_pack_list_han
 import { IAnimationRepo } from "./animations/animation_repo";
 import { IRegisterMapRepo } from "./registers/register_map_repo";
 import { RegisterMap } from "./registers/register_map_models";
+import { IVstsRepo } from "./vsts/vsts_repo";
 
 export class App {
 
@@ -29,6 +30,7 @@ export class App {
   private expressApp: any;
   private voiceHandler: IVoiceHandler;
   private deviceRepo: IDeviceRepo;
+  private vstsRepo: IVstsRepo;
   private animationRepo: IAnimationRepo;
   private registerMapRepo: IRegisterMapRepo;
   private config: ISystemConfig;
@@ -41,6 +43,7 @@ export class App {
     this.messageHub = container.get<IMessageHub>(TYPES.MessageHub);
     this.animationRepo = container.get<IAnimationRepo>(TYPES.AnimationRepo);
     this.registerMapRepo = container.get<IRegisterMapRepo>(TYPES.RegisterMapRepo);
+    this.vstsRepo = container.get<IVstsRepo>(TYPES.VstsRepo);
     this.config = container.get<ISystemConfig>(TYPES.Config);
 
     this.expressApp = express();
@@ -49,7 +52,7 @@ export class App {
     container.bind<IExpressApp>(TYPES.Config).toConstantValue(this.expressApp);
 
     let voiceHandlerFactory = container.get<IVoiceHandlerFactory>(TYPES.VoiceHandlerFactory);
-    this.voiceHandler = voiceHandlerFactory.getVoiceHandler(this.logger, this.deviceRepo, this.expressApp, this.config);
+    this.voiceHandler = voiceHandlerFactory.getVoiceHandler(this.logger, this.deviceRepo, this.vstsRepo, this.expressApp, this.config);
 
     this.mountRoutes();
 

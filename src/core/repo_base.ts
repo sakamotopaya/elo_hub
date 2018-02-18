@@ -9,7 +9,7 @@ import { TYPES } from '../types';
 
 export interface IRepoBase<T> {
     getItem(key: string): T;
-    allItems() : T[];
+    allItems(): T[];
 };
 
 @injectable()
@@ -17,6 +17,7 @@ export class RepoBase<T> implements IRepoBase<T> {
 
     private repoConfig: IRepoConfig;
     private items: KeyedCollection<T>;
+    private writing: number = 0;
 
     constructor(logger: ILogger, repoConfig: IRepoConfig) {
 
@@ -37,23 +38,44 @@ export class RepoBase<T> implements IRepoBase<T> {
         watcher.add(repoPath);
 
         watcher.on('change', function (file, stat) {
-            console.log(this.repoFileName + ' repo has changed, reloading...');
-            that.initializeRepo();
+            if (that.writing > 0)
+                that.writing = 0;
+            else {
+                console.log(this.repoFileName + ' repo has changed, reloading...');
+                that.initializeRepo();
+            }
         });
     }
 
-    getItem(key: string): T {
+    public save(): Promise<void> {
+        let self = this;
+        self.writing += 1;
+
+        return new Promise((resolve, reject) => {
+            let repoPath = self.getFullRepoPath();
+            let buf = JSON.stringify( self.items.values(), null, 2);
+            fs.writeFile(repoPath, buf, (err) => {
+
+                if (err)
+                    reject(err);
+                else
+                    resolve();
+            });
+        });
+    }
+
+    public getItem(key: string): T {
         if (this.items.containsKey(key))
             return this.items.item(key);
 
         return undefined;
     }
 
-    allItems(): T[] {
+    public allItems(): T[] {
         return this.items.values();
     }
 
-    getKey(item: T): string {
+    public getKey(item: T): string {
         return undefined;
     }
 

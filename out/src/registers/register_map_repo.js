@@ -12,9 +12,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//import * as fs from 'fs';
-//import * as filewatcher from 'filewatcher';
-//import * as path from 'path';
 const inversify_1 = require("inversify");
 const types_1 = require("../types");
 const repo_base_1 = require("../core/repo_base");

@@ -7,6 +7,10 @@ export class VstsWorkitem {
 };
 
 export class VstsUtilities {
+    public static getMyVstsId() : string {
+        return "me";
+    }
+
     public static getCompletedWork(item: VstsWorkitem): number {
         if (item.fields && item.fields["Microsoft.VSTS.Scheduling.CompletedWork"])
             return item.fields["Microsoft.VSTS.Scheduling.CompletedWork"];

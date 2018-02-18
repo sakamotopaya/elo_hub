@@ -1,4 +1,4 @@
-import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "./device_control_intent";
+import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice_handler";
 import { ILogger } from "../logger";
 import { IDeviceRepo } from "../device/device_repo";
 import { exec } from 'child_process'

@@ -3,13 +3,13 @@ import "reflect-metadata";
 
 import * as express from 'express';
 import * as fs from 'fs';
-import { exec } from 'child_process'
+import { exec } from 'child_process';
 
 import { app, ErrorHandler } from 'alexa-app';
 import { ILogger } from './logger';
 import { Messages, Utility, ISystemConfig } from './utility/utility';
 import { IDeviceFactory } from './device/device_factory';
-import { DeviceControlIntentHandler, IVoiceRequest, IVoiceResponse } from './intents/device_control_intent';
+import { DeviceControlIntentHandler } from './intents/device_control_intent';
 import { TYPES } from "./types";
 import { IDeviceRepo } from "./device/device_repo";
 import { AlexaLaunchHandler } from "./intents/alexa_launch_handler";
@@ -17,11 +17,36 @@ import { BuildIntentHandler } from "./intents/build_intent";
 import { QueueBuildIntentHandler } from "./intents/queue_build_intent";
 import { ActiveTasksIntentHandler } from "./intents/active_tasks_intent";
 import { runInThisContext } from "vm";
+import { response, request } from "alexa-app/types";
+import { IVstsRepo } from "./vsts/vsts_repo";
 
 //var alexa = require("alexa-app");
 
 export interface IVoiceHandler {
 
+}
+
+export interface IVoiceIntentHandler {
+  handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<IVoiceResponse>;
+}
+
+export interface IVoiceRequest extends request {
+
+}
+
+export interface IVoiceResponse extends response {
+
+}
+
+export interface AlexaSpeech {
+  say(msg: string): AlexaSpeech;
+  pause(time: string): AlexaSpeech;
+  sayAs(options: any): AlexaSpeech;
+  ssml(something: true): string;
+};
+
+export interface IVoiceHandlerFactory {
+  getVoiceHandler(logger: ILogger, deviceRepo: IDeviceRepo, vstsRepo: IVstsRepo, app: any, config: ISystemConfig): IVoiceHandler;
 }
 
 export class AlexaVoiceHandler implements IVoiceHandler {
@@ -30,9 +55,11 @@ export class AlexaVoiceHandler implements IVoiceHandler {
   private logger: ILogger;
   private deviceRepo: IDeviceRepo;
   private config: ISystemConfig;
+  private vstsRepo: IVstsRepo;
 
-  constructor( @inject(TYPES.Logger) logger: ILogger,
+  constructor(@inject(TYPES.Logger) logger: ILogger,
     @inject(TYPES.DeviceRepo) deviceRepo: IDeviceRepo,
+    @inject(TYPES.VstsRepo) vstsRepo: IVstsRepo,
     @inject(TYPES.ExpressApp) expressApp: any,
     @inject(TYPES.Config) config: ISystemConfig) {
 
@@ -40,6 +67,7 @@ export class AlexaVoiceHandler implements IVoiceHandler {
     this.logger = logger;
     this.deviceRepo = deviceRepo;
     this.config = config;
+    this.vstsRepo = vstsRepo;
 
     this.alexaApp.express({
       expressApp: expressApp,
@@ -102,21 +130,21 @@ export class AlexaVoiceHandler implements IVoiceHandler {
         , "to run a build"
         , "start a build"
       ]
-    },       (request: IVoiceRequest, response: IVoiceResponse) => {
-        try {
-          var intent = new QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
-          return intent.handleIntent(request, response);
-        } catch (e) {
-          logger.error(e);
-        }
-      });
+    }, (request: IVoiceRequest, response: IVoiceResponse) => {
+      try {
+        var intent = new QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
+        return intent.handleIntent(request, response);
+      } catch (e) {
+        logger.error(e);
+      }
+    });
 
     this.alexaApp.intent("AnimationIntent", {
       "slots": {},
       "utterances": [
         "to change the device animation"
       ]
-    },      (request: IVoiceRequest, response: IVoiceResponse) => {
+    }, (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
         var intent = new QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
         return intent.handleIntent(request, response);
@@ -132,7 +160,7 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       ]
     }, async (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
-        var intent = new ActiveTasksIntentHandler(this.logger, this.deviceRepo, self.config);
+        var intent = new ActiveTasksIntentHandler(this.logger, this.vstsRepo, self.config);
         return intent.handleIntent(request, response);
       } catch (e) {
         logger.error(e);
@@ -141,13 +169,9 @@ export class AlexaVoiceHandler implements IVoiceHandler {
   }
 }
 
-export interface IVoiceHandlerFactory {
-  getVoiceHandler(logger: ILogger, deviceRepo: IDeviceRepo, app: any, config: ISystemConfig): IVoiceHandler;
-}
-
 @injectable()
 export class RuntimeVoiceHandlerFactory implements IVoiceHandlerFactory {
-  getVoiceHandler(logger: ILogger, deviceRepo: IDeviceRepo, app: any, config: ISystemConfig): IVoiceHandler {
-    return new AlexaVoiceHandler(logger, deviceRepo, app, config);
+  getVoiceHandler(logger: ILogger, deviceRepo: IDeviceRepo, vstsRepo: IVstsRepo, app: any, config: ISystemConfig): IVoiceHandler {
+    return new AlexaVoiceHandler(logger, deviceRepo, vstsRepo, app, config);
   }
 }

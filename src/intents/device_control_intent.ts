@@ -1,19 +1,7 @@
 import { ILogger } from "../logger";
 import { Utility } from "../utility/utility";
 import { IDeviceRepo } from "../device/device_repo";
-import { response, request } from "alexa-app/types";
-
-export interface IVoiceIntentHandler {
-    handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<IVoiceResponse>;
-}
-
-export interface IVoiceRequest extends request {
-
-}
-
-export interface IVoiceResponse extends response {
-
-}
+import { IVoiceRequest, IVoiceResponse, IVoiceIntentHandler } from "../voice_handler";
 
 export class DeviceControlIntentHandler implements IVoiceIntentHandler {
 

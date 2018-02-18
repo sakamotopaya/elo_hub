@@ -29,12 +29,14 @@ const alexa_launch_handler_1 = require("./intents/alexa_launch_handler");
 const build_intent_1 = require("./intents/build_intent");
 const queue_build_intent_1 = require("./intents/queue_build_intent");
 const active_tasks_intent_1 = require("./intents/active_tasks_intent");
+;
 let AlexaVoiceHandler = class AlexaVoiceHandler {
-    constructor(logger, deviceRepo, expressApp, config) {
+    constructor(logger, deviceRepo, vstsRepo, expressApp, config) {
         this.alexaApp = new alexa_app_1.app("alexa");
         this.logger = logger;
         this.deviceRepo = deviceRepo;
         this.config = config;
+        this.vstsRepo = vstsRepo;
         this.alexaApp.express({
             expressApp: expressApp,
             checkCert: false,
@@ -122,7 +124,7 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
             ]
         }, (request, response) => __awaiter(this, void 0, void 0, function* () {
             try {
-                var intent = new active_tasks_intent_1.ActiveTasksIntentHandler(this.logger, this.deviceRepo, self.config);
+                var intent = new active_tasks_intent_1.ActiveTasksIntentHandler(this.logger, this.vstsRepo, self.config);
                 return intent.handleIntent(request, response);
             }
             catch (e) {
@@ -134,14 +136,15 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
 AlexaVoiceHandler = __decorate([
     __param(0, inversify_1.inject(types_1.TYPES.Logger)),
     __param(1, inversify_1.inject(types_1.TYPES.DeviceRepo)),
-    __param(2, inversify_1.inject(types_1.TYPES.ExpressApp)),
-    __param(3, inversify_1.inject(types_1.TYPES.Config)),
-    __metadata("design:paramtypes", [Object, Object, Object, Object])
+    __param(2, inversify_1.inject(types_1.TYPES.VstsRepo)),
+    __param(3, inversify_1.inject(types_1.TYPES.ExpressApp)),
+    __param(4, inversify_1.inject(types_1.TYPES.Config)),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
 ], AlexaVoiceHandler);
 exports.AlexaVoiceHandler = AlexaVoiceHandler;
 let RuntimeVoiceHandlerFactory = class RuntimeVoiceHandlerFactory {
-    getVoiceHandler(logger, deviceRepo, app, config) {
-        return new AlexaVoiceHandler(logger, deviceRepo, app, config);
+    getVoiceHandler(logger, deviceRepo, vstsRepo, app, config) {
+        return new AlexaVoiceHandler(logger, deviceRepo, vstsRepo, app, config);
     }
 };
 RuntimeVoiceHandlerFactory = __decorate([
