@@ -19,6 +19,7 @@ import { ActiveTasksIntentHandler } from "./intents/active_tasks_intent";
 import { runInThisContext } from "vm";
 import { response, request } from "alexa-app/types";
 import { IVstsRepo } from "./vsts/vsts_repo";
+import { StatusReportIntentHandler } from "./intents/status_report_intent";
 
 //var alexa = require("alexa-app");
 
@@ -161,6 +162,20 @@ export class AlexaVoiceHandler implements IVoiceHandler {
     }, async (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
         var intent = new ActiveTasksIntentHandler(this.logger, this.vstsRepo, self.config);
+        return intent.handleIntent(request, response);
+      } catch (e) {
+        logger.error(e);
+      }
+    });
+
+    this.alexaApp.intent("StatusReportIntent", {
+      "slots": {},
+      "utterances": [
+        "to read the current status report"
+      ]
+    }, async (request: IVoiceRequest, response: IVoiceResponse) => {
+      try {
+        var intent = new StatusReportIntentHandler(this.logger, self.config);
         return intent.handleIntent(request, response);
       } catch (e) {
         logger.error(e);

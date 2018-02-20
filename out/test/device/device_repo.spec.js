@@ -23,7 +23,8 @@ var config = {
         repoPath: 'sample_files'
     },
     broadcastInterval: 5000,
-    vsts: { scriptPath: "", dataPath: "", token: "", vstsPath: "", activeTasksQueryId: "" }
+    vsts: { scriptPath: "", dataPath: "", token: "", vstsPath: "", activeTasksQueryId: "" },
+    knowledgeDoc: { repoRoot: "" }
 };
 describe("Device Repo Tests", function () {
     describe("Static Device Repo Tests", function () {

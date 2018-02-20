@@ -1,4 +1,5 @@
 import { DeviceNames } from "../device/device";
+import { IKnowledgeDocConfig } from "../documents/knowledge_doc_parser";
 
 export class Utility {
 
@@ -55,6 +56,7 @@ export interface ISystemConfig {
     registerMapRepo: IRepoConfig;
     broadcastInterval: number;
     vsts: IVstsConfig;
+    knowledgeDoc: IKnowledgeDocConfig
 };
 
 export interface IExpressApp {

@@ -29,6 +29,7 @@ const alexa_launch_handler_1 = require("./intents/alexa_launch_handler");
 const build_intent_1 = require("./intents/build_intent");
 const queue_build_intent_1 = require("./intents/queue_build_intent");
 const active_tasks_intent_1 = require("./intents/active_tasks_intent");
+const status_report_intent_1 = require("./intents/status_report_intent");
 ;
 let AlexaVoiceHandler = class AlexaVoiceHandler {
     constructor(logger, deviceRepo, vstsRepo, expressApp, config) {
@@ -125,6 +126,20 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
         }, (request, response) => __awaiter(this, void 0, void 0, function* () {
             try {
                 var intent = new active_tasks_intent_1.ActiveTasksIntentHandler(this.logger, this.vstsRepo, self.config);
+                return intent.handleIntent(request, response);
+            }
+            catch (e) {
+                logger.error(e);
+            }
+        }));
+        this.alexaApp.intent("StatusReportIntent", {
+            "slots": {},
+            "utterances": [
+                "to read the current status report"
+            ]
+        }, (request, response) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                var intent = new status_report_intent_1.StatusReportIntentHandler(this.logger, self.config);
                 return intent.handleIntent(request, response);
             }
             catch (e) {
