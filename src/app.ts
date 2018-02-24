@@ -230,7 +230,7 @@ export class App {
         return console.log(err);
       }
 
-      return console.log(`server is listening on ${port}`);
+      return console.log(`elo_hub:${port} is listening...`);
     });
 
   }
