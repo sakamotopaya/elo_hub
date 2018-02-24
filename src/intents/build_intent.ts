@@ -1,4 +1,4 @@
-import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice_handler";
+import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice/voice_interfaces";
 import { ILogger } from "../logger";
 import { IDeviceRepo } from "../device/device_repo";
 import * as fs from 'fs';

@@ -1,4 +1,4 @@
-import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice_handler";
+import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice/voice_interfaces";
 import { ILogger } from "../logger";
 import { IDeviceRepo } from "../device/device_repo";
 import * as fs from 'fs';
@@ -9,7 +9,7 @@ import { container } from '../boot';
 import { VstsFileNames, StandardVoiceResponses } from "../types";
 import { VstsWorkitem, VstsUtilities } from "../vsts/vsts";
 import * as Speech from 'ssml-builder';
-import { AlexaSpeech } from "../voice_handler";
+import { AlexaSpeech } from "../voice/voice_handler";
 import { IVstsRepo } from "../vsts/vsts_repo";
 
 export class ActiveTasksIntentHandler implements IVoiceIntentHandler {

@@ -3,14 +3,13 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser';
 import axios from 'axios';
 import { IDeviceFactory } from './device/device_factory';
-import { IVoiceHandler, AlexaVoiceHandler, IVoiceHandlerFactory } from './voice_handler';
+import { AlexaVoiceHandler, IVoiceHandlerFactory } from './voice/voice_handler';
 import { ILogger } from './logger';
 import { IMessageHub } from './message_hub';
 import { TYPES } from "./types";
 import { ISystemConfig, IExpressApp } from "./utility/utility";
 import { IDeviceRepo } from "./device/device_repo";
 import { IExpressRequest, IExpressResponse } from "./api_handlers/handler_api";
-import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "./voice_handler";
 import { HelloHandler } from "./api_handlers/hello_handler";
 import { NgrokConfigHandler } from "./api_handlers/ngrok_config_handler";
 import { ExpressDeviceRelayHandler } from "./api_handlers/relay_handler";
@@ -24,6 +23,7 @@ import { IRegisterMapRepo } from "./registers/register_map_repo";
 import { RegisterMap } from "./registers/register_map_models";
 import { IVstsRepo } from "./vsts/vsts_repo";
 import { RepoScanner, KnowledgeDocParser, IKnowledgeDocConfig } from "./documents/knowledge_doc_parser";
+import { IVoiceHandler } from "./voice/voice_interfaces";
 
 export class App {
 

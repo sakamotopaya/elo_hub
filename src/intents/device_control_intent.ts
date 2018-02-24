@@ -1,7 +1,7 @@
 import { ILogger } from "../logger";
 import { Utility } from "../utility/utility";
 import { IDeviceRepo } from "../device/device_repo";
-import { IVoiceRequest, IVoiceResponse, IVoiceIntentHandler } from "../voice_handler";
+import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice/voice_interfaces";
 
 export class DeviceControlIntentHandler implements IVoiceIntentHandler {
 

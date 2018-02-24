@@ -1,7 +1,7 @@
 
 import { Container } from "inversify";
 import { IDeviceFactory, RuntimeDeviceFactory } from "./device/device_factory";
-import { IVoiceHandlerFactory, RuntimeVoiceHandlerFactory } from "./voice_handler";
+import { IVoiceHandlerFactory, RuntimeVoiceHandlerFactory } from "./voice/voice_handler";
 import { IMessageHub, MqttMessageHub } from "./message_hub";
 import { ConsoleLogger, ILogger } from "./logger";
 import { TYPES } from "./types";

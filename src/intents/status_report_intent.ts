@@ -1,4 +1,5 @@
-import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse, AlexaSpeech } from "../voice_handler";
+import { AlexaSpeech } from "../voice/voice_handler";
+import { IVoiceRequest, IVoiceIntentHandler, IVoiceResponse } from "../voice/voice_interfaces";
 import { ILogger } from "../logger";
 import { ISystemConfig } from "../utility/utility";
 import * as Speech from 'ssml-builder';

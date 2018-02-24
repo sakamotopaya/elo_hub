@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const device_factory_1 = require("./device/device_factory");
-const voice_handler_1 = require("./voice_handler");
+const voice_handler_1 = require("./voice/voice_handler");
 const message_hub_1 = require("./message_hub");
 const logger_1 = require("./logger");
 const types_1 = require("./types");

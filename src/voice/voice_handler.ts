@@ -6,39 +6,24 @@ import * as fs from 'fs';
 import { exec } from 'child_process';
 
 import { app, ErrorHandler } from 'alexa-app';
-import { ILogger } from './logger';
-import { Messages, Utility, ISystemConfig } from './utility/utility';
-import { IDeviceFactory } from './device/device_factory';
-import { DeviceControlIntentHandler } from './intents/device_control_intent';
-import { TYPES } from "./types";
-import { IDeviceRepo } from "./device/device_repo";
-import { AlexaLaunchHandler } from "./intents/alexa_launch_handler";
-import { BuildIntentHandler } from "./intents/build_intent";
-import { QueueBuildIntentHandler } from "./intents/queue_build_intent";
-import { ActiveTasksIntentHandler } from "./intents/active_tasks_intent";
+import { ILogger } from '../logger';
+import { Messages, Utility, ISystemConfig } from '../utility/utility';
+import { IDeviceFactory } from '../device/device_factory';
+import { DeviceControlIntentHandler } from '../intents/device_control_intent';
+import { TYPES } from "../types";
+import { IDeviceRepo } from "../device/device_repo";
+import { AlexaLaunchHandler } from "../intents/alexa_launch_handler";
+import { BuildIntentHandler } from "../intents/build_intent";
+import { QueueBuildIntentHandler } from "../intents/queue_build_intent";
+import { ActiveTasksIntentHandler } from "../intents/active_tasks_intent";
 import { runInThisContext } from "vm";
 import { response, request } from "alexa-app/types";
-import { IVstsRepo } from "./vsts/vsts_repo";
-import { StatusReportIntentHandler } from "./intents/status_report_intent";
-import { FeatureDisabledIntentHandler } from "./intents/feature_disabled_intent";
+import { IVstsRepo } from "../vsts/vsts_repo";
+import { StatusReportIntentHandler } from "../intents/status_report_intent";
+import { FeatureDisabledIntentHandler } from "../intents/feature_disabled_intent";
+import { IVoiceHandler, IVoiceRequest, IVoiceResponse } from "./voice_interfaces";
 
 //var alexa = require("alexa-app");
-
-export interface IVoiceHandler {
-
-}
-
-export interface IVoiceIntentHandler {
-  handleIntent(request: IVoiceRequest, response: IVoiceResponse): Promise<IVoiceResponse>;
-}
-
-export interface IVoiceRequest extends request {
-
-}
-
-export interface IVoiceResponse extends response {
-
-}
 
 export interface AlexaSpeech {
   say(msg: string): AlexaSpeech;

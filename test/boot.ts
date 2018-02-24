@@ -1,12 +1,13 @@
 
 import { Container } from "inversify";
 import { IDeviceFactory, RuntimeDeviceFactory } from "../src/device/device_factory";
-import { IVoiceHandler, AlexaVoiceHandler } from "../src/voice_handler";
+import { AlexaVoiceHandler } from "../src/voice/voice_handler";
 import { IMessageHub } from "../src/message_hub";
 import { ConsoleLogger, ILogger } from "../src/logger";
 import { TYPES } from "../src/types";
 import { MockMessageHub } from "./mocks/mock_message_hub";
 import { IDeviceRepo, StaticDeviceRepo } from "../src/device/device_repo";
+import { IVoiceHandler } from "../src/voice/voice_interfaces";
 
 const container = new Container();
 
