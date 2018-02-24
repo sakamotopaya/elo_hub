@@ -18,7 +18,7 @@ export class Utility {
     static isSideTable(unprocessedName: string): boolean {
         return (unprocessedName == "side table" || unprocessedName == "the side table");
     }
-    
+
     public static unprocessedNameToDeviceName(unprocessedName: string): string {
         if (Utility.isWhiteboard(unprocessedName))
             return DeviceNames.whiteboard;
@@ -42,13 +42,20 @@ export interface IVstsConfig {
     token: string;
     vstsPath: string;
     activeTasksQueryId: string;
-}
+};
+
+export interface IFeatureSet {
+    build: boolean;
+    wiki: boolean;
+    vsts: boolean;
+};
 
 export class Messages {
     public static StockErrorMessage: string = 'Sum ting wong!';
 };
 
 export interface ISystemConfig {
+    featureSet: IFeatureSet;
     messaging: any;
     deviceRepo: IRepoConfig;
     indicatorRepo: IRepoConfig;

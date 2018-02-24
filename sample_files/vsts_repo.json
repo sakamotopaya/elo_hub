@@ -22,6 +22,20 @@
         "originalEstimate": 24,
         "completedWork": 12,
         "remainingWork": 9
+      },
+      {
+        "id": 22268,
+        "title": "Research and select test harness components",
+        "originalEstimate": 6,
+        "completedWork": 5,
+        "remainingWork": 1
+      },
+      {
+        "id": 22264,
+        "title": "Print Relay Happy Path",
+        "originalEstimate": 16,
+        "completedWork": 3,
+        "remainingWork": 13
       }
     ]
   }

@@ -28,6 +28,8 @@ class Utility {
 exports.Utility = Utility;
 ;
 ;
+;
+;
 class Messages {
 }
 Messages.StockErrorMessage = 'Sum ting wong!';

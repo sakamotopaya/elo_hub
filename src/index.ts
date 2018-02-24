@@ -17,11 +17,11 @@ container.bind<ISystemConfig>(TYPES.Config).toConstantValue(config);
 
 setInterval(async () => {
 
-  let buildStatusJob = new CheckBuildStatusJob();
-  await buildStatusJob.run(container, config);
+  //let buildStatusJob = new CheckBuildStatusJob();
+  //await buildStatusJob.run(container, config);
 
-  let vstsTasksJob = new RefreshActiveTasksJob();
-  await vstsTasksJob.run(container, config);
+  //let vstsTasksJob = new RefreshActiveTasksJob();
+  //await vstsTasksJob.run(container, config);
 
 }, 30 * 1000);
 

@@ -20,6 +20,7 @@ import { runInThisContext } from "vm";
 import { response, request } from "alexa-app/types";
 import { IVstsRepo } from "./vsts/vsts_repo";
 import { StatusReportIntentHandler } from "./intents/status_report_intent";
+import { FeatureDisabledIntentHandler } from "./intents/feature_disabled_intent";
 
 //var alexa = require("alexa-app");
 
@@ -116,8 +117,13 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       ]
     }, (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
-        var intent = new BuildIntentHandler(this.logger, this.deviceRepo, this.config);
-        return intent.handleIntent(request, response);
+        if (self.config.featureSet.vsts) {
+          let intent = new BuildIntentHandler(this.logger, this.deviceRepo, this.config);
+          return intent.handleIntent(request, response);
+        } else {
+          let intent = new FeatureDisabledIntentHandler(this.logger);
+          return intent.handleIntent(request, response);
+        }
       } catch (e) {
         logger.error(e);
         response.say(e);
@@ -133,8 +139,13 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       ]
     }, (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
-        var intent = new QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
-        return intent.handleIntent(request, response);
+        if (self.config.featureSet.vsts) {
+          let intent = new QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
+          return intent.handleIntent(request, response);
+        } else {
+          let intent = new FeatureDisabledIntentHandler(this.logger);
+          return intent.handleIntent(request, response);
+        }
       } catch (e) {
         logger.error(e);
       }
@@ -147,7 +158,7 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       ]
     }, (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
-        var intent = new QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
+        let intent = new QueueBuildIntentHandler(this.logger, this.deviceRepo, this.config);
         return intent.handleIntent(request, response);
       } catch (e) {
         logger.error(e);
@@ -161,8 +172,13 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       ]
     }, async (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
-        var intent = new ActiveTasksIntentHandler(this.logger, this.vstsRepo, self.config);
-        return intent.handleIntent(request, response);
+        if (self.config.featureSet.vsts) {
+          let intent = new ActiveTasksIntentHandler(this.logger, this.vstsRepo, self.config);
+          return intent.handleIntent(request, response);
+        } else {
+          let intent = new FeatureDisabledIntentHandler(this.logger);
+          return intent.handleIntent(request, response);
+        }
       } catch (e) {
         logger.error(e);
       }
@@ -175,8 +191,13 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       ]
     }, async (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
-        var intent = new StatusReportIntentHandler(this.logger, self.config);
-        return intent.handleIntent(request, response);
+        if (self.config.featureSet.wiki) {
+          var intent = new StatusReportIntentHandler(this.logger, self.config);
+          return intent.handleIntent(request, response);
+        } else {
+          let intent = new FeatureDisabledIntentHandler(this.logger);
+          return intent.handleIntent(request, response);
+        }
       } catch (e) {
         logger.error(e);
       }
