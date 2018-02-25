@@ -61,7 +61,7 @@ export class ElasticRepo {
                 id: document.id,
                 body: { doc: document.documentBody }
             }, function (error, response: IDocument) {
-                if (error) != 7
+                if (error)
                     reject(error);
                 else
                     resolve(response);
