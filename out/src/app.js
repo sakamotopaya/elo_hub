@@ -20,6 +20,7 @@ const generic_list_handler_1 = require("./api_handlers/generic_list_handler");
 const device_profile_list_handler_1 = require("./api_handlers/device_profile_list_handler");
 const animation_pack_list_handler_1 = require("./api_handlers/animation_pack_list_handler");
 const knowledge_doc_parser_1 = require("./documents/knowledge_doc_parser");
+const elastic_repo_1 = require("./elasicsearch/elastic_repo");
 class App {
     constructor() {
         this.deviceRepo = boot_1.container.get(types_1.TYPES.DeviceRepo);
@@ -66,6 +67,59 @@ class App {
             }
             catch (error) {
                 console.log(error);
+            }
+        }));
+        app.get('/api/documents/:category/:documentType/all', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const repo = new elastic_repo_1.ElasticRepo(self.config);
+                let results = yield repo.all({ category: req.params.category, documentType: req.params.documentType });
+                res.json(results);
+            }
+            catch (error) {
+                res.status(500).send(error);
+            }
+        }));
+        app.post('/api/documents/:category/:documentType', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const repo = new elastic_repo_1.ElasticRepo(self.config);
+                let criteria = { category: req.params.category, documentType: req.params.documentType, criteria: req.body };
+                let results = yield repo.search(criteria);
+                res.json(results);
+            }
+            catch (error) {
+                res.status(500).send(error);
+            }
+        }));
+        app.put('/api/document/:category/:documentType/:resourceId', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const repo = new elastic_repo_1.ElasticRepo(self.config);
+                let doc = { id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
+                let results = yield repo.create(doc);
+                res.json(results);
+            }
+            catch (error) {
+                res.status(500).send(error);
+            }
+        }));
+        app.post('/api/document/:category/:documentType/:resourceId', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const repo = new elastic_repo_1.ElasticRepo(self.config);
+                let doc = { id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
+                let results = yield repo.update(doc);
+                res.json(results);
+            }
+            catch (error) {
+                res.status(500).send(error);
+            }
+        }));
+        app.delete('/api/document/:category/:documentType/:resourceId', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const repo = new elastic_repo_1.ElasticRepo(self.config);
+                let results = yield repo.delete(req.params.category, req.params.documentType, req.params.resourceId);
+                res.json(results);
+            }
+            catch (error) {
+                res.status(500).send(error);
             }
         }));
         app.get('/api/registermaps', (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -171,7 +225,7 @@ class App {
             if (err) {
                 return console.log(err);
             }
-            return console.log(`server is listening on ${port}`);
+            return console.log(`elo_hub:b2:${port} is listening...`);
         });
     }
     mountRoutes() {

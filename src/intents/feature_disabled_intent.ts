@@ -18,7 +18,7 @@ export class FeatureDisabledIntentHandler implements IVoiceIntentHandler {
 
             let complexSpeech = <AlexaSpeech>new Speech();
             complexSpeech.say("This feature is currently disabled");
-
+            response.say(complexSpeech.ssml(true));
             resolve(response);
 
         });

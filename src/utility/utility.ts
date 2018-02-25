@@ -32,6 +32,12 @@ export class Utility {
 
 };
 
+export interface IElasticConfig {
+    url: string;
+    logLevel: string;
+    index: string;
+};
+
 export interface IRepoConfig {
     repoPath: string;
 };
@@ -63,7 +69,8 @@ export interface ISystemConfig {
     registerMapRepo: IRepoConfig;
     broadcastInterval: number;
     vsts: IVstsConfig;
-    knowledgeDoc: IKnowledgeDocConfig
+    knowledgeDoc: IKnowledgeDocConfig;
+    elasticSearch: IElasticConfig;
 };
 
 export interface IExpressApp {

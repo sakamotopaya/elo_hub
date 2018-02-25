@@ -2,11 +2,13 @@
 export interface IExpressRequest {
     body: any;
     query : any;
+    params: any;
 }
 
 export interface IExpressResponse {
-    send(message: string): void;
-    json(data: any): void;
+    status(statusCode: number) : IExpressResponse;
+    send(message: string): IExpressResponse;
+    json(data: any): IExpressResponse;
 }
 
 export interface IExpressHandler {

@@ -14,6 +14,11 @@ var config: ISystemConfig = {
         listenerDisabled: false,
         listenerPattern: 'elo/#'
     },
+    elasticSearch : {
+        url: "localhost:9200",
+        logLevel : "trace",
+        index : "test"
+    },
     deviceRepo: {
         repoPath: 'sample_files'
     },

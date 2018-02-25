@@ -19,6 +19,7 @@ class FeatureDisabledIntentHandler {
             return new Promise((resolve, reject) => {
                 let complexSpeech = new Speech();
                 complexSpeech.say("This feature is currently disabled");
+                response.say(complexSpeech.ssml(true));
                 resolve(response);
             });
         });

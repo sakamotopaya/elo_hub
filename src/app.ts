@@ -24,6 +24,7 @@ import { RegisterMap } from "./registers/register_map_models";
 import { IVstsRepo } from "./vsts/vsts_repo";
 import { RepoScanner, KnowledgeDocParser, IKnowledgeDocConfig } from "./documents/knowledge_doc_parser";
 import { IVoiceHandler } from "./voice/voice_interfaces";
+import { ElasticRepo, IDocument, IDocumentCriteria } from "./elasicsearch/elastic_repo";
 
 export class App {
 
@@ -98,6 +99,74 @@ export class App {
 
       } catch (error) {
         console.log(error);
+      }
+
+    });
+
+    app.get('/api/documents/:category/:documentType/all', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const repo = new ElasticRepo(self.config);
+        let results = await repo.all({ category: req.params.category, documentType: req.params.documentType});
+        res.json(results);
+
+      } catch (error) {
+        res.status(500).send(error);
+      }
+
+    });
+
+    app.post('/api/documents/:category/:documentType', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const repo = new ElasticRepo(self.config);
+        let criteria = <IDocumentCriteria> { category: req.params.category, documentType: req.params.documentType, criteria: req.body};
+        let results = await repo.search(criteria);
+        res.json(results);
+
+      } catch (error) {
+        res.status(500).send(error);
+      }
+
+    });
+
+    app.put('/api/document/:category/:documentType/:resourceId', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const repo = new ElasticRepo(self.config);
+        let doc : IDocument = <IDocument> { id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
+        let results = await repo.create(doc);
+        res.json(results);
+
+      } catch (error) {
+        res.status(500).send(error);
+      }
+
+    });
+
+    app.post('/api/document/:category/:documentType/:resourceId', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const repo = new ElasticRepo(self.config);
+        let doc : IDocument = <IDocument> { id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
+        let results = await repo.update(doc);
+        res.json(results);
+
+      } catch (error) {
+        res.status(500).send(error);
+      }
+
+    });
+
+    app.delete('/api/document/:category/:documentType/:resourceId', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const repo = new ElasticRepo(self.config);
+        let results = await repo.delete(req.params.category, req.params.documentType, req.params.resourceId);
+        res.json(results);
+
+      } catch (error) {
+        res.status(500).send(error);
       }
 
     });
