@@ -21,7 +21,7 @@ class JenkinsCheckBuildStatusJob {
                 if (jenkinsEnabled) {
                     if (!config.jenkins) {
                         reject(new Error('when featureSet.jenkins is boolean true, config.jenkins needs to contain you jenkins.config!'));
-                        return x;
+                        return;
                     }
                     else
                         jenkins = config.jenkins;
