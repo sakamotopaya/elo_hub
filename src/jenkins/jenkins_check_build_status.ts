@@ -25,8 +25,8 @@ export class JenkinsCheckBuildStatusJob implements IScheduledJob {
 
                 if (jenkinsEnabled) {
                     if (!config.jenkins) {
-                        reject(new Error('when featureSet.jenkins is boolean true, config.jenkins needs to be set!'));
-                        return;
+                        reject(new Error('when featureSet.jenkins is boolean true, config.jenkins needs to contain you jenkins.config!'));
+                        return x;
                     } else
                         jenkins = config.jenkins;
                 } else {
