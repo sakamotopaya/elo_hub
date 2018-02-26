@@ -16,6 +16,11 @@ const TYPES = {
     VstsRepo: Symbol("IVstsRepo")
 };
 exports.TYPES = TYPES;
+const JenkinsFileNames = {
+    BuildResults: "jenkins_build_status.json",
+    CheckBuildStatus: "jenkins_check_build_status.sh",
+};
+exports.JenkinsFileNames = JenkinsFileNames;
 const VstsFileNames = {
     BuildResults: "build_status.json",
     CheckBuildStatus: "check_build_status.sh",

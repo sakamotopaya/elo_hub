@@ -1,5 +1,6 @@
 import { DeviceNames } from "../device/device";
 import { IKnowledgeDocConfig } from "../documents/knowledge_doc_parser";
+import { IJenkinsConfig } from "./interface";
 
 export class Utility {
 
@@ -54,6 +55,7 @@ export interface IFeatureSet {
     build: boolean;
     wiki: boolean;
     vsts: boolean;
+    jenkins: boolean | IJenkinsConfig
 };
 
 export class Messages {
@@ -71,6 +73,7 @@ export interface ISystemConfig {
     vsts: IVstsConfig;
     knowledgeDoc: IKnowledgeDocConfig;
     elasticSearch: IElasticConfig;
+    jenkins?: IJenkinsConfig;
 };
 
 export interface IExpressApp {

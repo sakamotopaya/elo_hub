@@ -8,7 +8,7 @@ import { DeviceNames } from '../../src/device/device';
 import { ConsoleLogger } from '../../src/logger';
 
 var config: ISystemConfig = {
-    featureSet: { vsts: false, build: false, wiki: false },
+    featureSet: { vsts: false, build: false, wiki: false, jenkins: false },
     messaging: {
         hubUrl: 'mqtt://pi3_hub',
         listenerDisabled: false,

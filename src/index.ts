@@ -6,7 +6,8 @@ import { ISystemConfig } from './utility/utility';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as process from 'process';
-import { CheckBuildStatusJob, RefreshActiveTasksJob } from './sch_jobs';
+import { RefreshActiveTasksJob } from './sch_jobs';
+import { JenkinsCheckBuildStatusJob } from './jenkins/jenkins_check_build_status';
 
 const port: number = parseInt(process.env.PORT) || 3000;
 
@@ -17,8 +18,8 @@ container.bind<ISystemConfig>(TYPES.Config).toConstantValue(config);
 
 setInterval(async () => {
 
-  //let buildStatusJob = new CheckBuildStatusJob();
-  //await buildStatusJob.run(container, config);
+  let buildStatusJob = new JenkinsCheckBuildStatusJob();
+  await buildStatusJob.run(container, config);
 
   //let vstsTasksJob = new RefreshActiveTasksJob();
   //await vstsTasksJob.run(container, config);

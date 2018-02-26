@@ -14,13 +14,14 @@ const types_1 = require("./types");
 const fs = require("fs");
 const path = require("path");
 const process = require("process");
+const jenkins_check_build_status_1 = require("./jenkins/jenkins_check_build_status");
 const port = parseInt(process.env.PORT) || 3000;
 let configPath = process.cwd();
 const config = JSON.parse(fs.readFileSync(path.join(configPath, 'elo_hub_cfg.json')).toString());
 boot_1.container.bind(types_1.TYPES.Config).toConstantValue(config);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    //let buildStatusJob = new CheckBuildStatusJob();
-    //await buildStatusJob.run(container, config);
+    let buildStatusJob = new jenkins_check_build_status_1.JenkinsCheckBuildStatusJob();
+    yield buildStatusJob.run(boot_1.container, config);
     //let vstsTasksJob = new RefreshActiveTasksJob();
     //await vstsTasksJob.run(container, config);
 }), 30 * 1000);
