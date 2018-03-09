@@ -52,6 +52,7 @@
     "filewatcher": "^3.0.1",
     "inversify": "^4.5.2",
     "mqtt": "^2.14.0",
+    "ravendb": "^4.0.0-rc3",
     "reflect-metadata": "^0.1.10",
     "serialport": "^6.0.4",
     "ssml-builder": "^0.4.3"
