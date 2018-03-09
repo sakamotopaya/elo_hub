@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const axios_1 = require("axios");
 const fs = require("fs");
 const path = require("path");
 const child_process_1 = require("child_process");
@@ -36,4 +37,27 @@ class VstsScriptRunner {
     }
 }
 exports.VstsScriptRunner = VstsScriptRunner;
+;
+class VstsQueueBuild {
+    queue(config) {
+    }
+}
+exports.VstsQueueBuild = VstsQueueBuild;
+;
+class JenkinsQueueBuild {
+    queue(config) {
+        return new Promise((resolve, reject) => {
+            axios_1.default.post('', {})
+                .then(function (axiosResponse) {
+                console.log('back from device', JSON.stringify(axiosResponse.data));
+                resolve(axiosResponse.data);
+            })
+                .catch(function (axiosError) {
+                console.log('error calling device' + JSON.stringify(axiosError));
+                reject(axiosError);
+            });
+        });
+    }
+}
+exports.JenkinsQueueBuild = JenkinsQueueBuild;
 //# sourceMappingURL=vsts_script_runner.js.map

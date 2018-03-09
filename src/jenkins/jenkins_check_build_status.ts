@@ -11,33 +11,22 @@ import { IIndicatorRulesEngine } from '../indicator/indicator_repo';
 import { IDeviceRepo } from '../device/device_repo';
 import { IJenkinsConfig } from '../utility/interface';
 import { JenkinsScriptRunner, JenkinsBuildCommandBuilder } from './jenkins_script_runner';
-import { JenkinsBuild } from './jenkins';
+import { JenkinsBuild, JenkinsUtilities } from './jenkins';
 
 export class JenkinsCheckBuildStatusJob implements IScheduledJob {
     run(container: Container, config: ISystemConfig): Promise<void> {
         return new Promise<void>(async (resolve, reject) => {
             console.log('checking jenkins build status...');
 
-            let jenkins: IJenkinsConfig;
+            let jenkins: IJenkinsConfig = JenkinsUtilities.getJenkinsConfig(config);
 
-            if (typeof config.featureSet.jenkins === "boolean") {
-                let jenkinsEnabled: boolean = config.featureSet.jenkins;
-
-                if (jenkinsEnabled) {
-                    if (!config.jenkins) {
-                        reject(new Error('when featureSet.jenkins is boolean true, config.jenkins needs to contain you jenkins.config!'));
-                        return;
-                    } else
-                        jenkins = config.jenkins;
-                } else {
-                    resolve();
-                    return;
-                }
-            } else
-                jenkins = <IJenkinsConfig>config.featureSet.jenkins;
+            if (jenkins === null) {
+                resolve();
+                return;
+            }
 
             let scriptRunner = new JenkinsScriptRunner<JenkinsBuild>(jenkins, JenkinsFileNames.CheckBuildStatus, JenkinsFileNames.BuildResults, JenkinsBuildCommandBuilder);
-            let buildStatus = await scriptRunner.runWithResult()
+            let buildStatus = await scriptRunner.runWithResult();
             let state = 0;
 
             if (buildStatus.building)

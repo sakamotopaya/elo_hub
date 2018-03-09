@@ -6,7 +6,7 @@ import * as path from 'path';
 import { ISystemConfig } from "../utility/utility";
 import { VstsFileNames, StandardVoiceResponses } from "../types";
 
-export class BuildIntentHandler implements IVoiceIntentHandler {
+export class CheckBuildStatusIntentHandler implements IVoiceIntentHandler {
 
   logger: ILogger;
   deviceFactory: IDeviceRepo;

@@ -1,3 +1,4 @@
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
@@ -50,5 +51,27 @@ export class VstsScriptRunner<T> {
             });
         });
 
+    }
+};
+
+export class VstsQueueBuild {
+    public queue(config: ISystemConfig) {
+        
+    }
+};
+
+export class JenkinsQueueBuild {
+    public queue(config: ISystemConfig) : Promise<void> {
+        return new Promise<void>((resolve, reject) =>{
+        axios.post('', {})
+            .then(function (axiosResponse: AxiosResponse) {
+              console.log('back from device', JSON.stringify(axiosResponse.data));
+              resolve(axiosResponse.data);
+            })
+            .catch(function (axiosError: AxiosError) {
+              console.log('error calling device' + JSON.stringify(axiosError));
+              reject(axiosError);
+            });
+        });
     }
 }

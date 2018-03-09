@@ -13,7 +13,7 @@ import { DeviceControlIntentHandler } from '../intents/device_control_intent';
 import { TYPES } from "../types";
 import { IDeviceRepo } from "../device/device_repo";
 import { AlexaLaunchHandler } from "../intents/alexa_launch_handler";
-import { BuildIntentHandler } from "../intents/build_intent";
+import { CheckBuildStatusIntentHandler } from "../intents/check_build_status_intent";
 import { QueueBuildIntentHandler } from "../intents/queue_build_intent";
 import { ActiveTasksIntentHandler } from "../intents/active_tasks_intent";
 import { runInThisContext } from "vm";
@@ -103,7 +103,7 @@ export class AlexaVoiceHandler implements IVoiceHandler {
     }, (request: IVoiceRequest, response: IVoiceResponse) => {
       try {
         if (self.config.featureSet.vsts) {
-          let intent = new BuildIntentHandler(this.logger, this.deviceRepo, this.config);
+          let intent = new CheckBuildStatusIntentHandler(this.logger, this.deviceRepo, this.config);
           return intent.handleIntent(request, response);
         } else {
           let intent = new FeatureDisabledIntentHandler(this.logger);

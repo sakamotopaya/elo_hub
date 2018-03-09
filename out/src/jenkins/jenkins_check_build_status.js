@@ -11,28 +11,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const types_1 = require("../types");
 const topic_handler_factory_1 = require("../topics/topic_handler_factory");
 const jenkins_script_runner_1 = require("./jenkins_script_runner");
+const jenkins_1 = require("./jenkins");
 class JenkinsCheckBuildStatusJob {
     run(container, config) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             console.log('checking jenkins build status...');
-            let jenkins;
-            if (typeof config.featureSet.jenkins === "boolean") {
-                let jenkinsEnabled = config.featureSet.jenkins;
-                if (jenkinsEnabled) {
-                    if (!config.jenkins) {
-                        reject(new Error('when featureSet.jenkins is boolean true, config.jenkins needs to contain you jenkins.config!'));
-                        return;
-                    }
-                    else
-                        jenkins = config.jenkins;
-                }
-                else {
-                    resolve();
-                    return;
-                }
+            let jenkins = jenkins_1.JenkinsUtilities.getJenkinsConfig(config);
+            if (jenkins === null) {
+                resolve();
+                return;
             }
-            else
-                jenkins = config.featureSet.jenkins;
             let scriptRunner = new jenkins_script_runner_1.JenkinsScriptRunner(jenkins, types_1.JenkinsFileNames.CheckBuildStatus, types_1.JenkinsFileNames.BuildResults, jenkins_script_runner_1.JenkinsBuildCommandBuilder);
             let buildStatus = yield scriptRunner.runWithResult();
             let state = 0;

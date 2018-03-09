@@ -26,7 +26,7 @@ const alexa_app_1 = require("alexa-app");
 const device_control_intent_1 = require("../intents/device_control_intent");
 const types_1 = require("../types");
 const alexa_launch_handler_1 = require("../intents/alexa_launch_handler");
-const build_intent_1 = require("../intents/build_intent");
+const check_build_status_intent_1 = require("../intents/check_build_status_intent");
 const queue_build_intent_1 = require("../intents/queue_build_intent");
 const active_tasks_intent_1 = require("../intents/active_tasks_intent");
 const status_report_intent_1 = require("../intents/status_report_intent");
@@ -82,7 +82,7 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
         }, (request, response) => {
             try {
                 if (self.config.featureSet.vsts) {
-                    let intent = new build_intent_1.BuildIntentHandler(this.logger, this.deviceRepo, this.config);
+                    let intent = new check_build_status_intent_1.CheckBuildStatusIntentHandler(this.logger, this.deviceRepo, this.config);
                     return intent.handleIntent(request, response);
                 }
                 else {
