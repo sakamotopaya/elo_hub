@@ -24,7 +24,10 @@ import { RegisterMap } from "./registers/register_map_models";
 import { IVstsRepo } from "./vsts/vsts_repo";
 import { RepoScanner, KnowledgeDocParser, IKnowledgeDocConfig } from "./documents/knowledge_doc_parser";
 import { IVoiceHandler } from "./voice/voice_interfaces";
-import { ElasticRepo, IDocument, IDocumentCriteria } from "./elasicsearch/elastic_repo";
+import { ElasticRepo } from "./elasicsearch/elastic_repo";
+import { IDocument } from "./core/document";
+import { IDocumentCriteria } from "./core/document_criteria";
+import { RavenRepo } from "./ravendb/raven_repo";
 
 export class App {
 
@@ -99,6 +102,18 @@ export class App {
 
       } catch (error) {
         console.log(error);
+      }
+
+    });
+    app.get('/api/objects/all', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const repo = new RavenRepo();
+        let results = await repo.all({ category: req.params.category, documentType: req.params.documentType});
+        res.json(results);
+
+      } catch (error) {
+        res.status(500).send(error);
       }
 
     });

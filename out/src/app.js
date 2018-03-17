@@ -21,6 +21,7 @@ const device_profile_list_handler_1 = require("./api_handlers/device_profile_lis
 const animation_pack_list_handler_1 = require("./api_handlers/animation_pack_list_handler");
 const knowledge_doc_parser_1 = require("./documents/knowledge_doc_parser");
 const elastic_repo_1 = require("./elasicsearch/elastic_repo");
+const raven_repo_1 = require("./ravendb/raven_repo");
 class App {
     constructor() {
         this.deviceRepo = boot_1.container.get(types_1.TYPES.DeviceRepo);
@@ -67,6 +68,16 @@ class App {
             }
             catch (error) {
                 console.log(error);
+            }
+        }));
+        app.get('/api/objects/all', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const repo = new raven_repo_1.RavenRepo();
+                let results = yield repo.all({ category: req.params.category, documentType: req.params.documentType });
+                res.json(results);
+            }
+            catch (error) {
+                res.status(500).send(error);
             }
         }));
         app.get('/api/documents/:category/:documentType/all', (req, res) => __awaiter(this, void 0, void 0, function* () {

@@ -1,19 +1,7 @@
 import { ISystemConfig , IElasticConfig } from "../utility/utility";
 import * as elasticsearch from 'elasticsearch';
-
-export interface IDocument {
-    id: string;
-    category: string;
-    documentType: string;
-    documentBody: any;
-};
-
-export interface IDocumentCriteria {
-    id?: string;
-    category: string;
-    documentType: string;
-    criteria?: any;
-};
+import { IDocument } from "../core/document";
+import { IDocumentCriteria } from "../core/document_criteria";
 
 export class ElasticRepo {
     config: ISystemConfig;

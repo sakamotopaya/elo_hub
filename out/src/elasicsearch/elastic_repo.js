@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const elasticsearch = require("elasticsearch");
-;
-;
 class ElasticRepo {
     constructor(config) {
         this.config = config;
