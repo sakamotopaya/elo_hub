@@ -68,17 +68,17 @@ export class App {
     let app = this.expressApp;
     let self = this;
 
-    app.get('/api/hello', (req: IExpressRequest, res: IExpressResponse) => {
+    app.get('/api/hello', async (req: IExpressRequest, res: IExpressResponse) => {
 
-        let config: IKnowledgeDocConfig = { repoRoot: "/Users/sakamoto/code/karmak/elk_wiki" };
+        /*let config: IKnowledgeDocConfig = { repoRoot: "/Users/sakamoto/code/karmak/elk_wiki" };
         let scanner = new RepoScanner(config);
         let result = scanner.scan();
         result.then((payload) => {
           res.json(payload);
-        });
+        });*/
 
-        //const handler = new HelloHandler();
-        //await handler.handle(req, res);
+        const handler = new HelloHandler();
+        await handler.handle(req, res);
 
     });
 

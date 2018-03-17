@@ -12,6 +12,7 @@ const boot_1 = require("./boot");
 const express = require("express");
 const bodyParser = require("body-parser");
 const types_1 = require("./types");
+const hello_handler_1 = require("./api_handlers/hello_handler");
 const ngrok_config_handler_1 = require("./api_handlers/ngrok_config_handler");
 const relay_handler_1 = require("./api_handlers/relay_handler");
 const device_list_handler_1 = require("./api_handlers/device_list_handler");
@@ -19,7 +20,6 @@ const update_device_handler_1 = require("./api_handlers/update_device_handler");
 const generic_list_handler_1 = require("./api_handlers/generic_list_handler");
 const device_profile_list_handler_1 = require("./api_handlers/device_profile_list_handler");
 const animation_pack_list_handler_1 = require("./api_handlers/animation_pack_list_handler");
-const knowledge_doc_parser_1 = require("./documents/knowledge_doc_parser");
 const elastic_repo_1 = require("./elasicsearch/elastic_repo");
 const raven_repo_1 = require("./ravendb/raven_repo");
 class App {
@@ -42,16 +42,16 @@ class App {
     run(port) {
         let app = this.expressApp;
         let self = this;
-        app.get('/api/hello', (req, res) => {
-            let config = { repoRoot: "/Users/sakamoto/code/karmak/elk_wiki" };
-            let scanner = new knowledge_doc_parser_1.RepoScanner(config);
+        app.get('/api/hello', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            /*let config: IKnowledgeDocConfig = { repoRoot: "/Users/sakamoto/code/karmak/elk_wiki" };
+            let scanner = new RepoScanner(config);
             let result = scanner.scan();
             result.then((payload) => {
-                res.json(payload);
-            });
-            //const handler = new HelloHandler();
-            //await handler.handle(req, res);
-        });
+              res.json(payload);
+            });*/
+            const handler = new hello_handler_1.HelloHandler();
+            yield handler.handle(req, res);
+        }));
         app.get('/api/config', (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const handler = new ngrok_config_handler_1.NgrokConfigHandler();
