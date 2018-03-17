@@ -32,4 +32,6 @@ const StandardVoiceResponses  = {
     MissingBuildResults: "The file containing the last build result is not where it should be."
 }
 
-export { TYPES, VstsFileNames, StandardVoiceResponses, JenkinsFileNames };
+const ELO_HUB_VERSION : string = "0.0.3.0";
+
+export { TYPES, VstsFileNames, StandardVoiceResponses, JenkinsFileNames, ELO_HUB_VERSION };

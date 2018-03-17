@@ -33,6 +33,10 @@ export class Utility {
 
 };
 
+export interface INgrokConfig {
+    baseUrl: string;
+};
+
 export interface IElasticConfig {
     url: string;
     logLevel: string;
@@ -74,6 +78,7 @@ export interface ISystemConfig {
     knowledgeDoc: IKnowledgeDocConfig;
     elasticSearch: IElasticConfig;
     jenkins?: IJenkinsConfig;
+    ngrok?: INgrokConfig;
 };
 
 export interface IExpressApp {

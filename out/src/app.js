@@ -54,7 +54,7 @@ class App {
         }));
         app.get('/api/config', (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const handler = new ngrok_config_handler_1.NgrokConfigHandler();
+                const handler = new ngrok_config_handler_1.NgrokConfigHandler(self.config.ngrok);
                 yield handler.handle(req, res);
             }
             catch (error) {
@@ -236,7 +236,7 @@ class App {
             if (err) {
                 return console.log(err);
             }
-            return console.log(`elo_hub:b2:${port} is listening...`);
+            return console.log(`elo_hub:${types_1.ELO_HUB_VERSION}:${port} is listening...`);
         });
     }
     mountRoutes() {

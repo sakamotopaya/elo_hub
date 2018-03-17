@@ -10,9 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 class NgrokConfigHandler {
+    constructor(config) {
+        this.config = config;
+    }
     handle(expressRequest, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var result = yield axios_1.default.get('http://localhost:4040/api/tunnels');
+            var result = yield axios_1.default.get(this.config.baseUrl + '/api/tunnels');
             res.json(result);
         });
     }

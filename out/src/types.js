@@ -34,4 +34,6 @@ const StandardVoiceResponses = {
     MissingBuildResults: "The file containing the last build result is not where it should be."
 };
 exports.StandardVoiceResponses = StandardVoiceResponses;
+const ELO_HUB_VERSION = "0.0.3.0";
+exports.ELO_HUB_VERSION = ELO_HUB_VERSION;
 //# sourceMappingURL=types.js.map

@@ -6,7 +6,7 @@ import { IDeviceFactory } from './device/device_factory';
 import { AlexaVoiceHandler, IVoiceHandlerFactory } from './voice/voice_handler';
 import { ILogger } from './logger';
 import { IMessageHub } from './message_hub';
-import { TYPES } from "./types";
+import { TYPES, ELO_HUB_VERSION } from "./types";
 import { ISystemConfig, IExpressApp } from "./utility/utility";
 import { IDeviceRepo } from "./device/device_repo";
 import { IExpressRequest, IExpressResponse } from "./api_handlers/handler_api";
@@ -76,7 +76,6 @@ export class App {
         result.then((payload) => {
           res.json(payload);
         });*/
-
         const handler = new HelloHandler();
         await handler.handle(req, res);
 
@@ -85,7 +84,7 @@ export class App {
     app.get('/api/config', async (req: IExpressRequest, res: IExpressResponse) => {
 
       try {
-        const handler = new NgrokConfigHandler();
+        const handler = new NgrokConfigHandler(self.config.ngrok);
         await handler.handle(req, res);
 
       } catch (error) {
@@ -313,8 +312,8 @@ export class App {
       if (err) {
         return console.log(err);
       }
-
-      return console.log(`elo_hub:b2:${port} is listening...`);
+      
+      return console.log(`elo_hub:${ELO_HUB_VERSION}:${port} is listening...`);
     });
 
   }
