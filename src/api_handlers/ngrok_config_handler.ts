@@ -12,6 +12,7 @@ export class NgrokConfigHandler implements IExpressHandler {
 
     public async handle(expressRequest: IExpressRequest, res: IExpressResponse) : Promise<any>{
         var result = await axios.get(this.config.baseUrl + '/api/tunnels');
+        console.log(result);
         res.json(result);
     }
 }
