@@ -157,9 +157,10 @@ export class StaticDeviceRepo implements IDeviceRepo {
         for (let key of this.devices.keys()) {
             var context = this.devices.item(key);
             if (context.descriptor) {
+                let state = context.state === undefined ? {} : context.state;
                 let deviceResponse: DevicePayload = <DevicePayload>
                     {
-                        name: key, config: context.config, state: context.state, device: context.descriptor
+                        name: key, config: context.config, state: state, device: context.descriptor
                     };
                 deviceList.push(deviceResponse);
             }
