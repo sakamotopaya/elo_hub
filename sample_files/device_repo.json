@@ -214,7 +214,7 @@
                 "address": "192.168.1.136",
                 "port": 8088,
                 "connectionType": "mqtt",
-                "deviceClass": "led",
+                "deviceClass": "scale",
                 "name": "elo_dfmon",
                 "description": "dog food scale",
                 "inputRegisterMap": {
