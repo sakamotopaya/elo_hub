@@ -39,5 +39,13 @@
         "preferredRender": "label",
         "factor": 1,
         "format": "0"
+    },
+    {
+        "name": "motion",
+        "label": "Motion",
+        "description": "0 = no motion, 1 = motion detected",
+        "preferredRender": "label",
+        "factor": 1,
+        "format": "0"
     }
 ]

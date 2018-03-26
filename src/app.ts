@@ -28,6 +28,18 @@ import { ElasticRepo } from "./elasicsearch/elastic_repo";
 import { IDocument } from "./core/document";
 import { IDocumentCriteria } from "./core/document_criteria";
 import { RavenRepo } from "./ravendb/raven_repo";
+import * as fs from 'fs';
+import * as path from 'path';
+
+export interface IDeviceAttributes {
+  macAddress: string;
+  chipSize: number;
+  freeSpace: number;
+  sdkVersion: string;
+  sketchMd5: string;
+  sketchSize: number;
+  sketchVersion: string;
+};
 
 export class App {
 
@@ -70,14 +82,14 @@ export class App {
 
     app.get('/api/hello', async (req: IExpressRequest, res: IExpressResponse) => {
 
-        /*let config: IKnowledgeDocConfig = { repoRoot: "/Users/sakamoto/code/karmak/elk_wiki" };
-        let scanner = new RepoScanner(config);
-        let result = scanner.scan();
-        result.then((payload) => {
-          res.json(payload);
-        });*/
-        const handler = new HelloHandler();
-        await handler.handle(req, res);
+      /*let config: IKnowledgeDocConfig = { repoRoot: "/Users/sakamoto/code/karmak/elk_wiki" };
+      let scanner = new RepoScanner(config);
+      let result = scanner.scan();
+      result.then((payload) => {
+        res.json(payload);
+      });*/
+      const handler = new HelloHandler();
+      await handler.handle(req, res);
 
     });
 
@@ -86,6 +98,69 @@ export class App {
       try {
         const handler = new NgrokConfigHandler(self.config.ngrok);
         await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    });
+
+    app.get('/api/update/:deviceType', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+
+        let deviceType: string = (<string>req.params.deviceType).toLowerCase();
+        let deviceAttributes = <IDeviceAttributes>{
+          macAddress: req.headers['x-esp8266-ap-mac'],
+          chipSize: parseFloat(req.headers['x-esp8266-chip-size']+ '.0') | 0,
+          freeSpace: parseFloat(req.headers['x-esp8266-free-space'] + '.0') | 0,
+          sdkVersion: req.headers['x-esp8266-sdk-version'],
+          sketchMd5: req.headers['x-esp8266-sketch-md5'],
+          sketchSize: parseFloat(req.headers['x-esp8266-sketch-size'] + '.0') | 0,
+          sketchVersion: req.headers['x-esp8266-version'],
+        };
+
+        if (1 == 1) {
+
+          //if (req.params.deviceType == 'frank') {
+          res.status(304);
+          res.end();
+
+          /*x-esp8266-ap-mac:"6A:C6:3A:9F:72:74"
+          x-esp8266-chip-size:"4194304"
+          x-esp8266-free-space:"2805760"
+          x-esp8266-mode:"sketch"
+          x-esp8266-sdk-version:"2.1.0(deb1901)"
+          x-esp8266-sketch-md5:"d8005e63ecfd837be504328872ccaa55"
+          x-esp8266-sketch-size:"336400"
+          x-esp8266-sta-mac:"68:C6:3A:9F:72:74"
+          x-esp8266-version:"0_0_1"*/
+
+        } else {
+
+          let fileName = "wemos_test.ino.bin";
+          var stat = fs.statSync(fileName);
+          let data: any;
+
+          res.writeHead(200, {
+            'Content-Type': 'application/octet-stream',
+            'Content-disposition': 'attachment;filename=' + fileName,
+            'Content-Length': stat.size
+          });
+
+          var stream = fs.createReadStream(fileName);
+
+          stream.on('error', function (error) {
+            res.writeHead(404, 'Not Found');
+            res.end();
+          });
+
+          stream.on('end', function () {
+            res.end();
+          });
+
+          stream.pipe(<any>res);
+        }
 
       } catch (error) {
         console.log(error);
@@ -108,7 +183,7 @@ export class App {
 
       try {
         const repo = new RavenRepo();
-        let results = await repo.all({ category: req.params.category, documentType: req.params.documentType});
+        let results = await repo.all({ category: req.params.category, documentType: req.params.documentType });
         res.json(results);
 
       } catch (error) {
@@ -121,7 +196,7 @@ export class App {
 
       try {
         const repo = new ElasticRepo(self.config);
-        let results = await repo.all({ category: req.params.category, documentType: req.params.documentType});
+        let results = await repo.all({ category: req.params.category, documentType: req.params.documentType });
         res.json(results);
 
       } catch (error) {
@@ -134,7 +209,7 @@ export class App {
 
       try {
         const repo = new ElasticRepo(self.config);
-        let criteria = <IDocumentCriteria> { category: req.params.category, documentType: req.params.documentType, criteria: req.body};
+        let criteria = <IDocumentCriteria>{ category: req.params.category, documentType: req.params.documentType, criteria: req.body };
         let results = await repo.search(criteria);
         res.json(results);
 
@@ -148,7 +223,7 @@ export class App {
 
       try {
         const repo = new ElasticRepo(self.config);
-        let doc : IDocument = <IDocument> { id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
+        let doc: IDocument = <IDocument>{ id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
         let results = await repo.create(doc);
         res.json(results);
 
@@ -162,7 +237,7 @@ export class App {
 
       try {
         const repo = new ElasticRepo(self.config);
-        let doc : IDocument = <IDocument> { id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
+        let doc: IDocument = <IDocument>{ id: req.params.resourceId, category: req.params.category, documentType: req.params.documentType, documentBody: req.body };
         let results = await repo.update(doc);
         res.json(results);
 
@@ -251,23 +326,23 @@ export class App {
             if (v2Config.p1 !== undefined) {
               v1Config.p1 = v2Config.p1;
             }
-  
+
             if (v2Config.p2 !== undefined) {
               v1Config.p2 = v2Config.p2;
             }
-  
+
             if (v2Config.p3 !== undefined) {
               v1Config.p3 = v2Config.p3;
             }
-  
+
             if (v2Config.p4 !== undefined) {
               v1Config.p4 = v2Config.p4;
             }
-  
+
             if (v2Config.p5 !== undefined) {
               v1Config.p5 = v2Config.p5;
             }
-  
+
           } else if (v2Config.c !== undefined) {
             deviceAddress = deviceAddress + "dev_color";
             v1Config.red = v2Config.r;
@@ -312,7 +387,7 @@ export class App {
       if (err) {
         return console.log(err);
       }
-      
+
       return console.log(`elo_hub:${ELO_HUB_VERSION}:${port} is listening...`);
     });
 

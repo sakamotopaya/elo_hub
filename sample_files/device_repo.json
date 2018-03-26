@@ -242,6 +242,40 @@
         }
     },
     {
+        "name": "elo_frank1",
+        "context": {
+            "descriptor": {
+                "address": "0.0.0.0",
+                "port": 0,
+                "connectionType": "mqtt",
+                "deviceClass": "frank",
+                "name": "elo_frank1",
+                "description": "franken sensor 1",
+                "inputRegisterMap": {
+                    "p1": null,
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": "temp",
+                    "v2": "humidity",
+                    "v3": "temp",
+                    "v4": null,
+                    "v5": "motion"
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
+            }
+        }
+    },
+    {
         "name": "elo_trek",
         "context": {
             "descriptor": {

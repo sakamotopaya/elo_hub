@@ -22,6 +22,8 @@ const device_profile_list_handler_1 = require("./api_handlers/device_profile_lis
 const animation_pack_list_handler_1 = require("./api_handlers/animation_pack_list_handler");
 const elastic_repo_1 = require("./elasicsearch/elastic_repo");
 const raven_repo_1 = require("./ravendb/raven_repo");
+const fs = require("fs");
+;
 class App {
     constructor() {
         this.deviceRepo = boot_1.container.get(types_1.TYPES.DeviceRepo);
@@ -56,6 +58,56 @@ class App {
             try {
                 const handler = new ngrok_config_handler_1.NgrokConfigHandler(self.config.ngrok);
                 yield handler.handle(req, res);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }));
+        app.get('/api/update/:deviceType', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let deviceType = req.params.deviceType.toLowerCase();
+                let deviceAttributes = {
+                    macAddress: req.headers['x-esp8266-ap-mac'],
+                    chipSize: parseFloat(req.headers['x-esp8266-chip-size'] + '.0') | 0,
+                    freeSpace: parseFloat(req.headers['x-esp8266-free-space'] + '.0') | 0,
+                    sdkVersion: req.headers['x-esp8266-sdk-version'],
+                    sketchMd5: req.headers['x-esp8266-sketch-md5'],
+                    sketchSize: parseFloat(req.headers['x-esp8266-sketch-size'] + '.0') | 0,
+                    sketchVersion: req.headers['x-esp8266-version'],
+                };
+                if (1 == 1) {
+                    //if (req.params.deviceType == 'frank') {
+                    res.status(304);
+                    res.end();
+                    /*x-esp8266-ap-mac:"6A:C6:3A:9F:72:74"
+                    x-esp8266-chip-size:"4194304"
+                    x-esp8266-free-space:"2805760"
+                    x-esp8266-mode:"sketch"
+                    x-esp8266-sdk-version:"2.1.0(deb1901)"
+                    x-esp8266-sketch-md5:"d8005e63ecfd837be504328872ccaa55"
+                    x-esp8266-sketch-size:"336400"
+                    x-esp8266-sta-mac:"68:C6:3A:9F:72:74"
+                    x-esp8266-version:"0_0_1"*/
+                }
+                else {
+                    let fileName = "wemos_test.ino.bin";
+                    var stat = fs.statSync(fileName);
+                    let data;
+                    res.writeHead(200, {
+                        'Content-Type': 'application/octet-stream',
+                        'Content-disposition': 'attachment;filename=' + fileName,
+                        'Content-Length': stat.size
+                    });
+                    var stream = fs.createReadStream(fileName);
+                    stream.on('error', function (error) {
+                        res.writeHead(404, 'Not Found');
+                        res.end();
+                    });
+                    stream.on('end', function () {
+                        res.end();
+                    });
+                    stream.pipe(res);
+                }
             }
             catch (error) {
                 console.log(error);

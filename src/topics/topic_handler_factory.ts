@@ -66,7 +66,7 @@ export interface EloColor {
     r: number;
     g: number;
     b: number;
-}
+};
 
 export interface DeviceConfig {
     s: number;
@@ -80,7 +80,12 @@ export interface DeviceConfig {
     p3: number;
     p4: number;
     p5: number;
-}
+    c1: number;
+    c2: number;
+    c3: number;
+    c4: number;
+    c5: number;    
+};
 
 export interface DeviceState {
     n: string;
@@ -89,7 +94,7 @@ export interface DeviceState {
     v3: number;
     v4: number;
     v5: number;
-}
+};
 
 export interface ITopicHandlerFactory {
     getHandlerForTopic(topic: string): ITopicHandler;

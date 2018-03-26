@@ -48,6 +48,9 @@ class NullTopicHandler {
         console.log(message);
     }
 }
+;
+;
+;
 let TopicHandlerFactory = class TopicHandlerFactory {
     constructor(logger, deviceRepo, rulesEngine, systemConfig) {
         this.logger = logger;

@@ -9,7 +9,10 @@ These are the things I think you need to do:
 - vsts cli installed for the vsts integration stuff
 - there are scripts that run. I am keeping mine in ~/.elo  (samples are in the script directory)
 
-
+### Deploying a repo to hub
+```bash
+scp sample_files/device_repo.json pi@your-hub:~/.elo_hub
+```
 
 ### Sample Hub Config
 This file is not under 
