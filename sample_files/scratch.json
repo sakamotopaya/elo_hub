@@ -1,14 +1,33 @@
-{"n":"elo_dfmon","s":1,"v":1,"c":{"r":255,"g":255,"b":255},"a":0,"l":50,"p1":0,"p2":0,"p3":0,"p4":0,"p5":0}
-
-connection:"close"
-host:"192.168.1.125:3000"
-user-agent:"ESP8266-http-Update"
-x-esp8266-ap-mac:"6A:C6:3A:9F:72:74"
-x-esp8266-chip-size:"4194304"
-x-esp8266-free-space:"2867200"
-x-esp8266-mode:"sketch"
-x-esp8266-sdk-version:"2.1.0(deb1901)"
-x-esp8266-sketch-md5:"514fd088a2bcae35f0e6112730a485c6"
-x-esp8266-sketch-size:"277024"
-x-esp8266-sta-mac:"68:C6:3A:9F:72:74"
-x-esp8266-version:"0_4_99"
+[
+    {
+        "n": "elo_dfmon",
+        "s": 1,
+        "v": 1,
+        "c": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+        },
+        "a": 0,
+        "l": 50,
+        "p1": 0,
+        "p2": 0,
+        "p3": 0,
+        "p4": 0,
+        "p5": 0
+    },
+    {
+        "connection": "close",
+        "host": "192.168.1.125:3000",
+        "user-agent": "ESP8266-http-Update",
+        "x-esp8266-ap-mac": "6A:C6:3A:9F:72:74",
+        "x-esp8266-chip-size": "4194304",
+        "x-esp8266-free-space": "2867200",
+        "x-esp8266-mode": "sketch",
+        "x-esp8266-sdk-version": "2.1.0(deb1901)",
+        "x-esp8266-sketch-md5": "514fd088a2bcae35f0e6112730a485c6",
+        "x-esp8266-sketch-size": "277024",
+        "x-esp8266-sta-mac": "68:C6:3A:9F:72:74",
+        "x-esp8266-version": "0_4_99"
+    }
+]
