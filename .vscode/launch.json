@@ -34,7 +34,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch Hub",
             "program": "${workspaceRoot}/src/index.ts",
             "cwd": "${workspaceRoot}",
             "preLaunchTask": "tsc: build - tsconfig.json",
