@@ -336,6 +336,66 @@
         }
     },
     {
+        "name": "elo_tree1",
+        "context": {
+            "descriptor": {
+                "address": "0.0.0.0",
+                "port": 0,
+                "connectionType": "mqtt",
+                "deviceClass": "led",
+                "name": "elo_tree1",
+                "description": "tree light",
+                "animationPack": "std",
+                "indicators": [
+                    {
+                        "i": 0,
+                        "li": 0,
+                        "ls": 0,
+                        "lc": 4
+                    }
+                ],
+                "inputRegisterMap": {
+                    "p1": "anim_speed",
+                    "p2": null,
+                    "p3": null,
+                    "p4": null,
+                    "p5": null
+                },
+                "outputRegisterMap": {
+                    "v1": null,
+                    "v2": null,
+                    "v3": null,
+                    "v4": null,
+                    "v5": null
+                },
+                "configRegisterMap": {
+                    "c1": null,
+                    "c2": null,
+                    "c3": null,
+                    "c4": null,
+                    "c5": null
+                }
+            },
+            "profile": {
+                "applianceId": "elo_tree1",
+                "manufacturerName": "ELO Home",
+                "modelName": "Tree Light",
+                "version": "1.0",
+                "friendlyName": "Oak Tree Light",
+                "friendlyDescription": "Oak Tree Light",
+                "isReachable": true,
+                "actions": [
+                    "turnOn",
+                    "turnOff",
+                    "setPercentage",
+                    "incrementPercentage",
+                    "decrementPercentage"
+                ],
+                "additionalApplianceDetails": {}
+            }
+        }
+    },
+    {
         "name": "elo_disp1",
         "context": {
             "descriptor": {
