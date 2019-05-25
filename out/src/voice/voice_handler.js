@@ -31,6 +31,7 @@ const queue_build_intent_1 = require("../intents/queue_build_intent");
 const active_tasks_intent_1 = require("../intents/active_tasks_intent");
 const status_report_intent_1 = require("../intents/status_report_intent");
 const feature_disabled_intent_1 = require("../intents/feature_disabled_intent");
+const expense_query_intent_1 = require("../intents/expense_query_intent");
 ;
 let AlexaVoiceHandler = class AlexaVoiceHandler {
     constructor(logger, deviceRepo, vstsRepo, expressApp, config) {
@@ -160,6 +161,26 @@ let AlexaVoiceHandler = class AlexaVoiceHandler {
             try {
                 if (self.config.featureSet.wiki) {
                     var intent = new status_report_intent_1.StatusReportIntentHandler(this.logger, self.config);
+                    return intent.handleIntent(request, response);
+                }
+                else {
+                    let intent = new feature_disabled_intent_1.FeatureDisabledIntentHandler(this.logger);
+                    return intent.handleIntent(request, response);
+                }
+            }
+            catch (e) {
+                logger.error(e);
+            }
+        }));
+        this.alexaApp.intent("ExpenseQueryIntent", {
+            "slots": {},
+            "utterances": [
+                "how much have I spent on <expense> this <period>"
+            ]
+        }, (request, response) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (self.config.featureSet.exfin) {
+                    var intent = new expense_query_intent_1.ExpenseQueryIntentHandler(this.logger, self.config);
                     return intent.handleIntent(request, response);
                 }
                 else {
