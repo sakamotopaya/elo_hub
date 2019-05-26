@@ -7,3 +7,9 @@ export interface IJenkinsConfig {
     scriptPath: string;
     dataPath: string;
 };
+
+export interface IExFinConfig {
+    api: string;
+    ids: string;
+    token: string;
+};

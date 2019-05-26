@@ -30,6 +30,7 @@ import { IDocumentCriteria } from "./core/document_criteria";
 import { RavenRepo } from "./ravendb/raven_repo";
 import * as fs from 'fs';
 import * as path from 'path';
+import { TrialBalanceListHandler } from "./api_handlers/trial_balance_list_handler";
 
 export interface IDeviceAttributes {
   macAddress: string;
@@ -380,9 +381,22 @@ export class App {
       } catch (error) {
         console.log(error);
       }
+      res.end();
 
     });
 
+    // ExFin
+    app.get('/api/exfin/trialbalance', async (req: IExpressRequest, res: IExpressResponse) => {
+
+      try {
+        const handler = new TrialBalanceListHandler(self.config.exfin);
+        await handler.handle(req, res);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    });
     app.listen(port, (err) => {
       if (err) {
         return console.log(err);

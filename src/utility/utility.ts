@@ -1,6 +1,7 @@
 import { DeviceNames } from "../device/device";
 import { IKnowledgeDocConfig } from "../documents/knowledge_doc_parser";
-import { IJenkinsConfig } from "./interface";
+import { IJenkinsConfig, IExFinConfig } from "./interface";
+import { BulkInsertProtocolViolationException } from "ravendb";
 
 export class Utility {
 
@@ -59,7 +60,8 @@ export interface IFeatureSet {
     build: boolean;
     wiki: boolean;
     vsts: boolean;
-    jenkins: boolean | IJenkinsConfig
+    jenkins: boolean | IJenkinsConfig;
+    exfin: boolean;
 };
 
 export class Messages {
@@ -79,6 +81,7 @@ export interface ISystemConfig {
     elasticSearch: IElasticConfig;
     jenkins?: IJenkinsConfig;
     ngrok?: INgrokConfig;
+    exfin?: IExFinConfig;
 };
 
 export interface IExpressApp {

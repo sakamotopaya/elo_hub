@@ -5,7 +5,7 @@ const device_repo_1 = require("../../src/device/device_repo");
 const device_1 = require("../../src/device/device");
 const logger_1 = require("../../src/logger");
 var config = {
-    featureSet: { vsts: false, build: false, wiki: false, jenkins: false },
+    featureSet: { vsts: false, build: false, wiki: false, jenkins: false, exfin: false },
     messaging: {
         hubUrl: 'mqtt://pi3_hub',
         listenerDisabled: false,

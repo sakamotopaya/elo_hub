@@ -22,6 +22,7 @@ import { IVstsRepo } from "../vsts/vsts_repo";
 import { StatusReportIntentHandler } from "../intents/status_report_intent";
 import { FeatureDisabledIntentHandler } from "../intents/feature_disabled_intent";
 import { IVoiceHandler, IVoiceRequest, IVoiceResponse } from "./voice_interfaces";
+import { ExpenseQueryIntentHandler } from "../intents/expense_query_intent";
 
 //var alexa = require("alexa-app");
 
@@ -178,6 +179,25 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       try {
         if (self.config.featureSet.wiki) {
           var intent = new StatusReportIntentHandler(this.logger, self.config);
+          return intent.handleIntent(request, response);
+        } else {
+          let intent = new FeatureDisabledIntentHandler(this.logger);
+          return intent.handleIntent(request, response);
+        }
+      } catch (e) {
+        logger.error(e);
+      }
+    });
+
+    this.alexaApp.intent("ExpenseQueryIntent", {
+      "slots": {},
+      "utterances": [
+        "how much have I spent on <expense> this <period>"
+      ]
+    }, async (request: IVoiceRequest, response: IVoiceResponse) => {
+      try {
+        if (self.config.featureSet.exfin) {
+          var intent = new ExpenseQueryIntentHandler(this.logger, self.config);
           return intent.handleIntent(request, response);
         } else {
           let intent = new FeatureDisabledIntentHandler(this.logger);

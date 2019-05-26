@@ -23,6 +23,7 @@ const animation_pack_list_handler_1 = require("./api_handlers/animation_pack_lis
 const elastic_repo_1 = require("./elasicsearch/elastic_repo");
 const raven_repo_1 = require("./ravendb/raven_repo");
 const fs = require("fs");
+const trial_balance_list_handler_1 = require("./api_handlers/trial_balance_list_handler");
 ;
 class App {
     constructor() {
@@ -278,6 +279,17 @@ class App {
         app.post('/api/relay', (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const handler = new relay_handler_1.ExpressDeviceRelayHandler();
+                yield handler.handle(req, res);
+            }
+            catch (error) {
+                console.log(error);
+            }
+            res.end();
+        }));
+        // ExFin
+        app.get('/api/exfin/trialbalance', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const handler = new trial_balance_list_handler_1.TrialBalanceListHandler(self.config.exfin);
                 yield handler.handle(req, res);
             }
             catch (error) {
