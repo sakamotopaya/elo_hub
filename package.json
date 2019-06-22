@@ -51,7 +51,7 @@
     "express": "^4.16.2",
     "filewatcher": "^3.0.1",
     "inversify": "^4.5.2",
-    "mqtt": "^2.14.0",
+    "mqtt": "^2.18.8",
     "ravendb": "^4.0.0-rc3",
     "reflect-metadata": "^0.1.10",
     "serialport": "^6.0.4",
