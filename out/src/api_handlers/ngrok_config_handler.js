@@ -15,9 +15,15 @@ class NgrokConfigHandler {
     }
     handle(expressRequest, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var result = yield axios_1.default.get(this.config.baseUrl + '/api/tunnels');
-            console.log(result);
-            res.json(result);
+            try {
+                var result = yield axios_1.default.get(this.config.baseUrl + '/api/tunnels');
+                console.log(result);
+                res.json(result);
+            }
+            catch (error) {
+                console.log(error);
+                res.status(500).send(error);
+            }
         });
     }
 }

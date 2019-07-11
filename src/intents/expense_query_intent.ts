@@ -10,7 +10,6 @@ import { VstsFileNames, StandardVoiceResponses } from "../types";
 export class ExpenseQueryIntentHandler implements IVoiceIntentHandler {
 
     logger: ILogger;
-    deviceFactory: IDeviceRepo;
     config: ISystemConfig;
 
     constructor(logger: ILogger, config: ISystemConfig) {
@@ -33,16 +32,6 @@ export class ExpenseQueryIntentHandler implements IVoiceIntentHandler {
             }
             else
                 response.say("I dont know about " + request.slot("category"));
-
-            // if (!error || error === null) {
-            //     console.log('build queued...');
-            //     response.say("Ok! A build has been queued");
-            // } else {
-            //     console.log(stdout);
-            //     console.log(stderr);
-            //     console.log(JSON.stringify(error));
-            //     response.say("There was an error when I tried to queue the build.");
-            // }
 
             resolve(response);
         });

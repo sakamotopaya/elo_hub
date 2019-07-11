@@ -15,3 +15,7 @@ export interface IVoiceRequest extends request {
 export interface IVoiceResponse extends response {
 
 }
+
+export interface IDotCoreVoiceResponse {
+  phrase: string;
+}

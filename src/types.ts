@@ -28,7 +28,7 @@ const VstsFileNames  = {
 };
 
 const StandardVoiceResponses  = {
-    MissingScript : "I seem to have lost the script. You can probably get sakamoto to fix it.",
+    MissingScript : "I seem to have lost the script. You can probably get the dev to fix it.",
     MissingBuildResults: "The file containing the last build result is not where it should be."
 }
 

@@ -62,6 +62,7 @@ class App {
             }
             catch (error) {
                 console.log(error);
+                res.status(500).send(error);
             }
         }));
         app.get('/api/update/:deviceType', (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -112,6 +113,7 @@ class App {
             }
             catch (error) {
                 console.log(error);
+                res.status(500).send(error);
             }
         }));
         app.get('/api/devices', (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -121,6 +123,7 @@ class App {
             }
             catch (error) {
                 console.log(error);
+                res.status(500).send(error);
             }
         }));
         app.get('/api/objects/all', (req, res) => __awaiter(this, void 0, void 0, function* () {

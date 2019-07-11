@@ -83,12 +83,6 @@ export class App {
 
     app.get('/api/hello', async (req: IExpressRequest, res: IExpressResponse) => {
 
-      /*let config: IKnowledgeDocConfig = { repoRoot: "/Users/sakamoto/code/karmak/elk_wiki" };
-      let scanner = new RepoScanner(config);
-      let result = scanner.scan();
-      result.then((payload) => {
-        res.json(payload);
-      });*/
       const handler = new HelloHandler();
       await handler.handle(req, res);
 
@@ -102,6 +96,7 @@ export class App {
 
       } catch (error) {
         console.log(error);
+        res.status(500).send(error);
       }
 
     });
@@ -165,6 +160,7 @@ export class App {
 
       } catch (error) {
         console.log(error);
+        res.status(500).send(error);
       }
 
     });
@@ -177,6 +173,7 @@ export class App {
 
       } catch (error) {
         console.log(error);
+        res.status(500).send(error);
       }
 
     });

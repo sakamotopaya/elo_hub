@@ -23,6 +23,7 @@ import { StatusReportIntentHandler } from "../intents/status_report_intent";
 import { FeatureDisabledIntentHandler } from "../intents/feature_disabled_intent";
 import { IVoiceHandler, IVoiceRequest, IVoiceResponse } from "./voice_interfaces";
 import { ExpenseQueryIntentHandler } from "../intents/expense_query_intent";
+import { DotCoreIntentHandler } from "../intents/dotcore_intent";
 
 //var alexa = require("alexa-app");
 
@@ -198,6 +199,25 @@ export class AlexaVoiceHandler implements IVoiceHandler {
       try {
         if (self.config.featureSet.exfin) {
           var intent = new ExpenseQueryIntentHandler(this.logger, self.config);
+          return intent.handleIntent(request, response);
+        } else {
+          let intent = new FeatureDisabledIntentHandler(this.logger);
+          return intent.handleIntent(request, response);
+        }
+      } catch (e) {
+        logger.error(e);
+      }
+    });
+
+    this.alexaApp.intent("NewSimulationIntent", {
+      "slots": {},
+      "utterances": [
+        "create a new simulation"
+      ]
+    }, async (request: IVoiceRequest, response: IVoiceResponse) => {
+      try {
+        if (self.config.featureSet.exfin) {
+          var intent = new DotCoreIntentHandler(this.logger, self.config);
           return intent.handleIntent(request, response);
         } else {
           let intent = new FeatureDisabledIntentHandler(this.logger);
