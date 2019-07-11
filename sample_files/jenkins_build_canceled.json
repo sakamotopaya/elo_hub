@@ -1,0 +1,116 @@
+{
+    "_class": "hudson.model.FreeStyleBuild",
+    "actions": [
+        {
+            "_class": "hudson.model.CauseAction",
+            "causes": [
+                {
+                    "_class": "hudson.triggers.SCMTrigger$SCMTriggerCause",
+                    "shortDescription": "Started by an SCM change"
+                }
+            ]
+        },
+        {},
+        {
+            "_class": "hudson.plugins.git.util.BuildData",
+            "buildsByBranchName": {
+                "refs/remotes/ELO_Hub_Repo/master": {
+                    "_class": "hudson.plugins.git.util.Build",
+                    "buildNumber": 19,
+                    "buildResult": null,
+                    "marked": {
+                        "SHA1": "47e06514608d42178982f9465ebe084149e6ccc1",
+                        "branch": [
+                            {
+                                "SHA1": "47e06514608d42178982f9465ebe084149e6ccc1",
+                                "name": "refs/remotes/ELO_Hub_Repo/master"
+                            }
+                        ]
+                    },
+                    "revision": {
+                        "SHA1": "47e06514608d42178982f9465ebe084149e6ccc1",
+                        "branch": [
+                            {
+                                "SHA1": "47e06514608d42178982f9465ebe084149e6ccc1",
+                                "name": "refs/remotes/ELO_Hub_Repo/master"
+                            }
+                        ]
+                    }
+                }
+            },
+            "lastBuiltRevision": {
+                "SHA1": "47e06514608d42178982f9465ebe084149e6ccc1",
+                "branch": [
+                    {
+                        "SHA1": "47e06514608d42178982f9465ebe084149e6ccc1",
+                        "name": "refs/remotes/ELO_Hub_Repo/master"
+                    }
+                ]
+            },
+            "remoteUrls": [
+                "https://github.com/sakamotopaya/elo_hub.git"
+            ],
+            "scmName": ""
+        },
+        {
+            "_class": "hudson.plugins.git.GitTagAction"
+        },
+        {},
+        {
+            "_class": "jenkins.model.InterruptedBuildAction"
+        },
+        {},
+        {}
+    ],
+    "artifacts": [],
+    "building": false,
+    "description": null,
+    "displayName": "#19",
+    "duration": 90141,
+    "estimatedDuration": 176579,
+    "executor": null,
+    "fullDisplayName": "elo_hub #19",
+    "id": "19",
+    "keepLog": false,
+    "number": 19,
+    "queueId": 18,
+    "result": "ABORTED",
+    "timestamp": 1519592834323,
+    "url": "http://pi3_build:8080/job/elo_hub/19/",
+    "builtOn": "",
+    "changeSet": {
+        "_class": "hudson.plugins.git.GitChangeSetList",
+        "items": [
+            {
+                "_class": "hudson.plugins.git.GitChangeSet",
+                "affectedPaths": [
+                    "src/elasicsearch/elastic_repo.ts"
+                ],
+                "commitId": "47e06514608d42178982f9465ebe084149e6ccc1",
+                "timestamp": 1519592715000,
+                "author": {
+                    "absoluteUrl": "http://pi3_build:8080/user/sakamoto.paya",
+                    "fullName": "sakamoto.paya"
+                },
+                "authorEmail": "sakamoto.paya@myqubix.com",
+                "comment": "fix build fail\n",
+                "date": "2018-02-25 15:05:15 -0600",
+                "id": "47e06514608d42178982f9465ebe084149e6ccc1",
+                "msg": "fix build fail",
+                "paths": [
+                    {
+                        "editType": "edit",
+                        "file": "src/elasicsearch/elastic_repo.ts"
+                    }
+                ]
+            }
+        ],
+        "kind": "git"
+    },
+    "culprits": [
+        {
+            "absoluteUrl": "http://pi3_build:8080/user/sakamoto.paya",
+            "fullName": "sakamoto.paya"
+        }
+    ]
+}

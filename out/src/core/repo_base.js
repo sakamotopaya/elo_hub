@@ -1,0 +1,90 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs");
+const filewatcher = require("filewatcher");
+const path = require("path");
+const inversify_1 = require("inversify");
+const dictionary_1 = require("../utility/dictionary");
+;
+let RepoBase = class RepoBase {
+    constructor(logger, repoConfig) {
+        this.writing = 0;
+        this.repoConfig = repoConfig;
+        this.initializeRepo();
+        this.watchRepo();
+    }
+    getFullRepoPath() {
+        return path.join(this.repoConfig.repoPath, this.getRepoFilename());
+    }
+    watchRepo() {
+        let that = this;
+        let repoPath = this.getFullRepoPath();
+        let watcher = filewatcher();
+        watcher.add(repoPath);
+        watcher.on('change', function (file, stat) {
+            if (that.writing > 0)
+                that.writing = 0;
+            else {
+                console.log(this.repoFileName + ' repo has changed, reloading...');
+                that.initializeRepo();
+            }
+        });
+    }
+    save() {
+        let self = this;
+        self.writing += 1;
+        return new Promise((resolve, reject) => {
+            let repoPath = self.getFullRepoPath();
+            let buf = JSON.stringify(self.items.values(), null, 2);
+            fs.writeFile(repoPath, buf, (err) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve();
+            });
+        });
+    }
+    getItem(key) {
+        if (this.items.containsKey(key))
+            return this.items.item(key);
+        return undefined;
+    }
+    allItems() {
+        return this.items.values();
+    }
+    getKey(item) {
+        return undefined;
+    }
+    getRepoFilename() {
+        return undefined;
+    }
+    readItems(buf) {
+        return JSON.parse(buf.toString());
+    }
+    initializeRepo() {
+        let self = this;
+        this.items = new dictionary_1.KeyedCollection();
+        let repoPath = this.getFullRepoPath();
+        let fileStore = self.readItems(fs.readFileSync(repoPath));
+        fileStore.forEach(item => {
+            let key = self.getKey(item);
+            this.items.add(key, item);
+        });
+    }
+};
+RepoBase = __decorate([
+    inversify_1.injectable(),
+    __metadata("design:paramtypes", [Object, Object])
+], RepoBase);
+exports.RepoBase = RepoBase;
+;
+//# sourceMappingURL=repo_base.js.map

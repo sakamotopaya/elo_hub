@@ -1,0 +1,85 @@
+{
+    "_class": "hudson.model.FreeStyleBuild",
+    "actions": [
+        {
+            "_class": "hudson.model.CauseAction",
+            "causes": [
+                {
+                    "_class": "hudson.model.Cause$UserIdCause",
+                    "shortDescription": "Started by user sakamoto paya",
+                    "userId": "sakamoto",
+                    "userName": "sakamoto paya"
+                }
+            ]
+        },
+        {
+            "_class": "hudson.plugins.git.util.BuildData",
+            "buildsByBranchName": {
+                "refs/remotes/ELO_Hub_Repo/master": {
+                    "_class": "hudson.plugins.git.util.Build",
+                    "buildNumber": 17,
+                    "buildResult": null,
+                    "marked": {
+                        "SHA1": "e638b21143d9ebf095bfa14222e7ee14e61fd1c4",
+                        "branch": [
+                            {
+                                "SHA1": "e638b21143d9ebf095bfa14222e7ee14e61fd1c4",
+                                "name": "refs/remotes/ELO_Hub_Repo/master"
+                            }
+                        ]
+                    },
+                    "revision": {
+                        "SHA1": "e638b21143d9ebf095bfa14222e7ee14e61fd1c4",
+                        "branch": [
+                            {
+                                "SHA1": "e638b21143d9ebf095bfa14222e7ee14e61fd1c4",
+                                "name": "refs/remotes/ELO_Hub_Repo/master"
+                            }
+                        ]
+                    }
+                }
+            },
+            "lastBuiltRevision": {
+                "SHA1": "e638b21143d9ebf095bfa14222e7ee14e61fd1c4",
+                "branch": [
+                    {
+                        "SHA1": "e638b21143d9ebf095bfa14222e7ee14e61fd1c4",
+                        "name": "refs/remotes/ELO_Hub_Repo/master"
+                    }
+                ]
+            },
+            "remoteUrls": [
+                "https://github.com/sakamotopaya/elo_hub.git"
+            ],
+            "scmName": ""
+        },
+        {
+            "_class": "hudson.plugins.git.GitTagAction"
+        },
+        {},
+        {},
+        {}
+    ],
+    "artifacts": [],
+    "building": true,
+    "description": null,
+    "displayName": "#17",
+    "duration": 0,
+    "estimatedDuration": 180402,
+    "executor": {},
+    "fullDisplayName": "elo_hub #17",
+    "id": "17",
+    "keepLog": false,
+    "number": 17,
+    "queueId": 16,
+    "result": null,
+    "timestamp": 1519591297516,
+    "url": "http://pi3_build:8080/job/elo_hub/17/",
+    "builtOn": "",
+    "changeSet": {
+        "_class": "hudson.plugins.git.GitChangeSetList",
+        "items": [],
+        "kind": "git"
+    },
+    "culprits": []
+}
